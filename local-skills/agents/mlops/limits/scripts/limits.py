@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import os
 import shutil
@@ -38,7 +39,6 @@ PROVIDER_MAP = {
 }
 
 
-
 def map_provider(name: str) -> str:
     key = name.strip().lower().replace("_", "-")
     return PROVIDER_MAP.get(key, key)
@@ -57,10 +57,8 @@ def extract_json(stdout: str) -> Any:
 def run_usage(timeout: int) -> list[dict[str, Any]]:
     """Fetch all configured providers in one CodexBar JSON request."""
     cmd = ["codexbar", "usage", "--json"]
-    env = dict(os.environ)
-    env.pop("CODEX_HOME", None)
     try:
-        proc = subprocess.run(cmd, text=True, capture_output=True, timeout=timeout, env=env)
+        proc = subprocess.run(cmd, text=True, capture_output=True, timeout=timeout)
     except subprocess.TimeoutExpired:
         return [{"provider": "codexbar", "error": f"timeout after {timeout}s"}]
     try:
@@ -74,29 +72,57 @@ def run_usage(timeout: int) -> list[dict[str, Any]]:
     return [item for item in payload if isinstance(item, dict)]
 
 
-def window_label(minutes: Any) -> str:
+def parse_resets_at(value: Any) -> datetime.datetime | None:
+    if not value:
+        return None
     try:
-        m = int(minutes)
+        return datetime.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
     except Exception:
-        return "?"
-    if m % 10080 == 0:
-        return f"{m // 10080 * 7}d" if m // 10080 != 1 else "7d"
-    if m % 1440 == 0:
-        return f"{m // 1440}d"
-    if m % 60 == 0:
-        return f"{m // 60}h"
-    return f"{m}m"
+        return None
 
 
-def remaining_token(win: dict[str, Any]) -> str | None:
-    if not win or "usedPercent" not in win or "windowMinutes" not in win:
+def remaining_label(delta: datetime.timedelta) -> str:
+    total_seconds = int(delta.total_seconds())
+    if total_seconds < 0:
+        total_seconds = 0
+    days, remainder = divmod(total_seconds, 86400)
+    hours = remainder // 3600
+    if days >= 1:
+        return f"{days}d"
+    return f"{hours}h"
+
+
+def copilot_resets_at(usage: dict[str, Any]) -> datetime.datetime | None:
+    """Copilot omits windowMinutes/resetsAt, but the monthly quota resets on the 1st of next month UTC."""
+    # If codexbar ever starts including resetsAt, trust it.
+    for name in ("primary", "secondary", "tertiary"):
+        win = usage.get(name) or {}
+        if ts := parse_resets_at(win.get("resetsAt")):
+            return ts
+    now = datetime.datetime.now(datetime.timezone.utc)
+    if now.day == 1:
+        return now
+    # Move to first day of next month.
+    year = now.year + (now.month // 12)
+    month = (now.month % 12) + 1
+    return datetime.datetime(year, month, 1, tzinfo=datetime.timezone.utc)
+
+
+def remaining_token(
+    win: dict[str, Any], *, default_resets_at: datetime.datetime | None = None
+) -> str | None:
+    if not win or "usedPercent" not in win:
+        return None
+    resets_at = parse_resets_at(win.get("resetsAt")) or default_resets_at
+    if resets_at is None:
         return None
     try:
         used = float(win["usedPercent"])
     except Exception:
         return None
     remaining = max(0.0, min(100.0, 100.0 - used))
-    return f"{int(remaining + 0.5)}%/{window_label(win.get('windowMinutes'))}"
+    now = datetime.datetime.now(datetime.timezone.utc)
+    return f"{int(remaining + 0.5)}%/{remaining_label(resets_at - now)}"
 
 
 def format_line(item: dict[str, Any]) -> str | None:
@@ -106,8 +132,11 @@ def format_line(item: dict[str, Any]) -> str | None:
         return f"{label}: error ({err})"
     usage = item.get("usage") or {}
     tokens = []
+    default_resets_at = copilot_resets_at(usage) if provider == "copilot" else None
     for name in ("primary", "secondary", "tertiary"):
-        tok = remaining_token(usage.get(name) or {})
+        tok = remaining_token(
+            usage.get(name) or {}, default_resets_at=default_resets_at
+        )
         if tok:
             tokens.append(tok)
     if not tokens:
@@ -141,13 +170,12 @@ def main() -> int:
 
     lines = [line for r in results if (line := format_line(r))]
 
-    # Default: keep noise down. Hide errors if at least one useful line exists.
-    useful = [ln for ln in lines if "error (" not in ln and "no limits" not in ln]
-    if useful and not args.provider:
-        lines = useful
-
     print("\n".join(lines))
-    return 0 if useful else 1
+    return (
+        0
+        if any(": error (" not in ln and ": no limits" not in ln for ln in lines)
+        else 1
+    )
 
 
 if __name__ == "__main__":

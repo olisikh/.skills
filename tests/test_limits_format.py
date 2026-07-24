@@ -44,7 +44,6 @@ class LimitsFormatTests(unittest.TestCase):
 
         run.assert_called_once()
         self.assertEqual(run.call_args.args[0], ["codexbar", "usage", "--json"])
-        self.assertNotIn("CODEX_HOME", run.call_args.kwargs["env"])
 
 
 if __name__ == "__main__":
