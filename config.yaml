@@ -115,3 +115,5 @@ sources:
     type: local
     root: .
     harness: hermes
+    exclude:
+      - model-routing
