@@ -1188,12 +1188,6 @@
       "source": "graphify/graphify/skills/claw/references",
       "status": "complete"
     },
-    "hermes:model-routing": {
-      "harness": "hermes",
-      "path": "model-routing",
-      "source": "local-skills/hermes/model-routing",
-      "status": "complete"
-    },
     "openclaw:self-improving-agent": {
       "harness": "openclaw",
       "path": "self-improving-agent",
