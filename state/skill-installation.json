@@ -1197,7 +1197,7 @@
     "opencode:graphify/SKILL.md": {
       "harness": "opencode",
       "path": "graphify/SKILL.md",
-      "source": "graphify/graphify/skill-opencode.md",
+      "source": "graphify/graphify/skill-pi.md",
       "status": "complete"
     },
     "opencode:graphify/references": {
@@ -1216,6 +1216,12 @@
       "harness": "opencode",
       "path": "wiki-query",
       "source": "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query",
+      "status": "complete"
+    },
+    "pi:graphify/references": {
+      "harness": "pi",
+      "path": "graphify/references",
+      "source": "graphify/graphify/skills/pi/references",
       "status": "complete"
     }
   },
