@@ -30,6 +30,8 @@ sources:
         harness: claude
       - root: plugins/llm-wiki-opencode/skills
         harness: opencode
+      - root: plugins/llm-wiki-opencode/skills
+        harness: pi
       - root: plugins/llm-wiki/skills
         harness: codex
 
@@ -88,6 +90,12 @@ sources:
         to: skills/graphify/SKILL.md
       - from: graphify/skills/opencode/references
         harness: opencode
+        to: skills/graphify/references
+      - from: graphify/skill-pi.md
+        harness: opencode
+        to: skills/graphify/SKILL.md
+      - from: graphify/skills/pi/references
+        harness: pi
         to: skills/graphify/references
       - from: graphify/skill-claw.md
         harness: hermes

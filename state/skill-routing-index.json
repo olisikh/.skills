@@ -160,6 +160,10 @@
       "path": "graphify/SKILL.md",
       "reason": "Graphify OpenCode variant"
     },
+    "graphify/graphify/skill-pi.md": {
+      "harness": "opencode",
+      "path": "graphify/SKILL.md"
+    },
     "graphify/graphify/skill.md": {
       "harness": "claude",
       "path": "graphify/SKILL.md",
@@ -190,16 +194,20 @@
       "path": "graphify/references",
       "reason": "Graphify OpenCode references"
     },
+    "graphify/graphify/skills/pi/references": {
+      "harness": "pi",
+      "path": "graphify/references"
+    },
     "llm-wiki/claude-plugin/skills/wiki-manager": {
       "harness": "claude",
       "path": "wiki-manager"
     },
     "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-manager": {
-      "harness": "opencode",
+      "harness": "pi",
       "path": "wiki-manager"
     },
     "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query": {
-      "harness": "opencode",
+      "harness": "pi",
       "path": "wiki-query"
     },
     "llm-wiki/plugins/llm-wiki/skills/wiki": {
