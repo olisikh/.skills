@@ -203,11 +203,11 @@
       "path": "wiki-manager"
     },
     "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-manager": {
-      "harness": "pi",
+      "harness": "opencode",
       "path": "wiki-manager"
     },
     "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query": {
-      "harness": "pi",
+      "harness": "opencode",
       "path": "wiki-query"
     },
     "llm-wiki/plugins/llm-wiki/skills/wiki": {

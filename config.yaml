@@ -30,8 +30,6 @@ sources:
         harness: claude
       - root: plugins/llm-wiki-opencode/skills
         harness: opencode
-      - root: plugins/llm-wiki-opencode/skills
-        harness: pi
       - root: plugins/llm-wiki/skills
         harness: codex
 
