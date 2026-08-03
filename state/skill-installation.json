@@ -1192,7 +1192,7 @@
       "harness": "openclaw",
       "path": "self-improving-agent",
       "source": "self-improving-agent/self-improving-agent",
-      "status": "complete"
+      "status": "blocked"
     },
     "opencode:graphify/SKILL.md": {
       "harness": "opencode",
@@ -1222,7 +1222,7 @@
       "harness": "pi",
       "path": "graphify/references",
       "source": "graphify/graphify/skills/pi/references",
-      "status": "complete"
+      "status": "blocked"
     }
   },
   "version": 1
