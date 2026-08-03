@@ -26,22 +26,22 @@ See `references/hermes-central-skill-install.md` for the concrete Hermes-specifi
 - Moving a skill out of an installed runtime tree into the central repo
 - Updating instructions that still say skills should be authored directly in `~/.agents/skills` or `~/.hermes/skills`
 - Verifying that installed runtime skill paths are symlinks into `~/.llm-harness`
-- Adding Hermes-specific skills that need category folders preserved under `~/.hermes/skills`
+- Adding Hermes-specific skills that may be grouped in source category folders
 
 Do not use this for one-off temporary personal notes that should remain local-only.
 
 ## Core Rules
 
 1. Treat `~/.llm-harness` as canonical.
-2. Put first-party source skills under `~/.llm-harness/local-skills/<harness>/...`.
-   - portable skills: `local-skills/agents/`
-   - Claude-only skills: `local-skills/claude/`
-   - Codex-only skills: `local-skills/codex/`
-   - Hermes-only skills: `local-skills/hermes/<category>/`
-   - OpenCode-only skills: `local-skills/opencode/` (when needed)
-   - use `harness/<name>/` only for non-skill harness-specific files such as `CLAUDE.md`
+2. Put first-party source skills under `~/.llm-harness/harness/<harness>/skills/`.
+   - portable skills: `harness/agents/skills/`
+   - Claude-only skills: `harness/claude/skills/`
+   - Codex-only skills: `harness/codex/skills/`
+   - Hermes-only skills: `harness/hermes/skills/<category>/`
+   - OpenCode-only skills: `harness/opencode/skills/` (when needed)
+   - use other top-level entries under `harness/<name>/` for non-skill harness-specific files such as `CLAUDE.md`
 3. Prefer editing repo source, not installed runtime copies.
-4. Once the routing index exists, a newly discovered skill is intentionally withheld until its actual `SKILL.md` has been classified and its config-selected harness is approved with `./harness.py approve-skill`.
+4. Once the routing index exists, a newly discovered submodule skill is intentionally withheld until its actual `SKILL.md` has been classified and its config-selected harness is approved with `./harness.py approve-skill`. Local skills are trusted immediately.
 5. After creating, moving, or editing skills, run the installer so harness homes refresh:
    ```sh
    cd ~/.llm-harness
@@ -69,18 +69,20 @@ only configured submodule sources need refreshing.
 
 ## Hermes-Specific Layout Rule
 
-Hermes skills may need nested category paths in the installed runtime tree, for example:
+Hermes source skills may be grouped in category folders, but installed skill
+targets are always flat:
 
-- source: `~/.llm-harness/local-skills/hermes/autonomous-ai-agents/hermes-agent/...`
-- install target: `~/.hermes/skills/autonomous-ai-agents/hermes-agent`
+- source: `~/.llm-harness/harness/hermes/skills/autonomous-ai-agents/hermes-agent/SKILL.md`
+- install target: `~/.hermes/skills/hermes-agent`
 
-The installer must preserve nested category paths by linking every directory containing `SKILL.md`, not only direct children of `skills/`.
+The installer links every directory containing `SKILL.md` and uses that
+directory's basename as the target name.
 
 ## Workflow
 
 1. Identify which harness should receive the installed skill.
-2. Create or update the physical source under `~/.llm-harness/local-skills/<harness>/...`.
-3. If the skill belongs somewhere other than the default `agents` harness, place it in the matching `local-skills/<harness>/` directory.
+2. Create or update the physical source under `~/.llm-harness/harness/<harness>/skills/...`.
+3. If the skill belongs somewhere other than the default `agents` harness, place it in the matching `harness/<harness>/skills/` directory.
 4. If instructions or references still point to old canonical paths, patch them in the same session.
 5. Re-run `cd ~/.llm-harness && ./harness.py install`.
 6. Run `./harness.py audit-skills` to repair safe repo-managed wrong links and record every effective configured skill as `complete` or `blocked` in `state/skill-installation.json`.
@@ -92,15 +94,15 @@ The installer must preserve nested category paths by linking every directory con
 ## Common Pitfalls
 
 1. **Editing installed runtime copies directly.** This creates drift and breaks the central-repo model.
-2. **Assuming skill trees are flat.** Hermes may require nested category paths like `autonomous-ai-agents/<skill>`.
+2. **Assuming source trees are flat.** Hermes sources may use category folders, but target skill directories are flat.
 3. **Forgetting to run `./harness.py install` after repo edits.** The repo can be correct while runtime homes are stale.
 4. **Keeping two editable copies.** Runtime paths should be symlinked compatibility/install views, not a second source of truth.
 5. **Using a copied or linked maintenance script.** `update-skills.sh` belongs only in `~/.llm-harness`; invoke `./harness.py update-repo` or `./harness.py update-skills` from that repository instead.
 
 ## Verification Checklist
 
-- [ ] Skill source lives under `~/.llm-harness/local-skills/<harness>/...`
-- [ ] Target harness matches the `local-skills/<harness>/` directory
+- [ ] Skill source lives under `~/.llm-harness/harness/<harness>/skills/...`
+- [ ] Target harness matches the `harness/<harness>/` directory
 - [ ] Installed runtime path exists where expected
 - [ ] Installed runtime path is a symlink or managed install target resolving into `~/.llm-harness`
 - [ ] `cd ~/.llm-harness && ./harness.py install` has been run after changes

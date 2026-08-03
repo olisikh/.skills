@@ -91,8 +91,61 @@ class Config:
                 child_sources = []
         return child_sources
 
+    def source_type(self, source_id: str) -> str | None:
+        """Return the configured type for a discovered source path."""
+        source_parts = Path(source_id).parts
+        if (
+            len(source_parts) >= 4
+            and source_parts[0] == "harness"
+            and source_parts[2] == "skills"
+        ):
+            return "local"
+
+        data = self._load_yaml(self.sources_file)
+        matches = [
+            (name, entry.get("type"))
+            for name, entry in (data.get("sources") or {}).items()
+            if source_id == name or source_id.startswith(f"{name}/")
+        ]
+        if not matches:
+            return None
+        return max(matches, key=lambda match: len(match[0]))[1]
+
+    def requires_routing_approval(self, source_id: str) -> bool:
+        """Only third-party submodule sources require routing approval."""
+        return self.source_type(source_id) == "submodule"
+
+    def _list_harness_skills(self) -> Iterator[tuple[str, str, str, Path]]:
+        """Yield standard skills stored directly under harness/<name>/skills/."""
+        if not self.harness_dir.exists():
+            return
+
+        for harness_dir in sorted(self.harness_dir.iterdir()):
+            if not harness_dir.is_dir() or harness_dir.name.startswith("."):
+                continue
+            source_root = harness_dir / "skills"
+            if not source_root.is_dir():
+                continue
+
+            for current_root, dirs, files in os.walk(source_root, followlinks=False):
+                dirs.sort()
+                files.sort()
+                if "SKILL.md" not in files:
+                    continue
+
+                source = Path(current_root)
+                yield (
+                    source.relative_to(self.repo_root).as_posix(),
+                    harness_dir.name,
+                    os.path.relpath(source, source_root),
+                    source,
+                )
+                # A skill is installed as one directory symlink. Do not treat
+                # nested SKILL.md files in its references/scripts as skills.
+                dirs.clear()
+
     def list_discovered_skills(self) -> Iterator[tuple[str, str, str, Path]]:
-        """Yield every raw configured source as (source_id, harness, target_rel, source_abs)."""
+        """Yield raw configured and harness-local skills."""
         data = self._load_yaml(self.sources_file)
         routes = data.get("routes") or {}
         for source_name, entry in (data.get("sources") or {}).items():
@@ -151,18 +204,36 @@ class Config:
                         yield (source_id, harness, rel, source_abs)
                         dirs.clear()
 
+        # Harness-local skills are the repository's first-party overlay. Keep
+        # them after configured sources so they preserve the old local-source
+        # behavior: local skills win a flattened-name collision.
+        yield from self._list_harness_skills()
+
     @staticmethod
     def _skill_relative_path(path: str) -> str:
         """Convert a harness-home skill path to its skills-directory-relative form."""
         prefix = "skills/"
         return path.removeprefix(prefix)
 
+    def _is_standard_skill_source(self, source: Path) -> bool:
+        if not source.is_dir() or not (source / "SKILL.md").is_file():
+            return False
+
+        data = self._load_yaml(self.sources_file)
+        source_resolved = source.resolve()
+        for source_name, entry in (data.get("sources") or {}).items():
+            source_base = self.repo_root / source_name
+            for artifact in entry.get("artifacts") or []:
+                if (source_base / artifact["from"]).resolve() == source_resolved:
+                    return False
+        return True
+
     def list_configured_skills(self) -> Iterator[tuple[str, str, Path]]:
         """Yield approved (harness_name, target_rel, source_abs) mappings."""
         index = self.routing_index()
         approved = None if index is None else index["skills"]
         for source_id, harness, rel, source in self.list_discovered_skills():
-            if approved is not None:
+            if approved is not None and self.requires_routing_approval(source_id):
                 record = approved.get(source_id)
                 if (
                     not isinstance(record, dict)
@@ -170,7 +241,10 @@ class Config:
                     or record.get("path") != rel
                 ):
                     continue
-            yield (harness, rel, source)
+            target_rel = rel
+            if self._is_standard_skill_source(source):
+                target_rel = source.name
+            yield (harness, target_rel, source)
 
     def list_skill_targets(self) -> Iterator[tuple[str, str, Path]]:
         """Yield direct configured targets and configured derived mirrors."""
@@ -186,11 +260,10 @@ class Config:
             for harness, rel, source in direct:
                 if harness != source_harness:
                     continue
-                if not source.is_dir() or not (source / "SKILL.md").is_file():
+                if not self._is_standard_skill_source(source):
                     continue
-                target_rel = Path(rel).name if mirror.get("flatten", False) else rel
-                if (target_harness, target_rel) not in direct_keys:
-                    yield (target_harness, target_rel, source)
+                if (target_harness, rel) not in direct_keys:
+                    yield (target_harness, rel, source)
 
     def configured_submodule_names(self) -> list[str]:
         data = self._load_yaml(self.sources_file)

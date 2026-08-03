@@ -9,8 +9,9 @@ from unittest.mock import patch
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "local-skills"
+    / "harness"
     / "agents"
+    / "skills"
     / "mlops"
     / "limits"
     / "scripts"

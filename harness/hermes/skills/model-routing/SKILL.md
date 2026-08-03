@@ -1,6 +1,6 @@
 ---
 name: model-routing
-description: Hermes-only deterministic routing policy. Use for non-trivial, parallelizable, coding, research, ambiguous, high-risk, or repeatedly failing work. Read ~/.hermes/model-routing.yaml and run the controller from ~/.llm-harness/local-skills/hermes/model-routing/scripts before selecting a route, model, fallback, or escalation path.
+description: Hermes-only deterministic routing policy. Use for non-trivial, parallelizable, coding, research, ambiguous, high-risk, or repeatedly failing work. Read ~/.hermes/model-routing.yaml and run the controller from ~/.llm-harness/harness/hermes/skills/model-routing/scripts before selecting a route, model, fallback, or escalation path.
 version: 2.1.1
 author: Hermes Agent
 license: MIT
@@ -12,7 +12,7 @@ metadata:
 
 # Hermes Model Routing
 
-This skill is **Hermes-only**. It relies on Hermes `delegate_task`, Hermes provider names, `~/.hermes/config.yaml` for native runtime values, and the deterministic controller in `~/.llm-harness/local-skills/hermes/model-routing/`.
+This skill is **Hermes-only**. It relies on Hermes `delegate_task`, Hermes provider names, `~/.hermes/config.yaml` for native runtime values, and the deterministic controller in `~/.llm-harness/harness/hermes/skills/model-routing/`.
 
 ## Source of truth
 
@@ -120,7 +120,7 @@ For a per-task specialist model that does not match the configured native spec, 
 The deterministic controller lives at:
 
 ```text
-~/.llm-harness/local-skills/hermes/model-routing/scripts/
+~/.llm-harness/harness/hermes/skills/model-routing/scripts/
 ```
 
 Key scripts:

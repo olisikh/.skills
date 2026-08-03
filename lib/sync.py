@@ -130,7 +130,7 @@ def sync_harness(config: Config, harness_name: str) -> None:
             continue
         target = target_skills_dir / rel
         if target in desired_sources:
-            warn(f"Source collision at {target}; later config wins")
+            warn(f"Source collision at {target}; later source wins")
         desired_sources[target] = source
 
     for target, source in desired_sources.items():

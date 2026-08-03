@@ -9,11 +9,11 @@ instructions: |
 
   1. Read docs/llm-harness-ops.md for the canonical procedure.
   2. Ask clarifying questions if the target harness, category, or skill type is unclear.
-  3. Prefer local-skills/ for first-party skills and git submodules for shared upstream sources.
+  3. Prefer harness/<harness>/skills/ for first-party skills and git submodules for shared upstream sources.
   4. After making changes, run the verification checklist:
      - python3 -m py_compile harness.py llm_harness/*.py
      - ./harness.py update-skills [submodule...]
      - ./harness.py install
      - ./harness.py uninstall
      - git status --short
-  5. Never put skills under harness/<name>/skills/ or track symlinks there.
+  5. Only directories containing SKILL.md under harness/<name>/skills/ are installed; never track symlinks there.

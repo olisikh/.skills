@@ -55,9 +55,9 @@ Only state you cannot verify after searching returns no useful result.
 
 - Canonical checkout path is `~/.llm-harness`.
 - Repo is harness-first.
-- `harness/<name>/` mirrors target harness home for non-skill harness-specific files.
+- `harness/<name>/` mirrors target harness home; standard first-party skills live under its `skills/` child.
 - `harness/agents/` is portable/default harness and mirrors `~/.agents/`.
-- Skill sources live in configured upstream submodules and in `local-skills/<harness>/`; `harness.py install` links each directory that contains `SKILL.md`, preserving nested category paths.
+- Skill sources live in configured upstream sources and `harness/<harness>/skills/`; `harness.py install` flattens every standard skill target to its final directory name.
 
 Current conventions:
 - `harness/agents` -> `~/.agents`
@@ -68,7 +68,7 @@ Current conventions:
 
 ## 7. Skill Source Sync Rules
 
-- Skill sources are declared in `config.yaml` under `sources:` with `type: submodule` or `type: local`.
+- Shared/external skill sources are declared in `config.yaml` under `sources:`. First-party standard skills are discovered from `harness/<harness>/skills/` without registration.
 - Shared upstream submodules currently are:
   - `obsidian-skills`
   - `mattpocock-skills`
@@ -83,7 +83,8 @@ Current conventions:
 - `harness.py install` auto-discovers harness directories.
 - `harness.py audit-skills` is the stateful verification step: it safely repairs repo-managed wrong links, records complete/blocked configured skills in `state/skill-installation.json`, and leaves non-repo paths untouched.
 - `state/skill-routing-index.json` gates installation: once seeded, only reviewed entries matching their `config.yaml` route may install. New discovered skills remain withheld until explicitly classified and approved.
-- Skill sources are read from `config.yaml` and linked with per-skill symlinks, preserving nested category paths.
+- Configured skill sources and `harness/<harness>/skills/` are linked with per-skill symlinks. Source categories may be nested, but every installed standard skill is flattened to `<skill-name>/SKILL.md`.
+- Only directories containing `SKILL.md` under `harness/<harness>/skills/` are treated as skills; arbitrary content there is ignored.
 - Non-skill top-level harness entries from `harness/<name>/` install as 1:1 symlinks into harness home.
 - Existing non-matching target paths are warnings, not overwrite candidates.
 - Stale managed symlinks should be removed.

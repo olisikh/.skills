@@ -3,7 +3,6 @@ skill_mirrors:
   # Claude discovers only direct children of ~/.claude/skills.
   claude:
     from: agents
-    flatten: true
 
 sources:
   obsidian-skills:
@@ -36,14 +35,11 @@ sources:
   awesome-llm-skills:
     type: submodule
     exclude:
-      - document-skills/
       - skill-creator
     overrides:
       algorithmic-art: claude
     sources:
       - root: .
-        harness: agents
-      - root: document-skills
         harness: agents
 
   caveman:
@@ -63,7 +59,7 @@ sources:
     type: submodule
     install:
       - uv tool install --editable .
-      - graphify --help
+      - graphify --version
     artifacts:
       - from: graphify/skill.md
         harness: claude
@@ -101,25 +97,3 @@ sources:
       - from: graphify/skills/claw/references
         harness: hermes
         to: skills/graphify/references
-
-  local-skills/agents:
-    type: local
-    root: .
-    harness: agents
-
-  local-skills/claude:
-    type: local
-    root: .
-    harness: claude
-
-  local-skills/codex:
-    type: local
-    root: .
-    harness: codex
-
-  local-skills/hermes:
-    type: local
-    root: .
-    harness: hermes
-    exclude:
-      - model-routing

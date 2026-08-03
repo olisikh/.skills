@@ -128,7 +128,9 @@ def commit_audit_state(root: Path, state_changed: bool) -> None:
         return
     run("git", "add", "state/skill-installation.json", cwd=root)
     run("git", "commit", "-m", "chore: audit skill installations", cwd=root)
-    branch = run("git", "branch", "--show-current", cwd=root, capture=True).stdout.strip()
+    branch = run(
+        "git", "branch", "--show-current", cwd=root, capture=True
+    ).stdout.strip()
     run("git", "push", "origin", branch, cwd=root)
     print(f"[audit] Committed and pushed state on {branch}")
 
@@ -144,7 +146,9 @@ def cmd_update_repo(args: argparse.Namespace) -> int:
     print(root)
 
     print("== pull ==")
-    run("git", "pull", "--rebase", "--autostash", "origin", "main", cwd=root, check=True)
+    run(
+        "git", "pull", "--rebase", "--autostash", "origin", "main", cwd=root, check=True
+    )
 
     print("== update shared skill submodules and refresh harness links ==")
     update_submodules(root, requested=[], commit=True, push=True)
@@ -277,7 +281,9 @@ def main() -> int:
         help="list discovered skills withheld pending routing approval",
         description="List discovered skills that are withheld pending routing approval.",
     )
-    candidates_parser.add_argument("--json", action="store_true", help="emit JSON output")
+    candidates_parser.add_argument(
+        "--json", action="store_true", help="emit JSON output"
+    )
     candidates_parser.set_defaults(func=cmd_routing_candidates)
 
     seed_parser = subparsers.add_parser(

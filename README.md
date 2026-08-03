@@ -7,18 +7,14 @@ Personal harness hub for LLM skills and harness-specific home files.
 ```text
 llm-harness/
 ├── AGENTS.md                  # repo contributor rules
-├── harness/                   # harness-specific home files
+├── harness/                   # harness-specific home files and first-party skills
 │   ├── agents/                # mirrors ~/.agents/
+│   │   └── skills/             # first-party portable skills
 │   ├── claude/                # mirrors ~/.claude/
 │   │   └── CLAUDE.md
 │   ├── opencode/              # mirrors ~/.config/opencode/
 │   ├── hermes/                # mirrors ~/.hermes/
 │   └── codex/                 # mirrors ~/.codex/
-├── local-skills/              # local first-party skill sources
-│   ├── agents/                # portable skills → ~/.agents/skills/
-│   ├── claude/                # Claude-only skills → ~/.claude/skills/
-│   ├── codex/                 # Codex-only skills → ~/.codex/skills/
-│   └── hermes/                # Hermes-only skills → ~/.hermes/skills/
 ├── docs/
 │   └── llm-harness-ops.md     # canonical operational guide
 ├── harness-paths.yaml         # non-obvious harness root overrides
@@ -47,7 +43,9 @@ Installer behavior:
   - `claude` -> `~/.claude`
   - `codex` -> `~/.codex`
 - reads `harness-paths.yaml` for non-obvious roots like OpenCode and custom Hermes skill installs
-- reads `config.yaml` to symlink all configured skill sources (submodules and `local-skills/<harness>/`) directly under target `skills/`, preserving nested category paths
+- reads configured skill sources from `config.yaml` and discovers first-party standard skills under `harness/<name>/skills/`
+- symlinks every directory containing `SKILL.md` into target `skills/`, flattening nested source categories to the final skill directory name
+- ignores arbitrary files and directories under `harness/<name>/skills/` that do not contain `SKILL.md`
 - symlinks non-skill top-level files and directories from `harness/<name>/` 1:1 into target harness home
 - removes stale managed symlinks
 - warns and skips when target path already exists and is not matching expected symlink
@@ -86,14 +84,14 @@ Optional commit/push flow:
 
 Sync rules:
 
-- `config.yaml` defines all skill sources under `sources:` with `type: submodule` or `type: local`
+- `config.yaml` defines shared/external skill sources under `sources:`; first-party standard skills live under `harness/<name>/skills/`
 - `harness.py update-skills` updates pinned submodule commits only for sources with `type: submodule`, then refreshes managed skill symlinks in target harness homes and removes stale managed links
 - `harness.py audit-skills` repairs safe wrong managed symlinks, verifies every effective configured skill resolves to its canonical source, and records the complete/blocked inventory in `state/skill-installation.json`
-- `state/skill-routing-index.json` is the approval gate for discovered source skills: after the initial baseline, a new `SKILL.md` is withheld from every runtime harness until the routing cron has read it and approved the config-selected harness
+- `state/skill-routing-index.json` gates newly discovered third-party submodule skills; harness-local skills are trusted immediately and do not require approval
 - `config.yaml` remains the routing source of truth: source defaults route general skills, existing `overrides:` handle relative-path exceptions, and source-specific `routes:` entries record new Claude/Hermes/etc. exceptions
 - `harness.py update-repo` runs the audit after its pull/update cycle and commits/pushes state changes, so newly discovered skills and corrected installs become durable repository state
-- install-time mapping of skills to target harness homes is controlled by `config.yaml`
-- later sources in `config.yaml` win on target-path collision
+- install-time mapping of configured skills to target harness homes is controlled by `config.yaml`; harness-local skills target their containing harness
+- harness-local skills are the first-party overlay and win flattened-name collisions with configured sources
 
 ## User-owned skill data
 
@@ -121,9 +119,9 @@ declared paths, binaries, credentials, and per-project setup documents are ready
 ## Notes
 
 - canonical checkout path is `~/.llm-harness`
-- all skill sources are configured in `config.yaml` and symlinked directly to target harness homes
+- configured skill sources and `harness/<name>/skills/` first-party skills are symlinked directly to target harness homes
 - shared skill submodules install from `~/.llm-harness/<submodule>`
-- local first-party skill sources live under `~/.llm-harness/local-skills/<harness>/`
+- first-party skills live under `~/.llm-harness/harness/<harness>/skills/`
 - harness-specific non-skill files live under `~/.llm-harness/harness/<name>/`
 - Hermes package-bundled skills stay in the Hermes install/source tree, not in `llm-harness`
 - OpenCode will discover both `~/.agents/skills` and `~/.config/opencode/skills`

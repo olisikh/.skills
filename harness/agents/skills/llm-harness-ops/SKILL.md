@@ -22,9 +22,9 @@ Always prefer the canonical operational guide:
 
 - `llm-harness` symlinks skills directly from configured sources into `~/.<harness>/skills/`.
 - Skill sources are declared in `config.yaml` under `sources:`.
-- A source has `type: submodule` (git submodule, updated by `./harness.py update-skills`) or `type: local` (directory in `~/.llm-harness`, ignored by `./harness.py update-skills`). After updating submodules, that command refreshes managed harness links and removes stale managed symlinks.
+- Shared sources have `type: submodule` (git submodule, updated by `./harness.py update-skills`). First-party standard skills live directly under `harness/<harness>/skills/` and do not need a config entry. After updating submodules, that command refreshes managed harness links and removes stale managed symlinks.
 - Default harness mappings live in `harness-paths.yaml` or built-in defaults.
-- Nested category paths inside a source are preserved when symlinking.
+- Source skill paths may be nested, but `./harness.py install` flattens every standard target to `<skill-name>/SKILL.md`.
 - Later sources in `config.yaml` win on target-path collision.
 
 ## Repository maintenance
@@ -40,12 +40,12 @@ cd ~/.llm-harness
 
 ## Workflows
 
-### Add a local skill
+### Add a first-party skill
 
-1. Ask the user: target harness, category (optional), skill name.
-2. Create `local-skills/<harness>/<category>/<skill-name>/SKILL.md`.
+1. Ask the user: target harness and skill name.
+2. Create `harness/<harness>/skills/<skill-name>/SKILL.md`.
 3. Run `./harness.py install`.
-4. Verify with `ls -la ~/.<harness>/skills/<category>/<skill-name>`.
+4. Verify with `ls -la ~/.<harness>/skills/<skill-name>`.
 
 ### Register a shared skill submodule
 
@@ -58,7 +58,7 @@ cd ~/.llm-harness
 
 ### Move a skill
 
-1. If local: move the directory from `local-skills/<old-harness>/` to `local-skills/<new-harness>/`.
+1. If first-party: move the directory from `harness/<old-harness>/skills/` to `harness/<new-harness>/skills/`.
 2. Run `./harness.py install`.
 
 ### Deprecate skills or a category
@@ -115,12 +115,12 @@ description: <one-line description>
     root: skills
     harness: <default-harness>
     overrides:
-      <category>/<skill-name>: <other-harness>
+      <skill-name>: <other-harness>
 ```
 
 ## What not to do
 
-- Do not put skills under `harness/<name>/skills/`.
+- Only directories containing `SKILL.md` under `harness/<name>/skills/` are installed; arbitrary content there is ignored.
 - Do not track symlinks inside `harness/`.
 - Do not edit files inside submodules directly unless you intend to fork them.
 - Do not run `./harness.py install` without first checking for existing real files at target paths.

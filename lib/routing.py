@@ -26,7 +26,9 @@ def _index_path(config: Config) -> Path:
 def _write_index(config: Config, skills: dict[str, dict[str, str]]) -> None:
     path = _index_path(config)
     path.parent.mkdir(parents=True, exist_ok=True)
-    rendered = json.dumps({"version": 1, "skills": skills}, indent=2, sort_keys=True) + "\n"
+    rendered = (
+        json.dumps({"version": 1, "skills": skills}, indent=2, sort_keys=True) + "\n"
+    )
     path.write_text(rendered)
 
 
@@ -34,6 +36,7 @@ def _raw_skills(config: Config) -> dict[str, RoutingCandidate]:
     return {
         source: RoutingCandidate(source=source, harness=harness, path=path)
         for source, harness, path, _ in config.list_discovered_skills()
+        if config.requires_routing_approval(source)
     }
 
 
@@ -65,6 +68,8 @@ def seed_routing_index(config: Config) -> int:
 
 def approve_skill(config: Config, source: str, harness: str, reason: str = "") -> None:
     """Approve a discovered skill only for the harness currently selected by config."""
+    if config.source_type(source) == "local":
+        raise SystemExit(f"Local skill does not require approval: {source}")
     candidate = _raw_skills(config).get(source)
     if candidate is None:
         raise SystemExit(f"Unknown discovered skill: {source}")
@@ -87,7 +92,11 @@ def print_candidates(candidates: list[RoutingCandidate], as_json: bool = False) 
         print(
             json.dumps(
                 [
-                    {"source": candidate.source, "harness": candidate.harness, "path": candidate.path}
+                    {
+                        "source": candidate.source,
+                        "harness": candidate.harness,
+                        "path": candidate.path,
+                    }
                     for candidate in candidates
                 ],
                 indent=2,
@@ -98,5 +107,5 @@ def print_candidates(candidates: list[RoutingCandidate], as_json: bool = False) 
     print(f"[routing] unapproved={len(candidates)}")
     for candidate in candidates:
         print(
-            f"[routing] {candidate.source} -> {candidate.harness}/skills/{candidate.path}"
+            f"[routing] {candidate.source} -> {candidate.harness} (source path {candidate.path})"
         )

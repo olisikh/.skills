@@ -27,7 +27,7 @@
 
 **Files:**
 
-- Create: `~/.llm-harness/local-skills/hermes/model-routing/SKILL.md`
+- Create: `~/.llm-harness/harness/hermes/skills/model-routing/SKILL.md`
 
 **Required content:**
 

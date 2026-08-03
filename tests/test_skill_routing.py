@@ -17,7 +17,7 @@ class SkillRoutingTests(unittest.TestCase):
     def setUp(self):
         self.tempdir = tempfile.TemporaryDirectory()
         self.root = Path(self.tempdir.name)
-        self.source = self.root / "local-skills" / "agents" / "category" / "example"
+        self.source = self.root / "shared-skills" / "category" / "example"
         self.source.mkdir(parents=True)
         (self.source / "SKILL.md").write_text("---\nname: example\n---\n")
         for harness in ("agents", "claude", "hermes"):
@@ -30,16 +30,16 @@ class SkillRoutingTests(unittest.TestCase):
         )
         self.write_config("")
         self.config = Config(self.root)
-        self.source_id = "local-skills/agents/category/example"
+        self.source_id = "shared-skills/category/example"
 
     def tearDown(self):
         self.tempdir.cleanup()
 
-    def write_config(self, extra: str):
+    def write_config(self, extra: str, source_type: str = "local"):
         (self.root / "config.yaml").write_text(
-            """sources:
-  local-skills/agents:
-    type: local
+            f"""sources:
+  shared-skills:
+    type: {source_type}
     root: .
     harness: agents
 """
@@ -47,6 +47,7 @@ class SkillRoutingTests(unittest.TestCase):
         )
 
     def test_unapproved_skill_is_withheld_until_its_configured_route_is_approved(self):
+        self.write_config("", source_type="submodule")
         (self.root / "state").mkdir()
         (self.root / "state" / "skill-routing-index.json").write_text(
             '{"version": 1, "skills": {}}\n'
@@ -69,7 +70,7 @@ class SkillRoutingTests(unittest.TestCase):
                 (harness, relative_path)
                 for harness, relative_path, _ in self.config.list_configured_skills()
             ],
-            [("agents", "category/example")],
+            [("agents", "example")],
         )
         index = json.loads(
             (self.root / "state" / "skill-routing-index.json").read_text()
@@ -86,8 +87,9 @@ class SkillRoutingTests(unittest.TestCase):
     def test_source_specific_config_route_is_the_route_that_must_be_approved(self):
         self.write_config(
             """routes:
-  local-skills/agents/category/example: claude
-"""
+  shared-skills/category/example: claude
+""",
+            source_type="submodule",
         )
         (self.root / "state").mkdir()
         (self.root / "state" / "skill-routing-index.json").write_text(
@@ -105,10 +107,11 @@ class SkillRoutingTests(unittest.TestCase):
                 (harness, relative_path)
                 for harness, relative_path, _ in self.config.list_configured_skills()
             ],
-            [("claude", "category/example")],
+            [("claude", "example")],
         )
 
     def test_seed_indexes_existing_effective_routes(self):
+        self.write_config("", source_type="submodule")
         seeded = seed_routing_index(self.config)
 
         self.assertEqual(seeded, 1)
@@ -118,8 +121,43 @@ class SkillRoutingTests(unittest.TestCase):
                 (harness, relative_path)
                 for harness, relative_path, _ in self.config.list_configured_skills()
             ],
-            [("agents", "category/example")],
+            [("agents", "example")],
         )
+
+    def test_local_skill_is_not_approval_gated(self):
+        (self.root / "state").mkdir()
+        (self.root / "state" / "skill-routing-index.json").write_text(
+            '{"version": 1, "skills": {}}\n'
+        )
+
+        local_source = (
+            self.root / "harness" / "agents" / "skills" / "category" / "local-example"
+        )
+        local_source.mkdir(parents=True)
+        (local_source / "SKILL.md").write_text("---\nname: local-example\n---\n")
+        non_skill = self.root / "harness" / "agents" / "skills" / "not-a-skill"
+        non_skill.mkdir(parents=True)
+        (non_skill / "README.md").write_text("not a skill")
+        (self.root / "config.yaml").write_text("sources: {}\n")
+
+        self.assertEqual(discover_unapproved_skills(self.config), [])
+        self.assertEqual(
+            [
+                (harness, relative_path)
+                for harness, relative_path, _ in self.config.list_configured_skills()
+            ],
+            [("agents", "local-example")],
+        )
+        sync_harness(self.config, "agents")
+        target = self.root / "home" / ".agents" / "skills" / "local-example"
+        self.assertEqual(target.resolve(), local_source.resolve())
+        self.assertFalse((target.parent / "category").exists())
+        self.assertFalse((target.parent / "not-a-skill").exists())
+
+        with self.assertRaisesRegex(SystemExit, "does not require approval"):
+            approve_skill(
+                self.config, "harness/agents/skills/category/local-example", "agents"
+            )
 
     def test_artifacts_install_explicit_files_and_directories(self):
         source_root = self.root / "graphify" / "graphify"
@@ -150,14 +188,14 @@ class SkillRoutingTests(unittest.TestCase):
                 ),
             ],
         )
-        seed_routing_index(self.config)
+        self.assertEqual(seed_routing_index(self.config), 0)
         self.assertEqual(
             [
                 (harness, path)
                 for harness, path, _ in self.config.list_configured_skills()
             ],
             [
-                ("agents", "category/example"),
+                ("agents", "example"),
                 ("agents", "graphify/SKILL.md"),
                 ("agents", "graphify/references"),
             ],
@@ -179,25 +217,33 @@ class SkillRoutingTests(unittest.TestCase):
             [(source_root.resolve(), ["tool", "setup", "--editable", "."])],
         )
 
-    def test_claude_mirror_flattens_approved_agent_skills(self):
+    def test_nested_skills_are_flattened_for_every_target(self):
+        sync_harness(self.config, "agents")
+        target = self.root / "home" / ".agents" / "skills" / "example"
+        self.assertEqual(target.resolve(), self.source.resolve())
+        self.assertFalse((target.parent / "category").exists())
+
+    def test_harness_local_skill_wins_a_flattened_name_collision(self):
+        local_source = self.root / "harness" / "agents" / "skills" / "local" / "example"
+        local_source.mkdir(parents=True)
+        (local_source / "SKILL.md").write_text("---\nname: example\n---\nlocal\n")
+
+        sync_harness(self.config, "agents")
+
+        target = self.root / "home" / ".agents" / "skills" / "example"
+        self.assertEqual(target.resolve(), local_source.resolve())
+
+    def test_claude_mirror_uses_the_flattened_agent_skill_path(self):
         self.write_config(
             """skill_mirrors:
   claude:
     from: agents
-    flatten: true
 """
         )
-        (self.root / "state").mkdir()
-        (self.root / "state" / "skill-routing-index.json").write_text(
-            '{"version": 1, "skills": {}}\n'
-        )
-
-        self.assertEqual(list(self.config.list_skill_targets()), [])
-        approve_skill(self.config, self.source_id, "agents")
 
         self.assertEqual(
             [(harness, path) for harness, path, _ in self.config.list_skill_targets()],
-            [("agents", "category/example"), ("claude", "example")],
+            [("agents", "example"), ("claude", "example")],
         )
 
         sync_harness(self.config, "claude")

@@ -1,6 +1,6 @@
 # Hermes Routing Procedure Reference
 
-The declarative policy lives in `~/.hermes/model-routing.yaml`. This file describes the execution contract used with that policy and the deterministic controller in `~/.llm-harness/local-skills/hermes/model-routing/`. It does not duplicate role models or provider fallback order.
+The declarative policy lives in `~/.hermes/model-routing.yaml`. This file describes the execution contract used with that policy and the deterministic controller in `~/.llm-harness/harness/hermes/skills/model-routing/`. It does not duplicate role models or provider fallback order.
 
 ## Compact handoff contract
 
@@ -72,7 +72,7 @@ This command is read-only. It never writes `config.yaml`. If it reports an error
 
    ```bash
    ~/.hermes/hermes-agent/venv/bin/python \
-     ~/.llm-harness/local-skills/hermes/model-routing/scripts/validate-controller-manifest.py \
+      ~/.llm-harness/harness/hermes/skills/model-routing/scripts/validate-controller-manifest.py \
      --kind task --input manifest.json
    ```
 
@@ -83,7 +83,7 @@ This command is read-only. It never writes `config.yaml`. If it reports an error
 ## Behavioral verification checklist
 
 - `validate-model-routing.py` reports `routing_policy=valid`.
-- The installed `model-routing` skill resolves to the canonical `~/.llm-harness/local-skills/hermes/model-routing` source and is visible in `~/.hermes/skills/model-routing`.
+- The installed `model-routing` skill resolves to the canonical `~/.llm-harness/harness/hermes/skills/model-routing` source and is visible in `~/.hermes/skills/model-routing`.
 - A direct synthetic request does not delegate.
 - A two-part bounded request produces two cheap read-only children with parent validation.
 - Writer candidates are created in isolated Git worktrees; overlapping scopes are rejected before launch.

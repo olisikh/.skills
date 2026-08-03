@@ -9,8 +9,9 @@ from pathlib import Path
 
 SCRIPT_PATH = (
     Path(__file__).resolve().parents[1]
-    / "local-skills"
+    / "harness"
     / "agents"
+    / "skills"
     / "apple-notes-to-obsidian"
     / "scripts"
     / "export_apple_notes.py"

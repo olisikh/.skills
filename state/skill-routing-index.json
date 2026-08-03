@@ -30,19 +30,23 @@
     },
     "awesome-llm-skills/document-skills/docx": {
       "harness": "agents",
-      "path": "docx"
+      "path": "document-skills/docx",
+      "reason": "Approved document skill"
     },
     "awesome-llm-skills/document-skills/pdf": {
       "harness": "agents",
-      "path": "pdf"
+      "path": "document-skills/pdf",
+      "reason": "Approved document skill"
     },
     "awesome-llm-skills/document-skills/pptx": {
       "harness": "agents",
-      "path": "pptx"
+      "path": "document-skills/pptx",
+      "reason": "Approved document skill"
     },
     "awesome-llm-skills/document-skills/xlsx": {
       "harness": "agents",
-      "path": "xlsx"
+      "path": "document-skills/xlsx",
+      "reason": "Approved document skill"
     },
     "awesome-llm-skills/domain-name-brainstormer": {
       "harness": "agents",
@@ -217,102 +221,6 @@
     "llm-wiki/plugins/llm-wiki/skills/wiki-query": {
       "harness": "codex",
       "path": "wiki-query"
-    },
-    "local-skills/agents/apple-notes-to-obsidian": {
-      "harness": "agents",
-      "path": "apple-notes-to-obsidian"
-    },
-    "local-skills/agents/devops/dotfiles-ops": {
-      "harness": "agents",
-      "path": "devops/dotfiles-ops"
-    },
-    "local-skills/agents/devops/sops-secret-safety": {
-      "harness": "agents",
-      "path": "devops/sops-secret-safety",
-      "reason": "Portable operational guardrail for SOPS secret mutations and recovery."
-    },
-    "local-skills/agents/explain": {
-      "harness": "agents",
-      "path": "explain"
-    },
-    "local-skills/agents/fix-issue": {
-      "harness": "agents",
-      "path": "fix-issue"
-    },
-    "local-skills/agents/git-commit": {
-      "harness": "agents",
-      "path": "git-commit"
-    },
-    "local-skills/agents/llm-harness-ops": {
-      "harness": "agents",
-      "path": "llm-harness-ops"
-    },
-    "local-skills/agents/mlops/limits": {
-      "harness": "agents",
-      "path": "mlops/limits"
-    },
-    "local-skills/agents/nix-for-dev": {
-      "harness": "agents",
-      "path": "nix-for-dev"
-    },
-    "local-skills/agents/nix-justfile": {
-      "harness": "agents",
-      "path": "nix-justfile"
-    },
-    "local-skills/agents/nix-manager": {
-      "harness": "agents",
-      "path": "nix-manager"
-    },
-    "local-skills/agents/nix-shell": {
-      "harness": "agents",
-      "path": "nix-shell"
-    },
-    "local-skills/agents/personal/obsidian-vault": {
-      "harness": "agents",
-      "path": "personal/obsidian-vault",
-      "reason": "portable replacement reads the shared user-selected vault path"
-    },
-    "local-skills/agents/productivity/handoff": {
-      "harness": "agents",
-      "path": "productivity/handoff",
-      "reason": "portable overlay persists redacted handoffs in the configured ~/.agents artifact directory"
-    },
-    "local-skills/agents/research/wiki": {
-      "harness": "agents",
-      "path": "research/wiki"
-    },
-    "local-skills/agents/summarize-changes": {
-      "harness": "agents",
-      "path": "summarize-changes"
-    },
-    "local-skills/agents/test-gen": {
-      "harness": "agents",
-      "path": "test-gen"
-    },
-    "local-skills/agents/transcribe": {
-      "harness": "agents",
-      "path": "transcribe"
-    },
-    "local-skills/claude/compress": {
-      "harness": "claude",
-      "path": "compress"
-    },
-    "local-skills/hermes/autonomous-ai-agents/autonomous-change-execution": {
-      "harness": "hermes",
-      "path": "autonomous-ai-agents/autonomous-change-execution",
-      "reason": "Hermes-only autonomous multi-repository execution workflow."
-    },
-    "local-skills/hermes/autonomous-ai-agents/harness-managed-skills": {
-      "harness": "hermes",
-      "path": "autonomous-ai-agents/harness-managed-skills"
-    },
-    "local-skills/hermes/autonomous-ai-agents/llm-harness-ops": {
-      "harness": "hermes",
-      "path": "autonomous-ai-agents/llm-harness-ops"
-    },
-    "local-skills/hermes/model-routing": {
-      "harness": "hermes",
-      "path": "model-routing"
     },
     "mattpocock-skills/skills/engineering/ask-matt": {
       "harness": "agents",
