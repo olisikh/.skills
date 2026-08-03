@@ -7,11 +7,13 @@ skill_mirrors:
 sources:
   obsidian-skills:
     type: submodule
+    path: submodules/obsidian-skills
     root: skills
     harness: agents
 
   mattpocock-skills:
     type: submodule
+    path: submodules/mattpocock-skills
     root: skills
     harness: agents
     exclude:
@@ -24,6 +26,7 @@ sources:
 
   llm-wiki:
     type: submodule
+    path: submodules/llm-wiki
     sources:
       - root: claude-plugin/skills
         harness: claude
@@ -34,6 +37,7 @@ sources:
 
   awesome-llm-skills:
     type: submodule
+    path: submodules/awesome-llm-skills
     exclude:
       - skill-creator
     overrides:
@@ -44,6 +48,7 @@ sources:
 
   caveman:
     type: submodule
+    path: submodules/caveman
     root: skills
     harness: agents
     exclude:
@@ -52,11 +57,13 @@ sources:
 
   self-improving-agent:
     type: submodule
+    path: submodules/self-improving-agent
     root: .
     harness: openclaw
 
   graphify:
     type: submodule
+    path: submodules/graphify
     install:
       - uv tool install --editable .
       - graphify --version

@@ -184,7 +184,7 @@ Examples:
     ./harness.py update-skills
 
   Update only selected submodules and commit/push the pointer changes:
-    ./harness.py update-skills --commit --push obsidian-skills mattpocock-skills
+    ./harness.py update-skills --commit --push submodules/obsidian-skills submodules/mattpocock-skills
 
   Audit skill installations, repairing safe mismatches:
     ./harness.py audit-skills

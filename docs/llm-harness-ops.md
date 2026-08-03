@@ -50,10 +50,12 @@ llm-harness/
 ├── docs/
 │   └── llm-harness-ops.md     # this file
 ├── harness.py                 # create/update/remove target symlinks and update submodules
-├── obsidian-skills          # shared submodule
-├── mattpocock-skills        # shared submodule
-├── llm-wiki                 # shared submodule
-└── awesome-llm-skills       # shared submodule
+├── submodules/              # shared submodules
+│   ├── obsidian-skills
+│   ├── mattpocock-skills
+│   ├── llm-wiki
+│   └── awesome-llm-skills
+└── tests/
 ```
 
 Only directories containing `SKILL.md` under `harness/<name>/skills/` are treated as
@@ -75,8 +77,8 @@ First-party standard skills are a separate harness-local source tree:
 
 ### Type
 
-- `type: submodule` — `./harness.py update-skills` will fetch and update the pinned commit, then refresh managed skill symlinks. `./harness.py install` can also refresh skills from `repo/<source-name>/<root>`.
-- `type: local` — `./harness.py update-skills` ignores it. `./harness.py install` symlinks skills from `repo/<source-name>/<root>`.
+- `type: submodule` — `./harness.py update-skills` will fetch and update the pinned commit, then refresh managed skill symlinks. `./harness.py install` can also refresh skills from `repo/submodules/<source-name>/<root>`.
+- `type: local` — `./harness.py update-skills` ignores it. `./harness.py install` symlinks skills from its configured `path` (or `repo/<source-name>/<root>` when `path` is omitted).
 
 ### Root
 
@@ -148,11 +150,13 @@ Declares every skill source. Order matters: later sources win if two sources pro
 sources:
   obsidian-skills:
     type: submodule
+    path: submodules/obsidian-skills
     root: skills
     harness: agents
 
   mattpocock-skills:
     type: submodule
+    path: submodules/mattpocock-skills
     root: skills
     harness: agents
     overrides:
@@ -160,6 +164,7 @@ sources:
 
   llm-wiki:
     type: submodule
+    path: submodules/llm-wiki
     sources:
       - root: claude-plugin/skills
         harness: claude
@@ -183,6 +188,7 @@ Every source entry under `sources:` shares a common shape. Fields at the top lev
   - `submodule`: tracked as a git submodule; updated by `./harness.py update-skills`.
   - `local`: a plain directory inside the repo; ignored by `update-skills`.
 - `root`: the subdirectory inside the source directory where skill directories live. The installer walks this root, creates a symlink for every directory that contains a `SKILL.md`, and flattens that skill target to the directory's basename.
+- `path`: optional repo-relative physical source location. All shared submodules use `submodules/<name>` while retaining their logical source key for routes and the routing index.
 - `harness`: the default target harness for every skill found under `root`.
 - `sources`: optional list of child sources. Use this when one submodule needs different roots or default harnesses. Top-level `root`/`harness` are ignored when `sources:` is present.
 - `exclude`: list of relative paths under `root` (or under each child source) to skip. End a folder name with `/` to exclude the whole subtree. Use without `/` to exclude a single skill.
@@ -198,6 +204,7 @@ running upstream installer scripts while keeping every filename explicit.
 ```yaml
   graphify:
     type: submodule
+    path: submodules/graphify
     artifacts:
       - from: graphify/skill-opencode.md
         harness: opencode
@@ -225,6 +232,7 @@ For example, `awesome-llm-skills` keeps document skills under
 ```yaml
   awesome-llm-skills:
     type: submodule
+    path: submodules/awesome-llm-skills
     exclude:
       - document-skills/
     overrides:
@@ -298,16 +306,16 @@ ls -la ~/.claude/skills/my-claude-skill
 
 Use this when skills live in an external repository you want to track.
 
-1. Add the repository as a git submodule at `~/.llm-harness`.
-2. Add a `sources:` entry in `config.yaml` with `type: submodule`.
+1. Add the repository as a git submodule at `~/.llm-harness/submodules/<name>`.
+2. Add a `sources:` entry in `config.yaml` with `type: submodule` and `path: submodules/<name>`.
 3. Set `root` and default `harness`.
 4. Add overrides for any skills that belong to a different harness.
-5. Run `./harness.py update-skills <source-name>` to initialize and pin the submodule, refresh target symlinks, and remove stale managed links.
+5. Run `./harness.py update-skills submodules/<source-name>` to initialize and pin the submodule, refresh target symlinks, and remove stale managed links.
 
 Example: add a new submodule `acme-skills`.
 
 ```bash
-git submodule add https://github.com/example/acme-skills.git acme-skills
+git submodule add https://github.com/example/acme-skills.git submodules/acme-skills
 ```
 
 Edit `config.yaml`:
@@ -315,6 +323,7 @@ Edit `config.yaml`:
 ```yaml
   acme-skills:
     type: submodule
+    path: submodules/acme-skills
     root: skills
     harness: agents
     overrides:
@@ -324,7 +333,7 @@ Edit `config.yaml`:
 Run:
 
 ```bash
-./harness.py update-skills acme-skills
+./harness.py update-skills submodules/acme-skills
 ```
 
 If the submodule groups some skills under an extra directory level (for
@@ -441,7 +450,7 @@ Updates pinned commits for every source with `type: submodule` in `config.yaml`.
 
 ```bash
 ./harness.py update-skills              # update all configured submodules
-./harness.py update-skills obsidian-skills
+./harness.py update-skills submodules/obsidian-skills
 ./harness.py update-skills --commit --push
 ```
 

@@ -217,6 +217,35 @@ class SkillRoutingTests(unittest.TestCase):
             [(source_root.resolve(), ["tool", "setup", "--editable", "."])],
         )
 
+    def test_source_path_preserves_logical_routing_ids(self):
+        moved_source = (
+            self.root
+            / "submodules"
+            / "shared-skills"
+            / "skills"
+            / "category"
+            / "example"
+        )
+        moved_source.parent.mkdir(parents=True)
+        self.source.rename(moved_source)
+        (self.root / "config.yaml").write_text(
+            """sources:
+  shared-skills:
+    type: submodule
+    path: submodules/shared-skills
+    root: skills
+    harness: agents
+"""
+        )
+
+        self.assertEqual(
+            [item[:3] for item in self.config.list_discovered_skills()],
+            [("shared-skills/skills/category/example", "agents", "category/example")],
+        )
+        self.assertEqual(
+            self.config.configured_submodule_names(), ["submodules/shared-skills"]
+        )
+
     def test_nested_skills_are_flattened_for_every_target(self):
         sync_harness(self.config, "agents")
         target = self.root / "home" / ".agents" / "skills" / "example"

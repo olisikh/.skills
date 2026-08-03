@@ -9,115 +9,121 @@
     "agents:artifacts-builder": {
       "harness": "agents",
       "path": "artifacts-builder",
-      "source": "awesome-llm-skills/artifacts-builder",
+      "source": "submodules/awesome-llm-skills/artifacts-builder",
       "status": "complete"
     },
     "agents:ask-matt": {
       "harness": "agents",
       "path": "ask-matt",
-      "source": "mattpocock-skills/skills/engineering/ask-matt",
+      "source": "submodules/mattpocock-skills/skills/engineering/ask-matt",
       "status": "complete"
     },
     "agents:batch-grill-me": {
       "harness": "agents",
       "path": "batch-grill-me",
-      "source": "mattpocock-skills/skills/in-progress/batch-grill-me",
+      "source": "submodules/mattpocock-skills/skills/in-progress/batch-grill-me",
       "status": "complete"
     },
     "agents:brand-guidelines": {
       "harness": "agents",
       "path": "brand-guidelines",
-      "source": "awesome-llm-skills/brand-guidelines",
+      "source": "submodules/awesome-llm-skills/brand-guidelines",
       "status": "complete"
     },
     "agents:canvas-design": {
       "harness": "agents",
       "path": "canvas-design",
-      "source": "awesome-llm-skills/canvas-design",
+      "source": "submodules/awesome-llm-skills/canvas-design",
       "status": "complete"
     },
     "agents:cavecrew": {
       "harness": "agents",
       "path": "cavecrew",
-      "source": "caveman/skills/cavecrew",
+      "source": "submodules/caveman/skills/cavecrew",
       "status": "complete"
     },
     "agents:caveman": {
       "harness": "agents",
       "path": "caveman",
-      "source": "caveman/skills/caveman",
+      "source": "submodules/caveman/skills/caveman",
       "status": "complete"
     },
     "agents:caveman-commit": {
       "harness": "agents",
       "path": "caveman-commit",
-      "source": "caveman/skills/caveman-commit",
+      "source": "submodules/caveman/skills/caveman-commit",
       "status": "complete"
     },
     "agents:caveman-help": {
       "harness": "agents",
       "path": "caveman-help",
-      "source": "caveman/skills/caveman-help",
+      "source": "submodules/caveman/skills/caveman-help",
       "status": "complete"
     },
     "agents:caveman-review": {
       "harness": "agents",
       "path": "caveman-review",
-      "source": "caveman/skills/caveman-review",
+      "source": "submodules/caveman/skills/caveman-review",
       "status": "complete"
     },
     "agents:changelog-generator": {
       "harness": "agents",
       "path": "changelog-generator",
-      "source": "awesome-llm-skills/changelog-generator",
+      "source": "submodules/awesome-llm-skills/changelog-generator",
       "status": "complete"
     },
     "agents:code-review": {
       "harness": "agents",
       "path": "code-review",
-      "source": "mattpocock-skills/skills/engineering/code-review",
+      "source": "submodules/mattpocock-skills/skills/engineering/code-review",
       "status": "complete"
     },
     "agents:codebase-design": {
       "harness": "agents",
       "path": "codebase-design",
-      "source": "mattpocock-skills/skills/engineering/codebase-design",
+      "source": "submodules/mattpocock-skills/skills/engineering/codebase-design",
       "status": "complete"
     },
     "agents:competitive-ads-extractor": {
       "harness": "agents",
       "path": "competitive-ads-extractor",
-      "source": "awesome-llm-skills/competitive-ads-extractor",
+      "source": "submodules/awesome-llm-skills/competitive-ads-extractor",
       "status": "complete"
     },
     "agents:content-research-writer": {
       "harness": "agents",
       "path": "content-research-writer",
-      "source": "awesome-llm-skills/content-research-writer",
+      "source": "submodules/awesome-llm-skills/content-research-writer",
       "status": "complete"
     },
     "agents:defuddle": {
       "harness": "agents",
       "path": "defuddle",
-      "source": "obsidian-skills/skills/defuddle",
+      "source": "submodules/obsidian-skills/skills/defuddle",
       "status": "complete"
     },
     "agents:diagnosing-bugs": {
       "harness": "agents",
       "path": "diagnosing-bugs",
-      "source": "mattpocock-skills/skills/engineering/diagnosing-bugs",
+      "source": "submodules/mattpocock-skills/skills/engineering/diagnosing-bugs",
+      "status": "complete"
+    },
+    "agents:docx": {
+      "harness": "agents",
+      "path": "docx",
+      "source": "submodules/awesome-llm-skills/document-skills/docx",
       "status": "complete"
     },
     "agents:domain-modeling": {
       "harness": "agents",
       "path": "domain-modeling",
-      "source": "mattpocock-skills/skills/engineering/domain-modeling",
+      "source": "submodules/mattpocock-skills/skills/engineering/domain-modeling",
       "status": "complete"
     },
     "agents:domain-name-brainstormer": {
       "harness": "agents",
       "path": "domain-name-brainstormer",
-      "source": "awesome-llm-skills/domain-name-brainstormer",
+      "source": "submodules/awesome-llm-skills/domain-name-brainstormer",
       "status": "complete"
     },
     "agents:dotfiles-ops": {
@@ -129,7 +135,7 @@
     "agents:edit-article": {
       "harness": "agents",
       "path": "edit-article",
-      "source": "mattpocock-skills/skills/personal/edit-article",
+      "source": "submodules/mattpocock-skills/skills/personal/edit-article",
       "status": "complete"
     },
     "agents:explain": {
@@ -141,7 +147,7 @@
     "agents:file-organizer": {
       "harness": "agents",
       "path": "file-organizer",
-      "source": "awesome-llm-skills/file-organizer",
+      "source": "submodules/awesome-llm-skills/file-organizer",
       "status": "complete"
     },
     "agents:fix-issue": {
@@ -159,31 +165,31 @@
     "agents:graphify/SKILL.md": {
       "harness": "agents",
       "path": "graphify/SKILL.md",
-      "source": "graphify/graphify/skill-agents.md",
+      "source": "submodules/graphify/graphify/skill-agents.md",
       "status": "complete"
     },
     "agents:graphify/references": {
       "harness": "agents",
       "path": "graphify/references",
-      "source": "graphify/graphify/skills/agents/references",
+      "source": "submodules/graphify/graphify/skills/agents/references",
       "status": "complete"
     },
     "agents:grill-me": {
       "harness": "agents",
       "path": "grill-me",
-      "source": "mattpocock-skills/skills/productivity/grill-me",
+      "source": "submodules/mattpocock-skills/skills/productivity/grill-me",
       "status": "complete"
     },
     "agents:grill-with-docs": {
       "harness": "agents",
       "path": "grill-with-docs",
-      "source": "mattpocock-skills/skills/engineering/grill-with-docs",
+      "source": "submodules/mattpocock-skills/skills/engineering/grill-with-docs",
       "status": "complete"
     },
     "agents:grilling": {
       "harness": "agents",
       "path": "grilling",
-      "source": "mattpocock-skills/skills/productivity/grilling",
+      "source": "submodules/mattpocock-skills/skills/productivity/grilling",
       "status": "complete"
     },
     "agents:handoff": {
@@ -195,43 +201,43 @@
     "agents:image-enhancer": {
       "harness": "agents",
       "path": "image-enhancer",
-      "source": "awesome-llm-skills/image-enhancer",
+      "source": "submodules/awesome-llm-skills/image-enhancer",
       "status": "complete"
     },
     "agents:implement": {
       "harness": "agents",
       "path": "implement",
-      "source": "mattpocock-skills/skills/engineering/implement",
+      "source": "submodules/mattpocock-skills/skills/engineering/implement",
       "status": "complete"
     },
     "agents:improve-codebase-architecture": {
       "harness": "agents",
       "path": "improve-codebase-architecture",
-      "source": "mattpocock-skills/skills/engineering/improve-codebase-architecture",
+      "source": "submodules/mattpocock-skills/skills/engineering/improve-codebase-architecture",
       "status": "complete"
     },
     "agents:internal-comms": {
       "harness": "agents",
       "path": "internal-comms",
-      "source": "awesome-llm-skills/internal-comms",
+      "source": "submodules/awesome-llm-skills/internal-comms",
       "status": "complete"
     },
     "agents:invoice-organizer": {
       "harness": "agents",
       "path": "invoice-organizer",
-      "source": "awesome-llm-skills/invoice-organizer",
+      "source": "submodules/awesome-llm-skills/invoice-organizer",
       "status": "complete"
     },
     "agents:json-canvas": {
       "harness": "agents",
       "path": "json-canvas",
-      "source": "obsidian-skills/skills/json-canvas",
+      "source": "submodules/obsidian-skills/skills/json-canvas",
       "status": "complete"
     },
     "agents:lead-research-assistant": {
       "harness": "agents",
       "path": "lead-research-assistant",
-      "source": "awesome-llm-skills/lead-research-assistant",
+      "source": "submodules/awesome-llm-skills/lead-research-assistant",
       "status": "complete"
     },
     "agents:limits": {
@@ -249,25 +255,25 @@
     "agents:loop-me": {
       "harness": "agents",
       "path": "loop-me",
-      "source": "mattpocock-skills/skills/in-progress/loop-me",
+      "source": "submodules/mattpocock-skills/skills/in-progress/loop-me",
       "status": "complete"
     },
     "agents:mcp-builder": {
       "harness": "agents",
       "path": "mcp-builder",
-      "source": "awesome-llm-skills/mcp-builder",
+      "source": "submodules/awesome-llm-skills/mcp-builder",
       "status": "complete"
     },
     "agents:meeting-insights-analyzer": {
       "harness": "agents",
       "path": "meeting-insights-analyzer",
-      "source": "awesome-llm-skills/meeting-insights-analyzer",
+      "source": "submodules/awesome-llm-skills/meeting-insights-analyzer",
       "status": "complete"
     },
     "agents:migrate-to-shoehorn": {
       "harness": "agents",
       "path": "migrate-to-shoehorn",
-      "source": "mattpocock-skills/skills/misc/migrate-to-shoehorn",
+      "source": "submodules/mattpocock-skills/skills/misc/migrate-to-shoehorn",
       "status": "complete"
     },
     "agents:nix-for-dev": {
@@ -297,43 +303,43 @@
     "agents:notion-knowledge-capture": {
       "harness": "agents",
       "path": "notion-knowledge-capture",
-      "source": "awesome-llm-skills/notion-knowledge-capture",
+      "source": "submodules/awesome-llm-skills/notion-knowledge-capture",
       "status": "complete"
     },
     "agents:notion-meeting-intelligence": {
       "harness": "agents",
       "path": "notion-meeting-intelligence",
-      "source": "awesome-llm-skills/notion-meeting-intelligence",
+      "source": "submodules/awesome-llm-skills/notion-meeting-intelligence",
       "status": "complete"
     },
     "agents:notion-research-documentation": {
       "harness": "agents",
       "path": "notion-research-documentation",
-      "source": "awesome-llm-skills/notion-research-documentation",
+      "source": "submodules/awesome-llm-skills/notion-research-documentation",
       "status": "complete"
     },
     "agents:notion-spec-to-implementation": {
       "harness": "agents",
       "path": "notion-spec-to-implementation",
-      "source": "awesome-llm-skills/notion-spec-to-implementation",
+      "source": "submodules/awesome-llm-skills/notion-spec-to-implementation",
       "status": "complete"
     },
     "agents:obsidian-bases": {
       "harness": "agents",
       "path": "obsidian-bases",
-      "source": "obsidian-skills/skills/obsidian-bases",
+      "source": "submodules/obsidian-skills/skills/obsidian-bases",
       "status": "complete"
     },
     "agents:obsidian-cli": {
       "harness": "agents",
       "path": "obsidian-cli",
-      "source": "obsidian-skills/skills/obsidian-cli",
+      "source": "submodules/obsidian-skills/skills/obsidian-cli",
       "status": "complete"
     },
     "agents:obsidian-markdown": {
       "harness": "agents",
       "path": "obsidian-markdown",
-      "source": "obsidian-skills/skills/obsidian-markdown",
+      "source": "submodules/obsidian-skills/skills/obsidian-markdown",
       "status": "complete"
     },
     "agents:obsidian-vault": {
@@ -342,64 +348,76 @@
       "source": "harness/agents/skills/personal/obsidian-vault",
       "status": "complete"
     },
+    "agents:pdf": {
+      "harness": "agents",
+      "path": "pdf",
+      "source": "submodules/awesome-llm-skills/document-skills/pdf",
+      "status": "complete"
+    },
+    "agents:pptx": {
+      "harness": "agents",
+      "path": "pptx",
+      "source": "submodules/awesome-llm-skills/document-skills/pptx",
+      "status": "complete"
+    },
     "agents:prototype": {
       "harness": "agents",
       "path": "prototype",
-      "source": "mattpocock-skills/skills/engineering/prototype",
+      "source": "submodules/mattpocock-skills/skills/engineering/prototype",
       "status": "complete"
     },
     "agents:raffle-winner-picker": {
       "harness": "agents",
       "path": "raffle-winner-picker",
-      "source": "awesome-llm-skills/raffle-winner-picker",
+      "source": "submodules/awesome-llm-skills/raffle-winner-picker",
       "status": "complete"
     },
     "agents:research": {
       "harness": "agents",
       "path": "research",
-      "source": "mattpocock-skills/skills/engineering/research",
+      "source": "submodules/mattpocock-skills/skills/engineering/research",
       "status": "complete"
     },
     "agents:resemble-detect": {
       "harness": "agents",
       "path": "resemble-detect",
-      "source": "awesome-llm-skills/resemble-detect",
+      "source": "submodules/awesome-llm-skills/resemble-detect",
       "status": "complete"
     },
     "agents:resolving-merge-conflicts": {
       "harness": "agents",
       "path": "resolving-merge-conflicts",
-      "source": "mattpocock-skills/skills/engineering/resolving-merge-conflicts",
+      "source": "submodules/mattpocock-skills/skills/engineering/resolving-merge-conflicts",
       "status": "complete"
     },
     "agents:scaffold-exercises": {
       "harness": "agents",
       "path": "scaffold-exercises",
-      "source": "mattpocock-skills/skills/misc/scaffold-exercises",
+      "source": "submodules/mattpocock-skills/skills/misc/scaffold-exercises",
       "status": "complete"
     },
     "agents:setup-matt-pocock-skills": {
       "harness": "agents",
       "path": "setup-matt-pocock-skills",
-      "source": "mattpocock-skills/skills/engineering/setup-matt-pocock-skills",
+      "source": "submodules/mattpocock-skills/skills/engineering/setup-matt-pocock-skills",
       "status": "complete"
     },
     "agents:setup-pre-commit": {
       "harness": "agents",
       "path": "setup-pre-commit",
-      "source": "mattpocock-skills/skills/misc/setup-pre-commit",
+      "source": "submodules/mattpocock-skills/skills/misc/setup-pre-commit",
       "status": "complete"
     },
     "agents:setup-ts-deep-modules": {
       "harness": "agents",
       "path": "setup-ts-deep-modules",
-      "source": "mattpocock-skills/skills/in-progress/setup-ts-deep-modules",
+      "source": "submodules/mattpocock-skills/skills/in-progress/setup-ts-deep-modules",
       "status": "complete"
     },
     "agents:slack-gif-creator": {
       "harness": "agents",
       "path": "slack-gif-creator",
-      "source": "awesome-llm-skills/slack-gif-creator",
+      "source": "submodules/awesome-llm-skills/slack-gif-creator",
       "status": "complete"
     },
     "agents:sops-secret-safety": {
@@ -417,19 +435,19 @@
     "agents:tdd": {
       "harness": "agents",
       "path": "tdd",
-      "source": "mattpocock-skills/skills/engineering/tdd",
+      "source": "submodules/mattpocock-skills/skills/engineering/tdd",
       "status": "complete"
     },
     "agents:teach": {
       "harness": "agents",
       "path": "teach",
-      "source": "mattpocock-skills/skills/productivity/teach",
+      "source": "submodules/mattpocock-skills/skills/productivity/teach",
       "status": "complete"
     },
     "agents:template-skill": {
       "harness": "agents",
       "path": "template-skill",
-      "source": "awesome-llm-skills/template-skill",
+      "source": "submodules/awesome-llm-skills/template-skill",
       "status": "complete"
     },
     "agents:test-gen": {
@@ -441,25 +459,25 @@
     "agents:theme-factory": {
       "harness": "agents",
       "path": "theme-factory",
-      "source": "awesome-llm-skills/theme-factory",
+      "source": "submodules/awesome-llm-skills/theme-factory",
       "status": "complete"
     },
     "agents:to-questionnaire": {
       "harness": "agents",
       "path": "to-questionnaire",
-      "source": "mattpocock-skills/skills/in-progress/to-questionnaire",
+      "source": "submodules/mattpocock-skills/skills/in-progress/to-questionnaire",
       "status": "complete"
     },
     "agents:to-spec": {
       "harness": "agents",
       "path": "to-spec",
-      "source": "mattpocock-skills/skills/engineering/to-spec",
+      "source": "submodules/mattpocock-skills/skills/engineering/to-spec",
       "status": "complete"
     },
     "agents:to-tickets": {
       "harness": "agents",
       "path": "to-tickets",
-      "source": "mattpocock-skills/skills/engineering/to-tickets",
+      "source": "submodules/mattpocock-skills/skills/engineering/to-tickets",
       "status": "complete"
     },
     "agents:transcribe": {
@@ -471,25 +489,25 @@
     "agents:triage": {
       "harness": "agents",
       "path": "triage",
-      "source": "mattpocock-skills/skills/engineering/triage",
+      "source": "submodules/mattpocock-skills/skills/engineering/triage",
       "status": "complete"
     },
     "agents:video-downloader": {
       "harness": "agents",
       "path": "video-downloader",
-      "source": "awesome-llm-skills/video-downloader",
+      "source": "submodules/awesome-llm-skills/video-downloader",
       "status": "complete"
     },
     "agents:wayfinder": {
       "harness": "agents",
       "path": "wayfinder",
-      "source": "mattpocock-skills/skills/engineering/wayfinder",
+      "source": "submodules/mattpocock-skills/skills/engineering/wayfinder",
       "status": "complete"
     },
     "agents:webapp-testing": {
       "harness": "agents",
       "path": "webapp-testing",
-      "source": "awesome-llm-skills/webapp-testing",
+      "source": "submodules/awesome-llm-skills/webapp-testing",
       "status": "complete"
     },
     "agents:wiki": {
@@ -501,37 +519,43 @@
     "agents:wizard": {
       "harness": "agents",
       "path": "wizard",
-      "source": "mattpocock-skills/skills/in-progress/wizard",
+      "source": "submodules/mattpocock-skills/skills/in-progress/wizard",
       "status": "complete"
     },
     "agents:writing-beats": {
       "harness": "agents",
       "path": "writing-beats",
-      "source": "mattpocock-skills/skills/in-progress/writing-beats",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-beats",
       "status": "complete"
     },
     "agents:writing-fragments": {
       "harness": "agents",
       "path": "writing-fragments",
-      "source": "mattpocock-skills/skills/in-progress/writing-fragments",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-fragments",
       "status": "complete"
     },
     "agents:writing-great-skills": {
       "harness": "agents",
       "path": "writing-great-skills",
-      "source": "mattpocock-skills/skills/productivity/writing-great-skills",
+      "source": "submodules/mattpocock-skills/skills/productivity/writing-great-skills",
       "status": "complete"
     },
     "agents:writing-shape": {
       "harness": "agents",
       "path": "writing-shape",
-      "source": "mattpocock-skills/skills/in-progress/writing-shape",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-shape",
+      "status": "complete"
+    },
+    "agents:xlsx": {
+      "harness": "agents",
+      "path": "xlsx",
+      "source": "submodules/awesome-llm-skills/document-skills/xlsx",
       "status": "complete"
     },
     "claude:algorithmic-art": {
       "harness": "claude",
       "path": "algorithmic-art",
-      "source": "awesome-llm-skills/algorithmic-art",
+      "source": "submodules/awesome-llm-skills/algorithmic-art",
       "status": "complete"
     },
     "claude:apple-notes-to-obsidian": {
@@ -543,91 +567,91 @@
     "claude:artifacts-builder": {
       "harness": "claude",
       "path": "artifacts-builder",
-      "source": "awesome-llm-skills/artifacts-builder",
+      "source": "submodules/awesome-llm-skills/artifacts-builder",
       "status": "complete"
     },
     "claude:ask-matt": {
       "harness": "claude",
       "path": "ask-matt",
-      "source": "mattpocock-skills/skills/engineering/ask-matt",
+      "source": "submodules/mattpocock-skills/skills/engineering/ask-matt",
       "status": "complete"
     },
     "claude:batch-grill-me": {
       "harness": "claude",
       "path": "batch-grill-me",
-      "source": "mattpocock-skills/skills/in-progress/batch-grill-me",
+      "source": "submodules/mattpocock-skills/skills/in-progress/batch-grill-me",
       "status": "complete"
     },
     "claude:brand-guidelines": {
       "harness": "claude",
       "path": "brand-guidelines",
-      "source": "awesome-llm-skills/brand-guidelines",
+      "source": "submodules/awesome-llm-skills/brand-guidelines",
       "status": "complete"
     },
     "claude:canvas-design": {
       "harness": "claude",
       "path": "canvas-design",
-      "source": "awesome-llm-skills/canvas-design",
+      "source": "submodules/awesome-llm-skills/canvas-design",
       "status": "complete"
     },
     "claude:cavecrew": {
       "harness": "claude",
       "path": "cavecrew",
-      "source": "caveman/skills/cavecrew",
+      "source": "submodules/caveman/skills/cavecrew",
       "status": "complete"
     },
     "claude:caveman": {
       "harness": "claude",
       "path": "caveman",
-      "source": "caveman/skills/caveman",
+      "source": "submodules/caveman/skills/caveman",
       "status": "complete"
     },
     "claude:caveman-commit": {
       "harness": "claude",
       "path": "caveman-commit",
-      "source": "caveman/skills/caveman-commit",
+      "source": "submodules/caveman/skills/caveman-commit",
       "status": "complete"
     },
     "claude:caveman-help": {
       "harness": "claude",
       "path": "caveman-help",
-      "source": "caveman/skills/caveman-help",
+      "source": "submodules/caveman/skills/caveman-help",
       "status": "complete"
     },
     "claude:caveman-review": {
       "harness": "claude",
       "path": "caveman-review",
-      "source": "caveman/skills/caveman-review",
+      "source": "submodules/caveman/skills/caveman-review",
       "status": "complete"
     },
     "claude:changelog-generator": {
       "harness": "claude",
       "path": "changelog-generator",
-      "source": "awesome-llm-skills/changelog-generator",
+      "source": "submodules/awesome-llm-skills/changelog-generator",
       "status": "complete"
     },
     "claude:claude-handoff": {
       "harness": "claude",
       "path": "claude-handoff",
-      "source": "mattpocock-skills/skills/in-progress/claude-handoff",
+      "source": "submodules/mattpocock-skills/skills/in-progress/claude-handoff",
       "status": "complete"
     },
     "claude:code-review": {
       "harness": "claude",
       "path": "code-review",
-      "source": "mattpocock-skills/skills/engineering/code-review",
+      "source": "submodules/mattpocock-skills/skills/engineering/code-review",
       "status": "complete"
     },
     "claude:codebase-design": {
       "harness": "claude",
       "path": "codebase-design",
-      "source": "mattpocock-skills/skills/engineering/codebase-design",
+      "source": "submodules/mattpocock-skills/skills/engineering/codebase-design",
       "status": "complete"
     },
     "claude:competitive-ads-extractor": {
       "harness": "claude",
       "path": "competitive-ads-extractor",
-      "source": "awesome-llm-skills/competitive-ads-extractor",
+      "source": "submodules/awesome-llm-skills/competitive-ads-extractor",
       "status": "complete"
     },
     "claude:compress": {
@@ -639,31 +663,37 @@
     "claude:content-research-writer": {
       "harness": "claude",
       "path": "content-research-writer",
-      "source": "awesome-llm-skills/content-research-writer",
+      "source": "submodules/awesome-llm-skills/content-research-writer",
       "status": "complete"
     },
     "claude:defuddle": {
       "harness": "claude",
       "path": "defuddle",
-      "source": "obsidian-skills/skills/defuddle",
+      "source": "submodules/obsidian-skills/skills/defuddle",
       "status": "complete"
     },
     "claude:diagnosing-bugs": {
       "harness": "claude",
       "path": "diagnosing-bugs",
-      "source": "mattpocock-skills/skills/engineering/diagnosing-bugs",
+      "source": "submodules/mattpocock-skills/skills/engineering/diagnosing-bugs",
+      "status": "complete"
+    },
+    "claude:docx": {
+      "harness": "claude",
+      "path": "docx",
+      "source": "submodules/awesome-llm-skills/document-skills/docx",
       "status": "complete"
     },
     "claude:domain-modeling": {
       "harness": "claude",
       "path": "domain-modeling",
-      "source": "mattpocock-skills/skills/engineering/domain-modeling",
+      "source": "submodules/mattpocock-skills/skills/engineering/domain-modeling",
       "status": "complete"
     },
     "claude:domain-name-brainstormer": {
       "harness": "claude",
       "path": "domain-name-brainstormer",
-      "source": "awesome-llm-skills/domain-name-brainstormer",
+      "source": "submodules/awesome-llm-skills/domain-name-brainstormer",
       "status": "complete"
     },
     "claude:dotfiles-ops": {
@@ -675,7 +705,7 @@
     "claude:edit-article": {
       "harness": "claude",
       "path": "edit-article",
-      "source": "mattpocock-skills/skills/personal/edit-article",
+      "source": "submodules/mattpocock-skills/skills/personal/edit-article",
       "status": "complete"
     },
     "claude:explain": {
@@ -687,7 +717,7 @@
     "claude:file-organizer": {
       "harness": "claude",
       "path": "file-organizer",
-      "source": "awesome-llm-skills/file-organizer",
+      "source": "submodules/awesome-llm-skills/file-organizer",
       "status": "complete"
     },
     "claude:fix-issue": {
@@ -705,37 +735,37 @@
     "claude:git-guardrails-claude-code": {
       "harness": "claude",
       "path": "git-guardrails-claude-code",
-      "source": "mattpocock-skills/skills/misc/git-guardrails-claude-code",
+      "source": "submodules/mattpocock-skills/skills/misc/git-guardrails-claude-code",
       "status": "complete"
     },
     "claude:graphify/SKILL.md": {
       "harness": "claude",
       "path": "graphify/SKILL.md",
-      "source": "graphify/graphify/skill.md",
+      "source": "submodules/graphify/graphify/skill.md",
       "status": "complete"
     },
     "claude:graphify/references": {
       "harness": "claude",
       "path": "graphify/references",
-      "source": "graphify/graphify/skills/claude/references",
+      "source": "submodules/graphify/graphify/skills/claude/references",
       "status": "complete"
     },
     "claude:grill-me": {
       "harness": "claude",
       "path": "grill-me",
-      "source": "mattpocock-skills/skills/productivity/grill-me",
+      "source": "submodules/mattpocock-skills/skills/productivity/grill-me",
       "status": "complete"
     },
     "claude:grill-with-docs": {
       "harness": "claude",
       "path": "grill-with-docs",
-      "source": "mattpocock-skills/skills/engineering/grill-with-docs",
+      "source": "submodules/mattpocock-skills/skills/engineering/grill-with-docs",
       "status": "complete"
     },
     "claude:grilling": {
       "harness": "claude",
       "path": "grilling",
-      "source": "mattpocock-skills/skills/productivity/grilling",
+      "source": "submodules/mattpocock-skills/skills/productivity/grilling",
       "status": "complete"
     },
     "claude:handoff": {
@@ -747,43 +777,43 @@
     "claude:image-enhancer": {
       "harness": "claude",
       "path": "image-enhancer",
-      "source": "awesome-llm-skills/image-enhancer",
+      "source": "submodules/awesome-llm-skills/image-enhancer",
       "status": "complete"
     },
     "claude:implement": {
       "harness": "claude",
       "path": "implement",
-      "source": "mattpocock-skills/skills/engineering/implement",
+      "source": "submodules/mattpocock-skills/skills/engineering/implement",
       "status": "complete"
     },
     "claude:improve-codebase-architecture": {
       "harness": "claude",
       "path": "improve-codebase-architecture",
-      "source": "mattpocock-skills/skills/engineering/improve-codebase-architecture",
+      "source": "submodules/mattpocock-skills/skills/engineering/improve-codebase-architecture",
       "status": "complete"
     },
     "claude:internal-comms": {
       "harness": "claude",
       "path": "internal-comms",
-      "source": "awesome-llm-skills/internal-comms",
+      "source": "submodules/awesome-llm-skills/internal-comms",
       "status": "complete"
     },
     "claude:invoice-organizer": {
       "harness": "claude",
       "path": "invoice-organizer",
-      "source": "awesome-llm-skills/invoice-organizer",
+      "source": "submodules/awesome-llm-skills/invoice-organizer",
       "status": "complete"
     },
     "claude:json-canvas": {
       "harness": "claude",
       "path": "json-canvas",
-      "source": "obsidian-skills/skills/json-canvas",
+      "source": "submodules/obsidian-skills/skills/json-canvas",
       "status": "complete"
     },
     "claude:lead-research-assistant": {
       "harness": "claude",
       "path": "lead-research-assistant",
-      "source": "awesome-llm-skills/lead-research-assistant",
+      "source": "submodules/awesome-llm-skills/lead-research-assistant",
       "status": "complete"
     },
     "claude:limits": {
@@ -801,25 +831,25 @@
     "claude:loop-me": {
       "harness": "claude",
       "path": "loop-me",
-      "source": "mattpocock-skills/skills/in-progress/loop-me",
+      "source": "submodules/mattpocock-skills/skills/in-progress/loop-me",
       "status": "complete"
     },
     "claude:mcp-builder": {
       "harness": "claude",
       "path": "mcp-builder",
-      "source": "awesome-llm-skills/mcp-builder",
+      "source": "submodules/awesome-llm-skills/mcp-builder",
       "status": "complete"
     },
     "claude:meeting-insights-analyzer": {
       "harness": "claude",
       "path": "meeting-insights-analyzer",
-      "source": "awesome-llm-skills/meeting-insights-analyzer",
+      "source": "submodules/awesome-llm-skills/meeting-insights-analyzer",
       "status": "complete"
     },
     "claude:migrate-to-shoehorn": {
       "harness": "claude",
       "path": "migrate-to-shoehorn",
-      "source": "mattpocock-skills/skills/misc/migrate-to-shoehorn",
+      "source": "submodules/mattpocock-skills/skills/misc/migrate-to-shoehorn",
       "status": "complete"
     },
     "claude:nix-for-dev": {
@@ -849,43 +879,43 @@
     "claude:notion-knowledge-capture": {
       "harness": "claude",
       "path": "notion-knowledge-capture",
-      "source": "awesome-llm-skills/notion-knowledge-capture",
+      "source": "submodules/awesome-llm-skills/notion-knowledge-capture",
       "status": "complete"
     },
     "claude:notion-meeting-intelligence": {
       "harness": "claude",
       "path": "notion-meeting-intelligence",
-      "source": "awesome-llm-skills/notion-meeting-intelligence",
+      "source": "submodules/awesome-llm-skills/notion-meeting-intelligence",
       "status": "complete"
     },
     "claude:notion-research-documentation": {
       "harness": "claude",
       "path": "notion-research-documentation",
-      "source": "awesome-llm-skills/notion-research-documentation",
+      "source": "submodules/awesome-llm-skills/notion-research-documentation",
       "status": "complete"
     },
     "claude:notion-spec-to-implementation": {
       "harness": "claude",
       "path": "notion-spec-to-implementation",
-      "source": "awesome-llm-skills/notion-spec-to-implementation",
+      "source": "submodules/awesome-llm-skills/notion-spec-to-implementation",
       "status": "complete"
     },
     "claude:obsidian-bases": {
       "harness": "claude",
       "path": "obsidian-bases",
-      "source": "obsidian-skills/skills/obsidian-bases",
+      "source": "submodules/obsidian-skills/skills/obsidian-bases",
       "status": "complete"
     },
     "claude:obsidian-cli": {
       "harness": "claude",
       "path": "obsidian-cli",
-      "source": "obsidian-skills/skills/obsidian-cli",
+      "source": "submodules/obsidian-skills/skills/obsidian-cli",
       "status": "complete"
     },
     "claude:obsidian-markdown": {
       "harness": "claude",
       "path": "obsidian-markdown",
-      "source": "obsidian-skills/skills/obsidian-markdown",
+      "source": "submodules/obsidian-skills/skills/obsidian-markdown",
       "status": "complete"
     },
     "claude:obsidian-vault": {
@@ -894,64 +924,76 @@
       "source": "harness/agents/skills/personal/obsidian-vault",
       "status": "complete"
     },
+    "claude:pdf": {
+      "harness": "claude",
+      "path": "pdf",
+      "source": "submodules/awesome-llm-skills/document-skills/pdf",
+      "status": "complete"
+    },
+    "claude:pptx": {
+      "harness": "claude",
+      "path": "pptx",
+      "source": "submodules/awesome-llm-skills/document-skills/pptx",
+      "status": "complete"
+    },
     "claude:prototype": {
       "harness": "claude",
       "path": "prototype",
-      "source": "mattpocock-skills/skills/engineering/prototype",
+      "source": "submodules/mattpocock-skills/skills/engineering/prototype",
       "status": "complete"
     },
     "claude:raffle-winner-picker": {
       "harness": "claude",
       "path": "raffle-winner-picker",
-      "source": "awesome-llm-skills/raffle-winner-picker",
+      "source": "submodules/awesome-llm-skills/raffle-winner-picker",
       "status": "complete"
     },
     "claude:research": {
       "harness": "claude",
       "path": "research",
-      "source": "mattpocock-skills/skills/engineering/research",
+      "source": "submodules/mattpocock-skills/skills/engineering/research",
       "status": "complete"
     },
     "claude:resemble-detect": {
       "harness": "claude",
       "path": "resemble-detect",
-      "source": "awesome-llm-skills/resemble-detect",
+      "source": "submodules/awesome-llm-skills/resemble-detect",
       "status": "complete"
     },
     "claude:resolving-merge-conflicts": {
       "harness": "claude",
       "path": "resolving-merge-conflicts",
-      "source": "mattpocock-skills/skills/engineering/resolving-merge-conflicts",
+      "source": "submodules/mattpocock-skills/skills/engineering/resolving-merge-conflicts",
       "status": "complete"
     },
     "claude:scaffold-exercises": {
       "harness": "claude",
       "path": "scaffold-exercises",
-      "source": "mattpocock-skills/skills/misc/scaffold-exercises",
+      "source": "submodules/mattpocock-skills/skills/misc/scaffold-exercises",
       "status": "complete"
     },
     "claude:setup-matt-pocock-skills": {
       "harness": "claude",
       "path": "setup-matt-pocock-skills",
-      "source": "mattpocock-skills/skills/engineering/setup-matt-pocock-skills",
+      "source": "submodules/mattpocock-skills/skills/engineering/setup-matt-pocock-skills",
       "status": "complete"
     },
     "claude:setup-pre-commit": {
       "harness": "claude",
       "path": "setup-pre-commit",
-      "source": "mattpocock-skills/skills/misc/setup-pre-commit",
+      "source": "submodules/mattpocock-skills/skills/misc/setup-pre-commit",
       "status": "complete"
     },
     "claude:setup-ts-deep-modules": {
       "harness": "claude",
       "path": "setup-ts-deep-modules",
-      "source": "mattpocock-skills/skills/in-progress/setup-ts-deep-modules",
+      "source": "submodules/mattpocock-skills/skills/in-progress/setup-ts-deep-modules",
       "status": "complete"
     },
     "claude:slack-gif-creator": {
       "harness": "claude",
       "path": "slack-gif-creator",
-      "source": "awesome-llm-skills/slack-gif-creator",
+      "source": "submodules/awesome-llm-skills/slack-gif-creator",
       "status": "complete"
     },
     "claude:sops-secret-safety": {
@@ -969,19 +1011,19 @@
     "claude:tdd": {
       "harness": "claude",
       "path": "tdd",
-      "source": "mattpocock-skills/skills/engineering/tdd",
+      "source": "submodules/mattpocock-skills/skills/engineering/tdd",
       "status": "complete"
     },
     "claude:teach": {
       "harness": "claude",
       "path": "teach",
-      "source": "mattpocock-skills/skills/productivity/teach",
+      "source": "submodules/mattpocock-skills/skills/productivity/teach",
       "status": "complete"
     },
     "claude:template-skill": {
       "harness": "claude",
       "path": "template-skill",
-      "source": "awesome-llm-skills/template-skill",
+      "source": "submodules/awesome-llm-skills/template-skill",
       "status": "complete"
     },
     "claude:test-gen": {
@@ -993,25 +1035,25 @@
     "claude:theme-factory": {
       "harness": "claude",
       "path": "theme-factory",
-      "source": "awesome-llm-skills/theme-factory",
+      "source": "submodules/awesome-llm-skills/theme-factory",
       "status": "complete"
     },
     "claude:to-questionnaire": {
       "harness": "claude",
       "path": "to-questionnaire",
-      "source": "mattpocock-skills/skills/in-progress/to-questionnaire",
+      "source": "submodules/mattpocock-skills/skills/in-progress/to-questionnaire",
       "status": "complete"
     },
     "claude:to-spec": {
       "harness": "claude",
       "path": "to-spec",
-      "source": "mattpocock-skills/skills/engineering/to-spec",
+      "source": "submodules/mattpocock-skills/skills/engineering/to-spec",
       "status": "complete"
     },
     "claude:to-tickets": {
       "harness": "claude",
       "path": "to-tickets",
-      "source": "mattpocock-skills/skills/engineering/to-tickets",
+      "source": "submodules/mattpocock-skills/skills/engineering/to-tickets",
       "status": "complete"
     },
     "claude:transcribe": {
@@ -1023,25 +1065,25 @@
     "claude:triage": {
       "harness": "claude",
       "path": "triage",
-      "source": "mattpocock-skills/skills/engineering/triage",
+      "source": "submodules/mattpocock-skills/skills/engineering/triage",
       "status": "complete"
     },
     "claude:video-downloader": {
       "harness": "claude",
       "path": "video-downloader",
-      "source": "awesome-llm-skills/video-downloader",
+      "source": "submodules/awesome-llm-skills/video-downloader",
       "status": "complete"
     },
     "claude:wayfinder": {
       "harness": "claude",
       "path": "wayfinder",
-      "source": "mattpocock-skills/skills/engineering/wayfinder",
+      "source": "submodules/mattpocock-skills/skills/engineering/wayfinder",
       "status": "complete"
     },
     "claude:webapp-testing": {
       "harness": "claude",
       "path": "webapp-testing",
-      "source": "awesome-llm-skills/webapp-testing",
+      "source": "submodules/awesome-llm-skills/webapp-testing",
       "status": "complete"
     },
     "claude:wiki": {
@@ -1053,61 +1095,67 @@
     "claude:wiki-manager": {
       "harness": "claude",
       "path": "wiki-manager",
-      "source": "llm-wiki/claude-plugin/skills/wiki-manager",
+      "source": "submodules/llm-wiki/claude-plugin/skills/wiki-manager",
       "status": "complete"
     },
     "claude:wizard": {
       "harness": "claude",
       "path": "wizard",
-      "source": "mattpocock-skills/skills/in-progress/wizard",
+      "source": "submodules/mattpocock-skills/skills/in-progress/wizard",
       "status": "complete"
     },
     "claude:writing-beats": {
       "harness": "claude",
       "path": "writing-beats",
-      "source": "mattpocock-skills/skills/in-progress/writing-beats",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-beats",
       "status": "complete"
     },
     "claude:writing-fragments": {
       "harness": "claude",
       "path": "writing-fragments",
-      "source": "mattpocock-skills/skills/in-progress/writing-fragments",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-fragments",
       "status": "complete"
     },
     "claude:writing-great-skills": {
       "harness": "claude",
       "path": "writing-great-skills",
-      "source": "mattpocock-skills/skills/productivity/writing-great-skills",
+      "source": "submodules/mattpocock-skills/skills/productivity/writing-great-skills",
       "status": "complete"
     },
     "claude:writing-shape": {
       "harness": "claude",
       "path": "writing-shape",
-      "source": "mattpocock-skills/skills/in-progress/writing-shape",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-shape",
+      "status": "complete"
+    },
+    "claude:xlsx": {
+      "harness": "claude",
+      "path": "xlsx",
+      "source": "submodules/awesome-llm-skills/document-skills/xlsx",
       "status": "complete"
     },
     "codex:graphify/SKILL.md": {
       "harness": "codex",
       "path": "graphify/SKILL.md",
-      "source": "graphify/graphify/skill-codex.md",
+      "source": "submodules/graphify/graphify/skill-codex.md",
       "status": "complete"
     },
     "codex:graphify/references": {
       "harness": "codex",
       "path": "graphify/references",
-      "source": "graphify/graphify/skills/codex/references",
+      "source": "submodules/graphify/graphify/skills/codex/references",
       "status": "complete"
     },
     "codex:wiki": {
       "harness": "codex",
       "path": "wiki",
-      "source": "llm-wiki/plugins/llm-wiki/skills/wiki",
+      "source": "submodules/llm-wiki/plugins/llm-wiki/skills/wiki",
       "status": "complete"
     },
     "codex:wiki-query": {
       "harness": "codex",
       "path": "wiki-query",
-      "source": "llm-wiki/plugins/llm-wiki/skills/wiki-query",
+      "source": "submodules/llm-wiki/plugins/llm-wiki/skills/wiki-query",
       "status": "complete"
     },
     "hermes:autonomous-change-execution": {
@@ -1119,13 +1167,13 @@
     "hermes:graphify/SKILL.md": {
       "harness": "hermes",
       "path": "graphify/SKILL.md",
-      "source": "graphify/graphify/skill-claw.md",
+      "source": "submodules/graphify/graphify/skill-claw.md",
       "status": "complete"
     },
     "hermes:graphify/references": {
       "harness": "hermes",
       "path": "graphify/references",
-      "source": "graphify/graphify/skills/claw/references",
+      "source": "submodules/graphify/graphify/skills/claw/references",
       "status": "complete"
     },
     "hermes:harness-managed-skills": {
@@ -1149,37 +1197,37 @@
     "openclaw:self-improving-agent": {
       "harness": "openclaw",
       "path": "self-improving-agent",
-      "source": "self-improving-agent/self-improving-agent",
+      "source": "submodules/self-improving-agent/self-improving-agent",
       "status": "blocked"
     },
     "opencode:graphify/SKILL.md": {
       "harness": "opencode",
       "path": "graphify/SKILL.md",
-      "source": "graphify/graphify/skill-pi.md",
+      "source": "submodules/graphify/graphify/skill-pi.md",
       "status": "complete"
     },
     "opencode:graphify/references": {
       "harness": "opencode",
       "path": "graphify/references",
-      "source": "graphify/graphify/skills/opencode/references",
+      "source": "submodules/graphify/graphify/skills/opencode/references",
       "status": "complete"
     },
     "opencode:wiki-manager": {
       "harness": "opencode",
       "path": "wiki-manager",
-      "source": "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-manager",
+      "source": "submodules/llm-wiki/plugins/llm-wiki-opencode/skills/wiki-manager",
       "status": "complete"
     },
     "opencode:wiki-query": {
       "harness": "opencode",
       "path": "wiki-query",
-      "source": "llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query",
+      "source": "submodules/llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query",
       "status": "complete"
     },
     "pi:graphify/references": {
       "harness": "pi",
       "path": "graphify/references",
-      "source": "graphify/graphify/skills/pi/references",
+      "source": "submodules/graphify/graphify/skills/pi/references",
       "status": "complete"
     }
   },

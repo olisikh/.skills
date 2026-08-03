@@ -69,7 +69,7 @@ Current conventions:
 ## 7. Skill Source Sync Rules
 
 - Shared/external skill sources are declared in `config.yaml` under `sources:`. First-party standard skills are discovered from `harness/<harness>/skills/` without registration.
-- Shared upstream submodules currently are:
+- Shared upstream submodules live under `submodules/` and currently are:
   - `obsidian-skills`
   - `mattpocock-skills`
   - `llm-wiki`

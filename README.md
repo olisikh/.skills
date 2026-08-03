@@ -21,9 +21,10 @@ llm-harness/
 ├── harness.py                 # unified entrypoint
 ├── llm_harness/               # Python implementation
 ├── scripts/                   # automation helpers
-├── obsidian-skills            # shared upstream skill submodule
-├── mattpocock-skills          # shared upstream skill submodule
-├── llm-wiki                   # shared upstream skill submodule
+├── submodules/                # shared upstream skill submodules
+│   ├── obsidian-skills
+│   ├── mattpocock-skills
+│   └── llm-wiki
 └── config.yaml                # skill source mapping rules
 ```
 
@@ -120,7 +121,7 @@ declared paths, binaries, credentials, and per-project setup documents are ready
 
 - canonical checkout path is `~/.llm-harness`
 - configured skill sources and `harness/<name>/skills/` first-party skills are symlinked directly to target harness homes
-- shared skill submodules install from `~/.llm-harness/<submodule>`
+- shared skill submodules live under `~/.llm-harness/submodules/<submodule>`
 - first-party skills live under `~/.llm-harness/harness/<harness>/skills/`
 - harness-specific non-skill files live under `~/.llm-harness/harness/<name>/`
 - Hermes package-bundled skills stay in the Hermes install/source tree, not in `llm-harness`

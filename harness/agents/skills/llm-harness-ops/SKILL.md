@@ -50,10 +50,10 @@ cd ~/.llm-harness
 ### Register a shared skill submodule
 
 1. Ask the user: repository URL, source name, default harness, root (usually `skills`).
-2. Run `git submodule add <url> <source-name>`.
-3. Add a `sources:` entry in `config.yaml` with `type: submodule`.
+2. Run `git submodule add <url> submodules/<source-name>`.
+3. Add a `sources:` entry in `config.yaml` with `type: submodule` and `path: submodules/<source-name>`.
 4. Add overrides for any skills that go to a different harness.
-5. Run `./harness.py update-skills <source-name>`.
+5. Run `./harness.py update-skills submodules/<source-name>`.
 6. Run `./harness.py install`.
 
 ### Move a skill

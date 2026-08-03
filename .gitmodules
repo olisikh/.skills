@@ -1,21 +1,21 @@
 [submodule "obsidian-skills"]
-	path = obsidian-skills
+	path = submodules/obsidian-skills
 	url = https://github.com/kepano/obsidian-skills
 [submodule "mattpocock-skills"]
-	path = mattpocock-skills
+	path = submodules/mattpocock-skills
 	url = https://github.com/mattpocock/skills
 [submodule "llm-wiki"]
-	path = llm-wiki
+	path = submodules/llm-wiki
 	url = https://github.com/nvk/llm-wiki
 [submodule "awesome-llm-skills"]
-	path = awesome-llm-skills
+	path = submodules/awesome-llm-skills
 	url = https://github.com/Prat011/awesome-llm-skills.git
 [submodule "caveman"]
-	path = caveman
+	path = submodules/caveman
 	url = https://github.com/juliusbrussee/caveman.git
 [submodule "self-improving-agent"]
-	path = self-improving-agent
+	path = submodules/self-improving-agent
 	url = https://github.com/pskoett/self-improving-agent.git
 [submodule "graphify"]
-	path = graphify
+	path = submodules/graphify
 	url = git@github.com:Graphify-Labs/graphify.git

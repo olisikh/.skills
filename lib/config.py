@@ -91,6 +91,10 @@ class Config:
                 child_sources = []
         return child_sources
 
+    def _source_base(self, source_name: str, entry: dict) -> Path:
+        """Return a configured source's physical repository path."""
+        return self.repo_root / entry.get("path", source_name)
+
     def source_type(self, source_id: str) -> str | None:
         """Return the configured type for a discovered source path."""
         source_parts = Path(source_id).parts
@@ -149,7 +153,7 @@ class Config:
         data = self._load_yaml(self.sources_file)
         routes = data.get("routes") or {}
         for source_name, entry in (data.get("sources") or {}).items():
-            source_base = self.repo_root / source_name
+            source_base = self._source_base(source_name, entry)
             if not source_base.exists():
                 continue
 
@@ -158,7 +162,7 @@ class Config:
                 if not source.exists():
                     continue
                 yield (
-                    source.relative_to(self.repo_root).as_posix(),
+                    (Path(source_name) / artifact["from"]).as_posix(),
                     artifact["harness"],
                     self._skill_relative_path(artifact["to"]),
                     source,
@@ -197,7 +201,7 @@ class Config:
                             dirs.clear()
                             continue
                         source_abs = Path(current_root)
-                        source_id = source_abs.relative_to(self.repo_root).as_posix()
+                        source_id = (Path(source_name) / root_rel / rel).as_posix()
                         harness = routes.get(
                             source_id, overrides.get(rel, default_harness)
                         )
@@ -222,7 +226,7 @@ class Config:
         data = self._load_yaml(self.sources_file)
         source_resolved = source.resolve()
         for source_name, entry in (data.get("sources") or {}).items():
-            source_base = self.repo_root / source_name
+            source_base = self._source_base(source_name, entry)
             for artifact in entry.get("artifacts") or []:
                 if (source_base / artifact["from"]).resolve() == source_resolved:
                     return False
@@ -269,14 +273,16 @@ class Config:
         data = self._load_yaml(self.sources_file)
         sources = data.get("sources") or {}
         return sorted(
-            name for name, entry in sources.items() if entry.get("type") == "submodule"
+            entry.get("path", name)
+            for name, entry in sources.items()
+            if entry.get("type") == "submodule"
         )
 
     def source_install_commands(self) -> Iterator[tuple[Path, list[str]]]:
         """Yield declared source setup commands, executed in source directories."""
         data = self._load_yaml(self.sources_file)
         for source_name, entry in (data.get("sources") or {}).items():
-            source = self.repo_root / source_name
+            source = self._source_base(source_name, entry)
             if not source.exists():
                 continue
             for command in entry.get("install") or []:
