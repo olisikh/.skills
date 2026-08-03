@@ -68,21 +68,21 @@ Current conventions:
 
 ## 7. Skill Source Sync Rules
 
-- Shared/external skill sources are declared in `config.yaml` under `sources:`. First-party standard skills are discovered from `harness/<harness>/skills/` without registration.
+- Shared/external content is declared in `config.yaml` under `submodules:`. First-party standard skills are discovered from `harness/<harness>/skills/` without registration.
 - Shared upstream submodules live under `submodules/` and currently are:
   - `obsidian-skills`
   - `mattpocock-skills`
   - `llm-wiki`
-- `./harness.py update-skills` is source of truth for shared skill submodule pointer updates; it only touches sources with `type: submodule`.
-- All configured skill sources install directly to target harness homes according to `config.yaml`.
-- Harness-specific exceptions use explicit overrides in `config.yaml`.
-- Later sources in `config.yaml` win on target-path collision.
+- `./harness.py update-skills` is source of truth for configured submodule pointer updates.
+- Exports targeting `skills` discover and flatten skill directories; other targets create exact file or directory links.
+- Harness-specific selections use export-local `include` and `exclude` patterns.
+- Duplicate target paths are configuration errors.
 
 ## 8. Installer Rules
 
 - `harness.py install` auto-discovers harness directories.
 - `harness.py audit-skills` is the stateful verification step: it safely repairs repo-managed wrong links, records complete/blocked configured skills in `state/skill-installation.json`, and leaves non-repo paths untouched.
-- `state/skill-routing-index.json` gates installation: once seeded, only reviewed entries matching their `config.yaml` route may install. New discovered skills remain withheld until explicitly classified and approved.
+- New upstream skills matching a configured export install automatically after the pinned submodule is updated.
 - Configured skill sources and `harness/<harness>/skills/` are linked with per-skill symlinks. Source categories may be nested, but every installed standard skill is flattened to `<skill-name>/SKILL.md`.
 - Only directories containing `SKILL.md` under `harness/<harness>/skills/` are treated as skills; arbitrary content there is ignored.
 - Non-skill top-level harness entries from `harness/<name>/` install as 1:1 symlinks into harness home.

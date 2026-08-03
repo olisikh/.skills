@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Install and uninstall synchronization logic."""
 
+import json
 import os
 import sys
 from pathlib import Path
 from typing import Callable
 
 from lib.config import Config
+
+
+MANIFEST_NAME = ".llm-harness-managed-targets.json"
 
 
 def log(msg: str) -> None:
@@ -57,21 +61,46 @@ def sync_target(
     return True
 
 
-def remove_stale_symlink(target_abs: Path, source_root_abs: Path) -> bool:
-    if not target_abs.is_symlink():
+def _target_stays_in_root(target: Path, target_root: Path) -> bool:
+    try:
+        target.parent.resolve().relative_to(target_root.resolve())
+    except ValueError:
         return False
+    return True
 
-    source_root_resolved = resolve_path(source_root_abs)
-    resolved = resolve_path(target_abs)
 
-    if resolved == source_root_resolved or str(resolved).startswith(
-        str(source_root_resolved) + os.sep
+def _manifest_path(target_root: Path) -> Path:
+    return target_root / MANIFEST_NAME
+
+
+def _read_managed_targets(target_root: Path) -> set[str] | None:
+    manifest = _manifest_path(target_root)
+    if not manifest.exists():
+        return None
+    try:
+        data = json.loads(manifest.read_text())
+    except (json.JSONDecodeError, OSError) as error:
+        raise SystemExit(f"Invalid managed-target manifest {manifest}: {error}")
+    if data.get("version") != 1 or not isinstance(data.get("targets"), list):
+        raise SystemExit(f"Invalid managed-target manifest: {manifest}")
+    targets = data["targets"]
+    if not all(
+        isinstance(target, str)
+        and target
+        and not Path(target).is_absolute()
+        and ".." not in Path(target).parts
+        for target in targets
     ):
-        target_abs.unlink()
-        print(f"[install] Removed stale {target_abs}")
-        return True
+        raise SystemExit(f"Invalid managed target path in: {manifest}")
+    return set(targets)
 
-    return False
+
+def _write_managed_targets(target_root: Path, targets: set[str]) -> None:
+    manifest = _manifest_path(target_root)
+    rendered = json.dumps({"version": 1, "targets": sorted(targets)}, indent=2) + "\n"
+    temporary = manifest.with_suffix(".tmp")
+    temporary.write_text(rendered)
+    temporary.replace(manifest)
 
 
 def prune_empty_parent_dirs(path: Path, stop_dir: Path) -> None:
@@ -85,13 +114,19 @@ def prune_empty_parent_dirs(path: Path, stop_dir: Path) -> None:
         current = current.parent
 
 
-def list_managed_symlinks(target_skills_dir: Path, repo_root: Path) -> list[Path]:
+def _prune_skill_parents(path: Path, target_root: Path) -> None:
+    relative = path.relative_to(target_root)
+    if relative.parts and relative.parts[0] == "skills":
+        prune_empty_parent_dirs(path, target_root / "skills")
+
+
+def list_managed_symlinks(target_root: Path, repo_root: Path) -> list[Path]:
     managed: list[Path] = []
-    if not target_skills_dir.exists():
+    if not target_root.exists():
         return managed
 
     repo_root_resolved = repo_root.resolve()
-    for current_root, dirs, files in os.walk(target_skills_dir, followlinks=False):
+    for current_root, dirs, files in os.walk(target_root, followlinks=False):
         dirs.sort()
         files.sort()
         for name in dirs + files:
@@ -111,7 +146,6 @@ def list_managed_symlinks(target_skills_dir: Path, repo_root: Path) -> list[Path
 
 
 def sync_harness(config: Config, harness_name: str) -> None:
-    source_dir = config.harness_dir / harness_name
     target_root = config.resolve_harness_root(harness_name)
 
     if not target_root.exists():
@@ -120,49 +154,65 @@ def sync_harness(config: Config, harness_name: str) -> None:
 
     log(f"[{harness_name}] -> {target_root}")
 
-    target_skills_dir = target_root / "skills"
-    target_skills_dir.mkdir(parents=True, exist_ok=True)
-
     desired_sources: dict[Path, Path] = {}
 
-    for harness, rel, source in config.list_skill_targets():
+    for harness, rel, source in config.list_harness_targets():
         if harness != harness_name:
             continue
-        target = target_skills_dir / rel
-        if target in desired_sources:
-            warn(f"Source collision at {target}; later source wins")
+        target = target_root / rel
         desired_sources[target] = source
 
+    previous = _read_managed_targets(target_root)
+    if previous is None:
+        # One-time migration from the pre-manifest installer. Skills were the
+        # only recursively managed namespace in that version. Top-level links
+        # were managed only when they pointed into this harness source tree.
+        previous_paths = set(
+            list_managed_symlinks(target_root / "skills", config.repo_root)
+        )
+        harness_source = config.harness_dir / harness_name
+        for path in target_root.iterdir():
+            if not path.is_symlink():
+                continue
+            try:
+                path.resolve().relative_to(harness_source.resolve())
+            except ValueError:
+                continue
+            previous_paths.add(path)
+    else:
+        previous_paths = {target_root / relative for relative in previous}
+
     for target, source in desired_sources.items():
+        if not _target_stays_in_root(target, target_root):
+            warn(
+                f"Skipping target outside harness root through symlinked parent: {target}"
+            )
+            continue
         sync_target(source, target, log, managed_root=config.repo_root)
 
     desired_target_set = set(desired_sources)
-    for existing in list_managed_symlinks(target_skills_dir, config.repo_root):
+    for existing in previous_paths:
         if existing in desired_target_set:
             continue
-        existing.unlink()
-        log(f"Removed stale {existing}")
-        prune_empty_parent_dirs(existing, target_skills_dir)
+        if existing.is_symlink():
+            if not _target_stays_in_root(existing, target_root):
+                warn(f"Skipping stale target outside harness root: {existing}")
+                continue
+            try:
+                existing.resolve().relative_to(config.repo_root.resolve())
+            except ValueError:
+                continue
+            existing.unlink()
+            log(f"Removed stale {existing}")
+            _prune_skill_parents(existing, target_root)
 
-    if source_dir.exists():
-        for source_entry in source_dir.iterdir():
-            base_name = source_entry.name
-            if base_name in (".gitkeep", "skills"):
-                continue
-            sync_target(source_entry, target_root / base_name, log)
-
-        for existing in target_root.iterdir():
-            base_name = existing.name
-            if base_name == "skills":
-                continue
-            source_entry = source_dir / base_name
-            if source_entry.exists() or source_entry.is_symlink():
-                continue
-            remove_stale_symlink(existing, source_dir)
+    _write_managed_targets(
+        target_root,
+        {target.relative_to(target_root).as_posix() for target in desired_target_set},
+    )
 
 
 def uninstall_harness(config: Config, harness_name: str) -> None:
-    source_dir = config.harness_dir / harness_name
     target_root = config.resolve_harness_root(harness_name)
 
     if not target_root.exists():
@@ -171,32 +221,24 @@ def uninstall_harness(config: Config, harness_name: str) -> None:
 
     print(f"[uninstall] [{harness_name}]")
 
-    target_skills_dir = target_root / "skills"
-    if target_skills_dir.exists():
-        for existing in list_managed_symlinks(target_skills_dir, config.repo_root):
-            existing.unlink()
-            print(f"[uninstall] Removed {existing}")
-            prune_empty_parent_dirs(existing, target_skills_dir)
-
-    if source_dir.exists():
-        for source_entry in source_dir.iterdir():
-            base_name = source_entry.name
-            if base_name in (".gitkeep", "skills"):
-                continue
-            target = target_root / base_name
-            if not target.is_symlink():
-                if target.exists():
-                    print(
-                        f"[uninstall] WARNING: Skipping non-symlink at {target}",
-                        file=sys.stderr,
-                    )
-                continue
-            if resolve_path(target) != resolve_path(source_entry):
-                print(
-                    f"[uninstall] WARNING: Skipping symlink at {target} (points elsewhere)",
-                    file=sys.stderr,
-                )
-                continue
-            target.unlink()
-            print(f"[uninstall] Removed {target}")
-            prune_empty_parent_dirs(target, target_root)
+    previous = _read_managed_targets(target_root)
+    if previous is None:
+        managed = list_managed_symlinks(target_root / "skills", config.repo_root)
+    else:
+        managed = [target_root / relative for relative in previous]
+    for existing in managed:
+        if not existing.is_symlink():
+            continue
+        if not _target_stays_in_root(existing, target_root):
+            warn(f"Skipping uninstall target outside harness root: {existing}")
+            continue
+        try:
+            existing.resolve().relative_to(config.repo_root.resolve())
+        except ValueError:
+            continue
+        existing.unlink()
+        print(f"[uninstall] Removed {existing}")
+        _prune_skill_parents(existing, target_root)
+    manifest = _manifest_path(target_root)
+    if manifest.exists():
+        manifest.unlink()

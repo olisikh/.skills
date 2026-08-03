@@ -29,17 +29,17 @@ def _is_exact_target(source: Path, target: Path) -> bool:
 def _effective_skills(config: Config) -> dict[str, tuple[str, str, Path]]:
     """Return the final configured source for each harness-relative target."""
     desired: dict[str, tuple[str, str, Path]] = {}
-    for harness, relative_path, source in config.list_skill_targets():
-        desired[f"{harness}:{relative_path}"] = (harness, relative_path, source)
+    for harness, target, source in config.list_harness_targets():
+        desired[f"{harness}:{target}"] = (harness, target, source)
     return desired
 
 
 def _state_entry(
-    config: Config, harness: str, relative_path: str, source: Path, status: str
+    config: Config, harness: str, target: str, source: Path, status: str
 ) -> dict[str, str]:
     return {
         "harness": harness,
-        "path": relative_path,
+        "path": target,
         "source": source.resolve().relative_to(config.repo_root).as_posix(),
         "status": status,
     }
@@ -47,9 +47,9 @@ def _state_entry(
 
 def _read_state(state_path: Path) -> dict[str, dict[str, dict[str, str]]]:
     if not state_path.exists():
-        return {"version": 1, "skills": {}}
+        return {"version": 2, "skills": {}}
     data = json.loads(state_path.read_text())
-    if data.get("version") != 1 or not isinstance(data.get("skills"), dict):
+    if data.get("version") not in (1, 2) or not isinstance(data.get("skills"), dict):
         raise SystemExit(f"Invalid skill audit state: {state_path}")
     return data
 
@@ -65,13 +65,12 @@ def _write_state(state_path: Path, state: dict[str, object]) -> bool:
 
 def audit_skill_installations(config: Config) -> SkillAuditResult:
     """Repair safe managed links, verify final mappings, and persist their state."""
+    config.validate()
     desired = _effective_skills(config)
     pre_invalid = {
         key
-        for key, (harness, relative_path, source) in desired.items()
-        if not _is_exact_target(
-            source, config.resolve_harness_root(harness) / "skills" / relative_path
-        )
+        for key, (harness, target, source) in desired.items()
+        if not _is_exact_target(source, config.resolve_harness_root(harness) / target)
     }
 
     for harness in config.list_harness_names():
@@ -83,16 +82,14 @@ def audit_skill_installations(config: Config) -> SkillAuditResult:
     current_skills: dict[str, dict[str, str]] = {}
     invalid_keys: list[str] = []
 
-    for key, (harness, relative_path, source) in sorted(desired.items()):
-        target = config.resolve_harness_root(harness) / "skills" / relative_path
+    for key, (harness, target_path, source) in sorted(desired.items()):
+        target = config.resolve_harness_root(harness) / target_path
         status = "complete" if _is_exact_target(source, target) else "blocked"
         if status != "complete":
             invalid_keys.append(key)
-        current_skills[key] = _state_entry(
-            config, harness, relative_path, source, status
-        )
+        current_skills[key] = _state_entry(config, harness, target_path, source, status)
 
-    state = {"version": 1, "skills": current_skills}
+    state = {"version": 2, "skills": current_skills}
     state_changed = _write_state(state_path, state)
     new_keys = sorted(set(current_skills) - set(previous_skills))
     removed_keys = sorted(set(previous_skills) - set(current_skills))

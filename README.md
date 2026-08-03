@@ -85,14 +85,15 @@ Optional commit/push flow:
 
 Sync rules:
 
-- `config.yaml` defines shared/external skill sources under `sources:`; first-party standard skills live under `harness/<name>/skills/`
-- `harness.py update-skills` updates pinned submodule commits only for sources with `type: submodule`, then refreshes managed skill symlinks in target harness homes and removes stale managed links
+- `config.yaml` defines shared/external exports under `submodules:`; first-party standard skills live under `harness/<name>/skills/`
+- `harness.py update-skills` updates configured pinned submodule commits, then refreshes managed symlinks in target harness homes and removes stale managed links
 - `harness.py audit-skills` repairs safe wrong managed symlinks, verifies every effective configured skill resolves to its canonical source, and records the complete/blocked inventory in `state/skill-installation.json`
-- `state/skill-routing-index.json` gates newly discovered third-party submodule skills; harness-local skills are trusted immediately and do not require approval
-- `config.yaml` remains the routing source of truth: source defaults route general skills, existing `overrides:` handle relative-path exceptions, and source-specific `routes:` entries record new Claude/Hermes/etc. exceptions
+- exports targeting `skills` recursively discover `SKILL.md` directories and flatten them; exact exports can link any file or directory to a harness-relative target
+- export-local `include` and `exclude` lists select harness-specific subsets; newly matched upstream skills install automatically
+- duplicate effective targets are configuration errors rather than order-dependent overrides
 - `harness.py update-repo` runs the audit after its pull/update cycle and commits/pushes state changes, so newly discovered skills and corrected installs become durable repository state
 - install-time mapping of configured skills to target harness homes is controlled by `config.yaml`; harness-local skills target their containing harness
-- harness-local skills are the first-party overlay and win flattened-name collisions with configured sources
+- `harness.py setup [submodule...]` explicitly runs setup commands; ordinary install never executes them
 
 ## User-owned skill data
 

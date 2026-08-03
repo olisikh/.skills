@@ -41,7 +41,7 @@ Do not use this for one-off temporary personal notes that should remain local-on
    - OpenCode-only skills: `harness/opencode/skills/` (when needed)
    - use other top-level entries under `harness/<name>/` for non-skill harness-specific files such as `CLAUDE.md`
 3. Prefer editing repo source, not installed runtime copies.
-4. Once the routing index exists, a newly discovered submodule skill is intentionally withheld until its actual `SKILL.md` has been classified and its config-selected harness is approved with `./harness.py approve-skill`. Local skills are trusted immediately.
+4. Submodule exports live under `submodules:` in `config.yaml`. New upstream skills matching a broad export install automatically after the pinned submodule is updated.
 5. After creating, moving, or editing skills, run the installer so harness homes refresh:
    ```sh
    cd ~/.llm-harness

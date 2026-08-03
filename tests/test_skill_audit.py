@@ -24,7 +24,7 @@ class SkillAuditTests(unittest.TestCase):
         )
         self.source.mkdir(parents=True)
         (self.source / "SKILL.md").write_text("---\nname: example\n---\n")
-        (self.root / "config.yaml").write_text("sources: {}\n")
+        (self.root / "config.yaml").write_text("version: 2\nsubmodules: {}\n")
         (self.root / "harness-paths.yaml").write_text(
             f"harness:\n  agents: {self.home}\n"
         )
@@ -39,17 +39,17 @@ class SkillAuditTests(unittest.TestCase):
         first = audit_skill_installations(self.config)
         second = audit_skill_installations(self.config)
 
-        self.assertEqual(first.new_keys, ["agents:example"])
+        self.assertEqual(first.new_keys, ["agents:skills/example"])
         self.assertEqual(first.invalid_keys, [])
         self.assertEqual(second.new_keys, [])
         state = json.loads(
             (self.root / "state" / "skill-installation.json").read_text()
         )
         self.assertEqual(
-            state["skills"]["agents:example"],
+            state["skills"]["agents:skills/example"],
             {
                 "harness": "agents",
-                "path": "example",
+                "path": "skills/example",
                 "source": "harness/agents/skills/category/example",
                 "status": "complete",
             },
@@ -77,7 +77,7 @@ class SkillAuditTests(unittest.TestCase):
         self.assertTrue(target.is_symlink())
         self.assertEqual(target.resolve(), self.source.resolve())
         self.assertEqual(result.invalid_keys, [])
-        self.assertEqual(result.repaired_keys, ["agents:example"])
+        self.assertEqual(result.repaired_keys, ["agents:skills/example"])
 
 
 if __name__ == "__main__":

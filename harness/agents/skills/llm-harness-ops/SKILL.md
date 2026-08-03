@@ -5,122 +5,85 @@ description: Manage ~/.llm-harness — add, move, register, and configure skills
 
 # llm-harness-ops
 
-Use this skill when the user wants to:
+Use for adding or moving skills, registering submodules, changing harness mappings,
+running setup, or fixing managed symlinks. Prefer the canonical guide:
 
-- Add a new skill to ~/.llm-harness.
-- Register a new shared skill submodule source.
-- Move a skill between harnesses or categories.
-- Add or change a harness mapping.
-- Understand how install, uninstall, or update-skills work.
-- Fix symlink problems in harness homes.
+[docs/llm-harness-ops.md](../../../../docs/llm-harness-ops.md)
 
-Always prefer the canonical operational guide:
+## Core model
 
-[docs/llm-harness-ops.md](../docs/llm-harness-ops.md)
+- First-party skills live under `harness/<harness>/skills/`; no config needed.
+- External content comes only from configured Git submodules.
+- `config.yaml` uses `version: 2` and a root `submodules:` mapping.
+- Submodule path defaults to `submodules/<name>`; `path:` overrides exceptions.
+- Export defaults are `from: skills` and `to: skills`.
+- `to: skills` discovers `SKILL.md` directories and flattens their basenames.
+- Any other `to` creates one exact file or directory link relative to harness home.
+- `include` and `exclude` filter discovered skill paths; exclusion wins.
+- Duplicate effective targets are errors.
+- Matching new upstream skills install automatically after submodule updates.
+- `setup:` commands run only through `./harness.py setup`.
 
-## Quick facts
+## Add first-party skill
 
-- `llm-harness` symlinks skills directly from configured sources into `~/.<harness>/skills/`.
-- Skill sources are declared in `config.yaml` under `sources:`.
-- Shared sources have `type: submodule` (git submodule, updated by `./harness.py update-skills`). First-party standard skills live directly under `harness/<harness>/skills/` and do not need a config entry. After updating submodules, that command refreshes managed harness links and removes stale managed symlinks.
-- Default harness mappings live in `harness-paths.yaml` or built-in defaults.
-- Source skill paths may be nested, but `./harness.py install` flattens every standard target to `<skill-name>/SKILL.md`.
-- Later sources in `config.yaml` win on target-path collision.
+1. Create `harness/<harness>/skills/<skill-name>/SKILL.md`.
+2. Run `./harness.py install`.
+3. Verify target symlink.
 
-## Repository maintenance
-
-Run maintenance from the canonical checkout; do not link or copy
-`update-skills.sh` into another harness home.
+## Register submodule
 
 ```sh
-cd ~/.llm-harness
-./harness.py update-repo        # pull the repository, update sources, refresh links
-./harness.py update-skills      # update configured skill submodules only
+git submodule add <url> submodules/<name>
 ```
 
-## Workflows
+```yaml
+submodules:
+  <name>:
+    exports:
+      - harness: agents
+```
 
-### Add a first-party skill
+Then run:
 
-1. Ask the user: target harness and skill name.
-2. Create `harness/<harness>/skills/<skill-name>/SKILL.md`.
-3. Run `./harness.py install`.
-4. Verify with `ls -la ~/.<harness>/skills/<skill-name>`.
+```sh
+./harness.py update-skills submodules/<name>
+./harness.py install
+```
 
-### Register a shared skill submodule
+## Route subset elsewhere
 
-1. Ask the user: repository URL, source name, default harness, root (usually `skills`).
-2. Run `git submodule add <url> submodules/<source-name>`.
-3. Add a `sources:` entry in `config.yaml` with `type: submodule` and `path: submodules/<source-name>`.
-4. Add overrides for any skills that go to a different harness.
-5. Run `./harness.py update-skills submodules/<source-name>`.
-6. Run `./harness.py install`.
-
-### Move a skill
-
-1. If first-party: move the directory from `harness/<old-harness>/skills/` to `harness/<new-harness>/skills/`.
-2. Run `./harness.py install`.
-
-### Deprecate skills or a category
-
-1. Add the skill's relative path, or a category path ending with `/`, to the source's `exclude:` list in `config.yaml`.
-2. Run `./harness.py install`.
-
-Example: exclude all `deprecated/` skills from a shared source.
+Exclude exceptions from broad export and include them in specific export:
 
 ```yaml
-  mattpocock-skills:
-    type: submodule
-    root: skills
-    harness: agents
+exports:
+  - harness: agents
     exclude:
-      - deprecated/
+      - category/claude-only
+  - harness: claude
+    include:
+      - category/claude-only
 ```
 
-### Add or change a harness path
-
-1. Edit `harness-paths.yaml`.
-2. Run `./harness.py install`.
-
-## Verification checklist
-
-After any structural change:
-
-1. `python3 -m py_compile harness.py lib/*.py`
-2. `./harness.py update-skills [submodule...]`
-3. `./harness.py install`
-4. `./harness.py uninstall`
-5. `git status --short`
-
-## Templates
-
-### Local skill SKILL.md
-
-```markdown
----
-name: <skill-name>
-description: <one-line description>
----
-
-# <skill-name>
-
-<What this skill does and when to use it.>
-```
-
-### New shared source in config.yaml
+## Exact export
 
 ```yaml
-  <source-name>:
-    type: submodule
-    root: skills
-    harness: <default-harness>
-    overrides:
-      <skill-name>: <other-harness>
+exports:
+  - from: plugin/command.md
+    harness: claude
+    to: commands/plugin.md
 ```
 
-## What not to do
+## Setup and verification
 
-- Only directories containing `SKILL.md` under `harness/<name>/skills/` are installed; arbitrary content there is ignored.
-- Do not track symlinks inside `harness/`.
-- Do not edit files inside submodules directly unless you intend to fork them.
-- Do not run `./harness.py install` without first checking for existing real files at target paths.
+```sh
+./harness.py setup [submodule...]
+python3 -m py_compile harness.py lib/*.py
+./harness.py update-skills [submodule...]
+./harness.py install
+./harness.py audit-skills
+./harness.py uninstall
+git status --short
+```
+
+Do not edit installed runtime copies, track symlinks inside `harness/`, or edit
+submodule contents unless intentionally maintaining a fork.

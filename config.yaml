@@ -1,73 +1,68 @@
 ---
+version: 2
+
 skill_mirrors:
   # Claude discovers only direct children of ~/.claude/skills.
   claude:
     from: agents
 
-sources:
+submodules:
   obsidian-skills:
-    type: submodule
-    path: submodules/obsidian-skills
-    root: skills
-    harness: agents
+    exports:
+      - harness: agents
 
   mattpocock-skills:
-    type: submodule
-    path: submodules/mattpocock-skills
-    root: skills
-    harness: agents
-    exclude:
-      - deprecated/
-      - personal/obsidian-vault
-      - productivity/handoff
-    overrides:
-      misc/git-guardrails-claude-code: claude
-      in-progress/claude-handoff: claude
+    exports:
+      - harness: agents
+        exclude:
+          - deprecated/
+          - personal/obsidian-vault
+          - productivity/handoff
+          - misc/git-guardrails-claude-code
+          - in-progress/claude-handoff
+      - harness: claude
+        include:
+          - misc/git-guardrails-claude-code
+          - in-progress/claude-handoff
 
   llm-wiki:
-    type: submodule
-    path: submodules/llm-wiki
-    sources:
-      - root: claude-plugin/skills
+    exports:
+      - from: claude-plugin/skills
         harness: claude
-      - root: plugins/llm-wiki-opencode/skills
+      - from: plugins/llm-wiki-opencode/skills
         harness: opencode
-      - root: plugins/llm-wiki/skills
+      - from: plugins/llm-wiki/skills
         harness: codex
 
   awesome-llm-skills:
-    type: submodule
-    path: submodules/awesome-llm-skills
-    exclude:
-      - skill-creator
-    overrides:
-      algorithmic-art: claude
-    sources:
-      - root: .
+    exports:
+      - from: .
         harness: agents
+        exclude:
+          - skill-creator
+          - algorithmic-art
+      - from: .
+        harness: claude
+        include:
+          - algorithmic-art
 
   caveman:
-    type: submodule
-    path: submodules/caveman
-    root: skills
-    harness: agents
-    exclude:
-      - caveman-compress
-      - caveman-stats
+    exports:
+      - harness: agents
+        exclude:
+          - caveman-compress
+          - caveman-stats
 
   self-improving-agent:
-    type: submodule
-    path: submodules/self-improving-agent
-    root: .
-    harness: openclaw
+    exports:
+      - from: .
+        harness: openclaw
 
   graphify:
-    type: submodule
-    path: submodules/graphify
-    install:
+    setup:
       - uv tool install --editable .
       - graphify --version
-    artifacts:
+    exports:
       - from: graphify/skill.md
         harness: claude
         to: skills/graphify/SKILL.md
@@ -93,7 +88,7 @@ sources:
         harness: opencode
         to: skills/graphify/references
       - from: graphify/skill-pi.md
-        harness: opencode
+        harness: pi
         to: skills/graphify/SKILL.md
       - from: graphify/skills/pi/references
         harness: pi

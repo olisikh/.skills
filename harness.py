@@ -10,12 +10,6 @@ from lib.audit import audit_skill_installations, print_audit_summary
 from lib.config import Config
 from lib.git import update_submodules
 from lib.readiness import audit_skill_readiness, print_readiness_summary
-from lib.routing import (
-    approve_skill,
-    discover_unapproved_skills,
-    print_candidates,
-    seed_routing_index,
-)
 from lib.sync import sync_harness, uninstall_harness
 
 
@@ -33,6 +27,7 @@ def run(*args: str, cwd: Path | None = None, check: bool = True, capture: bool =
 
 def cmd_install(args: argparse.Namespace) -> int:
     cfg = Config(repo_root())
+    cfg.validate()
     names = cfg.list_harness_names()
     if not names:
         print(
@@ -40,10 +35,6 @@ def cmd_install(args: argparse.Namespace) -> int:
             file=sys.stderr,
         )
         return 1
-
-    for source, command in cfg.source_install_commands():
-        print(f"[install] Setup [{source.name}]: {' '.join(command)}")
-        run(*command, cwd=source)
 
     for name in names:
         sync_harness(cfg, name)
@@ -83,6 +74,7 @@ def cmd_update_skills(args: argparse.Namespace) -> int:
 
     print("== refresh harness links ==")
     cfg = Config(repo_root())
+    cfg.validate()
     for name in cfg.list_harness_names():
         sync_harness(cfg, name)
     return 0
@@ -106,20 +98,16 @@ def cmd_audit_readiness(args: argparse.Namespace) -> int:
     return 1 if result.blocked else 0
 
 
-def cmd_routing_candidates(args: argparse.Namespace) -> int:
-    print_candidates(discover_unapproved_skills(Config(repo_root())), as_json=args.json)
-    return 0
-
-
-def cmd_seed_routing_index(args: argparse.Namespace) -> int:
-    count = seed_routing_index(Config(repo_root()))
-    print(f"[routing] seeded={count}")
-    return 0
-
-
-def cmd_approve_skill(args: argparse.Namespace) -> int:
-    approve_skill(Config(repo_root()), args.source, args.harness, reason=args.reason)
-    print(f"[routing] approved {args.source} -> {args.harness}")
+def cmd_setup(args: argparse.Namespace) -> int:
+    cfg = Config(repo_root())
+    cfg.validate()
+    ran = 0
+    for name, source, command in cfg.submodule_setup_commands(args.submodule):
+        print(f"[setup] [{name}]: {' '.join(command)}")
+        run(*command, cwd=source)
+        ran += 1
+    if not ran:
+        print("[setup] No setup commands configured.")
     return 0
 
 
@@ -168,8 +156,8 @@ Manage the llm-harness repository.
 
 This entrypoint installs, uninstalls, and updates repository-driven LLM harness
 homes such as ~/.agents, ~/.claude, ~/.codex, ~/.hermes, and ~/.config/opencode.
-Skills and harness files are mirrored through symlinks driven by config.yaml
-and the routing index in state/skill-routing-index.json.
+Skills and harness files are mirrored through symlinks driven by convention-based
+submodule exports in config.yaml.
 """
 
 EPILOG = """\
@@ -195,11 +183,8 @@ Examples:
   Audit project-specific engineering prerequisites:
     ./harness.py audit-readiness --project /path/to/project
 
-  List skills awaiting routing approval:
-    ./harness.py routing-candidates
-
-  Approve a skill for a target harness:
-    ./harness.py approve-skill --source shared/some-skill --harness agents
+  Run declared setup commands for one submodule:
+    ./harness.py setup graphify
 
   One-shot repo maintenance (pull, update, audit, install):
     ./harness.py update-repo
@@ -276,47 +261,18 @@ def main() -> int:
     )
     readiness_parser.set_defaults(func=cmd_audit_readiness)
 
-    candidates_parser = subparsers.add_parser(
-        "routing-candidates",
-        help="list discovered skills withheld pending routing approval",
-        description="List discovered skills that are withheld pending routing approval.",
+    setup_parser = subparsers.add_parser(
+        "setup",
+        help="run setup commands declared by configured submodules",
+        description="Run setup commands declared by configured submodules.",
     )
-    candidates_parser.add_argument(
-        "--json", action="store_true", help="emit JSON output"
+    setup_parser.add_argument(
+        "submodule",
+        nargs="*",
+        metavar="SUBMODULE",
+        help="specific submodules to set up (default: all with setup commands)",
     )
-    candidates_parser.set_defaults(func=cmd_routing_candidates)
-
-    seed_parser = subparsers.add_parser(
-        "seed-routing-index",
-        help="baseline current config-derived routes as approved",
-        description="Baseline current config-derived routes as approved in the routing index.",
-    )
-    seed_parser.set_defaults(func=cmd_seed_routing_index)
-
-    approve_parser = subparsers.add_parser(
-        "approve-skill",
-        help="approve a discovered skill for its config-selected harness",
-        description="Approve a discovered skill for its config-selected harness.",
-    )
-    approve_parser.add_argument(
-        "--source",
-        required=True,
-        metavar="PATH",
-        help="repo-relative path to the skill directory",
-    )
-    approve_parser.add_argument(
-        "--harness",
-        required=True,
-        metavar="NAME",
-        help="configured target harness name (e.g. agents, claude, opencode)",
-    )
-    approve_parser.add_argument(
-        "--reason",
-        default="",
-        metavar="TEXT",
-        help="concise routing rationale",
-    )
-    approve_parser.set_defaults(func=cmd_approve_skill)
+    setup_parser.set_defaults(func=cmd_setup)
 
     repo_parser = subparsers.add_parser(
         "update-repo",

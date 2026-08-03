@@ -1,133 +1,164 @@
 ---
 title: LLM Harness Operations Guide
-summary: How to add, move, register, and configure skills and harness homes in ~/.llm-harness.
-tags:
-  - llm-harness
-  - operations
-  - skills
-  - onboarding
-created: 2026-07-03
-updated: 2026-07-03
+summary: How to add, move, register, and configure skills and harness homes.
+tags: [llm-harness, operations, skills]
+updated: 2026-08-03
 confidence: high
 ---
 
 # LLM Harness Operations Guide
 
-This document is the canonical reference for changing the shape of the `llm-harness` repository. Read it before adding skills, registering new shared sources, or changing harness mappings.
+Canonical reference for changing `~/.llm-harness` structure and configuration.
 
-## What this repo does
+## Repository model
 
-`llm-harness` is a single source of truth for LLM harness homes (`~/.agents`, `~/.claude`, `~/.codex`, etc.) across machines. It does two things:
-
-1. **Symlinks skill sources** into target harness `skills/` directories.
-2. **Symlinks harness-specific home files** (e.g. `CLAUDE.md`) into target harness homes.
-
-Shared skill sources are declared in `config.yaml`. First-party standard skills are
-discovered directly under the matching `harness/<name>/skills/` directory. Configured
-sources can be:
-
-- `type: submodule` — shared upstream skill repositories tracked as git submodules.
-- `type: local` — an explicitly configured local source, used only when a repository
-  needs a nonstandard source or artifact layout.
-
-The repo does **not** copy skill files around. It creates symlinks from the target harness home directly to the source directory. This keeps the repo portable and avoids machine-specific paths in tracked files.
-
-## Repository layout
+`llm-harness` links repository-managed files into runtime homes such as
+`~/.agents`, `~/.claude`, and `~/.config/opencode`.
 
 ```text
-llm-harness/
-├── AGENTS.md                  # contributor rules (link to this doc)
-├── config.yaml                # all skill source mappings
-├── harness-paths.yaml         # non-obvious harness root overrides
-├── harness/                   # harness-specific home files and first-party skills
-│   ├── agents/
-│   │   └── skills/            # portable first-party skills
-│   ├── claude/
-│   │   └── CLAUDE.md
-│   ├── codex/
-│   ├── hermes/
-│   └── opencode/
-├── docs/
-│   └── llm-harness-ops.md     # this file
-├── harness.py                 # create/update/remove target symlinks and update submodules
-├── submodules/              # shared submodules
-│   ├── obsidian-skills
-│   ├── mattpocock-skills
-│   ├── llm-wiki
-│   └── awesome-llm-skills
-└── tests/
+config.yaml             # external submodule exports
+harness-paths.yaml       # non-default harness home paths
+harness/<name>/          # first-party harness content
+submodules/<name>/       # external Git submodules
+state/                   # installation audit state
 ```
 
-Only directories containing `SKILL.md` under `harness/<name>/skills/` are treated as
-first-party skills. Other files and directories there are ignored by skill discovery.
-
-Harness directories under `harness/` are optional. The install/uninstall logic discovers active harnesses from `harness-paths.yaml` keys and from every `harness` value referenced in `config.yaml`, so a harness with only skills still gets processed even if its `harness/<name>/` directory does not exist.
-
-## Core concepts
-
-### Source
-
-A configured source is a top-level key under `sources:` in `config.yaml`. It points at a directory inside the repo. Example source names:
-
-- `obsidian-skills` — a git submodule directory.
-
-First-party standard skills are a separate harness-local source tree:
-
-- `harness/agents/skills` — the first-party standard-skill source for the `agents` harness.
-
-### Type
-
-- `type: submodule` — `./harness.py update-skills` will fetch and update the pinned commit, then refresh managed skill symlinks. `./harness.py install` can also refresh skills from `repo/submodules/<source-name>/<root>`.
-- `type: local` — `./harness.py update-skills` ignores it. `./harness.py install` symlinks skills from its configured `path` (or `repo/<source-name>/<root>` when `path` is omitted).
-
-### Root
-
-The `root` value is the subdirectory inside the source that contains skill directories. For most sources it is `skills`. For `llm-wiki` it differs per child source.
-
-### Harness
-
-The default target harness for every skill under the source. Values are keys known to `harness-paths.yaml` and the built-in defaults:
-
-- `agents` -> `~/.agents`
-- `claude` -> `~/.claude`
-- `codex` -> `~/.codex`
-- `hermes` -> `~/.hermes` (via `harness-paths.yaml`)
-- `opencode` -> `~/.config/opencode` (via `harness-paths.yaml`)
-
-### Harness-local skills
-
-Directories under `harness/<name>/skills/` that contain `SKILL.md` are standard
-first-party skills for that harness. Their source categories may be nested, but
-installation always flattens the target to the skill directory's basename. These
-skills are trusted immediately and do not require routing-index approval. They are
-the local overlay and win a flattened-name collision with a configured source.
-
-### Override
-
-A per-skill mapping from its relative path inside `root` to a different harness. Overrides are evaluated after the default `harness`.
-
-### Skill layout and target paths
-
-Skill sources may organize skills in category folders. During installation,
-standard skill directories are always flattened to their final directory name:
+First-party skills need no configuration. Put them below:
 
 ```text
-<source-root>/<skill-name>/SKILL.md
+harness/<harness>/skills/<optional-category>/<skill-name>/SKILL.md
 ```
+
+Installed standard skill targets are always flat:
 
 ```text
-<source-root>/skill-category/skill-name/SKILL.md
-  -> <harness-home>/skills/skill-name/SKILL.md
+<harness-home>/skills/<skill-name>
 ```
 
-This applies to local skills, submodule skills, and mirrors. If two sources
-produce the same final skill name, the later source in `config.yaml` wins and
-the installer reports a collision.
+Other top-level entries below `harness/<harness>/` map directly into harness home.
 
-### Claude mirrors
+## Configuration
 
-Claude Code discovers skills only as directories directly under its `skills/`
-directory. To expose portable `agents` skills to Claude, configure a mirror:
+`config.yaml` uses schema version 2:
+
+```yaml
+version: 2
+
+skill_mirrors:
+  claude:
+    from: agents
+
+submodules:
+  example-skills:
+    exports:
+      - harness: agents
+```
+
+### Submodule paths
+
+Submodule `example-skills` defaults to physical path
+`submodules/example-skills`. Override unusual layouts:
+
+```yaml
+submodules:
+  example-skills:
+    path: vendor/example
+```
+
+Configured paths must be safe repo-relative paths and must appear in `.gitmodules`.
+
+### Skill collection exports
+
+Export defaults:
+
+```yaml
+- from: skills
+  harness: agents
+  to: skills
+```
+
+`to: skills` has reserved behavior:
+
+1. Walk `from` recursively.
+2. Discover directories containing `SKILL.md`.
+3. Stop below each discovered skill directory.
+4. Apply export filters.
+5. Link each directory to `skills/<directory-basename>`.
+
+`harness` is always required. `from` and `to` default to `skills`.
+
+### Filters
+
+`include` and `exclude` match discovered skill paths relative to `from`:
+
+```yaml
+exports:
+  - harness: agents
+    exclude:
+      - deprecated/
+      - claude/special-skill
+
+  - harness: claude
+    include:
+      - claude/special-skill
+```
+
+Rules:
+
+- Missing `include` includes every discovered skill.
+- Missing `exclude` excludes nothing.
+- Exclusion wins.
+- A trailing `/` matches a subtree.
+- `*`, `**`, `?`, and character classes are supported.
+- An unmatched literal include is an error.
+- An export selecting no skills emits a warning.
+
+When routing exceptions elsewhere, exclude them from broad export and include
+them in specific export. Duplicate targets are errors.
+
+### Exact exports
+
+Any `to` other than exact value `skills` creates one exact symlink. Source may
+be file or directory; destination is relative to harness home:
+
+```yaml
+submodules:
+  example-plugin:
+    exports:
+      - from: plugin/command.md
+        harness: claude
+        to: commands/example.md
+      - from: plugin/references
+        harness: claude
+        to: skills/example/references
+```
+
+Filters are invalid on exact exports. Missing sources are errors.
+
+### Setup commands
+
+Setup is explicit and never runs during ordinary install:
+
+```yaml
+submodules:
+  example-tool:
+    setup:
+      - uv tool install --editable .
+      - example-tool --version
+```
+
+Run all or selected setup declarations:
+
+```bash
+./harness.py setup
+./harness.py setup example-tool
+```
+
+Commands run directly in submodule checkout without a shell.
+
+### Mirrors
+
+Mirrors expose standard skills selected for one harness in another:
 
 ```yaml
 skill_mirrors:
@@ -135,421 +166,106 @@ skill_mirrors:
     from: agents
 ```
 
-Mirrors use the same flattened target path and only create links when
-`~/.claude` already exists. Direct Claude routes win on duplicate names, and
-mirrored third-party skills inherit the source skill's routing-index approval.
+Mirrors apply only to standard flattened skill directories. Direct/mirror
+collisions are errors.
 
-## Configuration files
+## Workflows
 
-### `config.yaml`
-
-Declares every skill source. Order matters: later sources win if two sources produce the same target path.
-
-```yaml
----
-sources:
-  obsidian-skills:
-    type: submodule
-    path: submodules/obsidian-skills
-    root: skills
-    harness: agents
-
-  mattpocock-skills:
-    type: submodule
-    path: submodules/mattpocock-skills
-    root: skills
-    harness: agents
-    overrides:
-      misc/git-guardrails-claude-code: claude
-
-  llm-wiki:
-    type: submodule
-    path: submodules/llm-wiki
-    sources:
-      - root: claude-plugin/skills
-        harness: claude
-      - root: plugins/llm-wiki-opencode/skills
-        harness: opencode
-      - root: plugins/llm-wiki/skills
-        harness: codex
-
-```
-
-A source may have either:
-
-- a single `root` + `harness` at the top level, or
-- a `sources:` list of child sources (used when one submodule hosts skills for multiple harnesses or needs different roots).
-
-### Source entry anatomy
-
-Every source entry under `sources:` shares a common shape. Fields at the top level apply to the whole entry; some can also be specified per child source when using `sources:`.
-
-- `type`: either `submodule` or `local`.
-  - `submodule`: tracked as a git submodule; updated by `./harness.py update-skills`.
-  - `local`: a plain directory inside the repo; ignored by `update-skills`.
-- `root`: the subdirectory inside the source directory where skill directories live. The installer walks this root, creates a symlink for every directory that contains a `SKILL.md`, and flattens that skill target to the directory's basename.
-- `path`: optional repo-relative physical source location. All shared submodules use `submodules/<name>` while retaining their logical source key for routes and the routing index.
-- `harness`: the default target harness for every skill found under `root`.
-- `sources`: optional list of child sources. Use this when one submodule needs different roots or default harnesses. Top-level `root`/`harness` are ignored when `sources:` is present.
-- `exclude`: list of relative paths under `root` (or under each child source) to skip. End a folder name with `/` to exclude the whole subtree. Use without `/` to exclude a single skill.
-- `overrides`: map from a skill's relative path under `root` to a different harness. Evaluated after the default `harness`.
-
-### Explicit artifacts
-
-Use `artifacts:` when an upstream repository ships files, directories, or paths that
-do not follow the standard directory-with-`SKILL.md` layout. Each artifact is one
-exact source-to-target symlink; both files and directories are supported. This avoids
-running upstream installer scripts while keeping every filename explicit.
-
-```yaml
-  graphify:
-    type: submodule
-    path: submodules/graphify
-    artifacts:
-      - from: graphify/skill-opencode.md
-        harness: opencode
-        to: skills/graphify/SKILL.md
-      - from: graphify/skills/opencode/references
-        harness: opencode
-        to: skills/graphify/references
-```
-
-`from` is relative to the source directory, `to` is relative to the harness home,
-and paths are case-sensitive by convention. Artifacts participate in source-order
-collision handling and the same submodule-only routing approval gate as standard
-skills.
-
-Order matters: later sources in `config.yaml` win if two sources produce the same target path.
-
-### Child source roots for grouped repositories
-
-Some repositories group related skills under an extra directory level. Child
-source roots are optional, but can be useful when you want the source-relative
-route and target name to be the same or want to avoid basename collisions.
-For example, `awesome-llm-skills` keeps document skills under
-`document-skills/docx`, `document-skills/pdf`, etc.
-
-```yaml
-  awesome-llm-skills:
-    type: submodule
-    path: submodules/awesome-llm-skills
-    exclude:
-      - document-skills/
-    overrides:
-      algorithmic-art: claude
-    sources:
-      - root: .
-        harness: agents
-      - root: document-skills
-        harness: agents
-```
-
-How it works:
-
-1. The first source walks the top level and excludes `document-skills/`.
-2. The second source walks `document-skills/` as its root and installs
-   `docx`, `pdf`, and the other skills directly under `~/.agents/skills/`.
-3. `overrides` routes `algorithmic-art` to the `claude` harness instead of
-   the default `agents`.
-
-The same target flattening happens even if the child-source configuration is
-not used.
-
-### `harness-paths.yaml`
-
-Maps harness names to install roots that do not follow the default `~/.<name>` convention.
-
-```yaml
----
-harness:
-  hermes: ~/.hermes
-  opencode: ~/.config/opencode
-```
-
-Only add entries here for harnesses that do not use the default path.
-
-## Recipes
-
-### Add a new first-party skill
-
-Use this when the skill is private, experimental, or specific to your setup.
-
-1. Choose a target harness.
-2. Create the skill directory under `harness/<harness>/skills/`.
-   - Flat source: `harness/agents/skills/my-skill/SKILL.md`
-   - Categorized source: `harness/agents/skills/category/my-skill/SKILL.md`
-     (both install as `~/.agents/skills/my-skill`)
-3. Run `./harness.py install`.
-4. Verify the symlink in the target harness `skills/` directory.
-
-Example: add a Claude-only skill called `my-claude-skill`.
+### Add first-party skill
 
 ```bash
-mkdir -p harness/claude/skills/my-claude-skill
-cat > harness/claude/skills/my-claude-skill/SKILL.md <<'EOF'
+mkdir -p harness/agents/skills/my-skill
+cat > harness/agents/skills/my-skill/SKILL.md <<'EOF'
 ---
-name: my-claude-skill
-description: A custom Claude skill.
+name: my-skill
+description: Does one useful thing.
 ---
-# my-claude-skill
+
+# my-skill
 EOF
-```
-
-Run:
-
-```bash
 ./harness.py install
-ls -la ~/.claude/skills/my-claude-skill
 ```
 
-### Add a new shared skill submodule
-
-Use this when skills live in an external repository you want to track.
-
-1. Add the repository as a git submodule at `~/.llm-harness/submodules/<name>`.
-2. Add a `sources:` entry in `config.yaml` with `type: submodule` and `path: submodules/<name>`.
-3. Set `root` and default `harness`.
-4. Add overrides for any skills that belong to a different harness.
-5. Run `./harness.py update-skills submodules/<source-name>` to initialize and pin the submodule, refresh target symlinks, and remove stale managed links.
-
-Example: add a new submodule `acme-skills`.
+### Register external submodule
 
 ```bash
-git submodule add https://github.com/example/acme-skills.git submodules/acme-skills
+git submodule add https://github.com/example/skills.git submodules/example-skills
 ```
-
-Edit `config.yaml`:
 
 ```yaml
-  acme-skills:
-    type: submodule
-    path: submodules/acme-skills
-    root: skills
-    harness: agents
-    overrides:
-      acme-helper: claude
+submodules:
+  example-skills:
+    exports:
+      - harness: agents
 ```
 
-Run:
+Then:
 
 ```bash
-./harness.py update-skills submodules/acme-skills
+./harness.py update-skills submodules/example-skills
+./harness.py install
 ```
 
-If the submodule groups some skills under an extra directory level (for
-example `document-skills/docx`), use a child source rooted at
-`document-skills`, as described in [Child source roots for grouped
-repositories](#child-source-roots-for-grouped-repositories) above.
+### Move first-party skill
 
-### Deprecate skills or a category
-
-To stop installing a skill, add its relative path under the source's `exclude:` list. To exclude an entire category folder, end the entry with `/`.
-
-Example: exclude all skills under `mattpocock-skills/skills/deprecated/`.
-
-```yaml
-  mattpocock-skills:
-    type: submodule
-    root: skills
-    harness: agents
-    exclude:
-      - deprecated/
-```
-
-To deprecate a single skill, use its full relative path without a trailing slash:
-
-```yaml
-    exclude:
-      - deprecated/skill-name
-```
-
-Then run `./harness.py install`. Existing target symlinks for excluded skills will be removed automatically.
-
-### Move a skill to another harness
-
-If the skill is in a shared submodule, add or change an override in `config.yaml`. If the skill is first-party, move its directory from `harness/<old-harness>/skills/` to `harness/<new-harness>/skills/`.
-
-Example: move `harness/agents/skills/old-agents-skill` to Claude.
+Move source directory between harness trees, then install:
 
 ```bash
-mv harness/agents/skills/old-agents-skill harness/claude/skills/
+mv harness/agents/skills/my-skill harness/claude/skills/
+./harness.py install
 ```
 
-Then run `./harness.py install`. The old symlink in `~/.agents/skills/old-agents-skill` will be removed and a new one created at `~/.claude/skills/old-agents-skill`.
+### Exclude upstream skill
 
-### Add a new harness
+Add source-relative path to export `exclude`, then run `./harness.py install`.
+Stale managed target is removed.
 
-1. Create a directory under `harness/` with the harness name.
-2. Add any harness-specific files (e.g. `CLAUDE.md` for Claude).
-3. If the default install path `~/.<name>` is wrong, add an entry to `harness-paths.yaml`.
-4. Reference the harness in `config.yaml` overrides or source `harness` values.
-5. Run `./harness.py install`.
+### Add harness path
 
-Example: add `gemini` harness targeting `~/.gemini`.
-
-```bash
-mkdir -p harness/gemini
-cat > harness/gemini/README.md <<'EOF'
-# Gemini harness notes
-EOF
-```
-
-Edit `harness-paths.yaml`:
-
-```yaml
-harness:
-  gemini: ~/.gemini
-```
-
-Then add skills for it in `config.yaml`.
-
-### Add a new harness root path
-
-If a harness home lives somewhere other than `~/.<name>`, add it to `harness-paths.yaml`. Do not hard-code unusual paths in `harness.py install`.
+Default path is `~/.<harness>`. Add exceptions to `harness-paths.yaml`:
 
 ```yaml
 harness:
   opencode: ~/.config/opencode
-  gemini: ~/custom/gemini/home
 ```
 
-### Remove a skill
-
-1. Delete the skill source directory (or remove its override if it is excluded from install).
-2. Run `./harness.py install`. Stale target symlinks will be removed automatically.
-
-For shared submodule skills you no longer want at all, also remove the override or source entry from `config.yaml`.
-
-## Scripts reference
-
-The single entrypoint is `harness.py`.
-
-### `harness.py install`
-
-Idempotent. Discovers harnesses from `harness/`, `harness-paths.yaml`, and
-`config.yaml`; creates flattened skill symlinks; removes stale managed
-symlinks.
+## Commands
 
 ```bash
 ./harness.py install
-```
-
-Safe to run repeatedly. It warns and skips when a target path already exists and is not the expected symlink.
-
-### `harness.py uninstall`
-
-Removes all symlinks managed by `~/.llm-harness`. For skill directories it removes any symlink under `~/.<harness>/skills/` that resolves into `~/.llm-harness`. For non-skill harness entries it removes symlinks that point to the matching source in `harness/`.
-
-```bash
 ./harness.py uninstall
-```
-
-### `harness.py update-skills`
-
-Updates pinned commits for every source with `type: submodule` in `config.yaml`. Skips sources with `type: local` and submodules with uncommitted local changes. It then refreshes all managed harness links and removes stale managed skill symlinks; unrelated files and symlinks outside `~/.llm-harness` are preserved.
-
-```bash
-./harness.py update-skills              # update all configured submodules
-./harness.py update-skills submodules/obsidian-skills
-./harness.py update-skills --commit --push
-```
-
-### Routing newly discovered skills
-
-`config.yaml` is the routing authority. Each source has a default `harness` for general-use skills; existing `overrides:` remain available for relative-path exceptions; use top-level `routes:` for a source-specific exception when the same source can expose skills through multiple roots.
-
-The tracked `state/skill-routing-index.json` is an approval gate for
-third-party submodule skills, not a second routing authority. Harness-local
-skills are trusted immediately and do not need approval. For submodules, the
-index records the source path, config-selected harness, and source-relative
-path for each reviewed skill. Once the baseline exists, `harness.py install`,
-`update-skills`, and `update-repo` install only submodule skills whose index
-entry exactly matches the current `config.yaml` route. A new upstream
-`SKILL.md` is discovered but withheld from all harness homes until reviewed.
-
-```bash
-./harness.py routing-candidates --json
-# Read each candidate's SKILL.md and, if needed, add a source-specific route to config.yaml.
-./harness.py approve-skill --source source/path/to/skill --harness hermes
+./harness.py update-skills [submodule-path...]
+./harness.py setup [submodule-name...]
 ./harness.py audit-skills
-```
-
-Use `seed-routing-index` only to establish a deliberate baseline for a repository that predates the gate:
-
-```bash
-./harness.py seed-routing-index
-```
-
-The daily Hermes routing cron runs the source update first, reads each withheld candidate, classifies it, updates `config.yaml` for non-default routing, approves it, and then audits the resulting installation. It must keep package-bundled Hermes skills outside this index and never infer a route merely from a name: classify from the skill's actual instructions and dependencies.
-
-### Runtime readiness
-
-Installation state answers whether a skill symlink is correct; it cannot prove that
-an installed skill has its configured vault, credential, binary, or project setup.
-`state/skill-readiness.yaml` is the tracked readiness matrix for the material
-prerequisites discovered during skill review. It supports:
-
-- global checks for user-owned paths, runtime commands, and environment-variable
-  presence;
-- optional checks that report unavailable integrations without failing the audit;
-- project checks for files such as Matt Pocock's `docs/agents/*.md`.
-
-Run the read-only audit after installing or changing user configuration:
-
-```bash
-./harness.py audit-readiness
-./harness.py audit-readiness --project /absolute/path/to/project
-```
-
-The non-secret shared path configuration is installed at
-`~/.agents/config/skill-paths.json` from `harness/agents/config/skill-paths.json`.
-Use `~/.agents` for durable agent artifacts; keep secrets in the relevant runtime
-or provider store.
-
-### `harness.py audit-skills`
-
-Repairs an incorrect skill symlink only when its current target is already inside `~/.llm-harness`; external symlinks and real paths remain protected and are reported as blocked. It then verifies every **effective** configured target (after source-order collision handling) resolves to the canonical source and writes the portable inventory at `state/skill-installation.json`.
-
-The state uses harness names and repo-relative source paths, never machine-specific absolute paths. New configured skills are reported once when first added to the state; removed skills are reported when their state entry disappears. Only exact installs are marked `complete`; protected conflicts remain `blocked` and make the command exit non-zero.
-
-```bash
-./harness.py audit-skills
-```
-
-### `harness.py update-repo`
-
-Pulls the latest `llm-harness` repo, updates shared submodules, and runs `audit-skills`. When the audit inventory changes, it commits and pushes `state/skill-installation.json` as `chore: audit skill installations`. This is the maintenance command used by the Hermes cron wrapper at `~/.hermes/scripts/update-llm-harness.sh`.
-
-```bash
+./harness.py audit-readiness [--project PATH]
 ./harness.py update-repo
 ```
 
-## Troubleshooting
+`install` validates complete target graph before changing links. It warns and
+preserves existing real paths or external symlinks. Managed stale symlinks are
+removed. Each harness home stores managed target names in
+`.llm-harness-managed-targets.json`; cleanup never guesses ownership by scanning
+unrelated home content. Duplicate or overlapping target ownership fails validation.
 
-### `harness.py install` skips a skill with "Skipping existing path"
+`update-skills` updates configured pinned commits. New upstream skills matching
+broad exports install automatically when links refresh.
 
-A real file or directory already exists at the target path. Decide whether to back it up and remove it, or rename your skill.
+`audit-skills` repairs safe repo-managed mismatches and records complete/blocked
+state with full harness-relative targets in `state/skill-installation.json`.
 
-### `harness.py install` skips a skill with "Skipping existing symlink (points elsewhere)"
+## Verification
 
-The target is already a symlink to a path outside this repo. Back it up or remove it manually, then re-run `./harness.py install`.
+After structural changes:
 
-### A skill appears under the wrong harness
+```bash
+python3 -m py_compile harness.py lib/*.py
+python3 -m unittest discover tests
+./harness.py update-skills
+./harness.py install
+./harness.py audit-skills
+./harness.py uninstall
+git status --short
+```
 
-Check `config.yaml`:
-
-- Is the source's default `harness` correct?
-- Is there an `overrides:` entry for the skill's relative path?
-- If two sources define the same target path, the later source in `config.yaml` wins.
-
-### `harness.py update-skills` says a submodule is not configured
-
-Only sources with `type: submodule` in `config.yaml` are updated. If a submodule is new, add it to `config.yaml` first.
-
-### Machine-specific symlink targets appear in git status
-
-This means an intermediate symlink inside the repo is still tracked. First-party
-skill directories under `harness/<name>/skills/` must be real source directories;
-the installer creates the symlink only in the target harness home. If you see a
-tracked symlink inside the source tree, remove it and rely on `./harness.py install`
-to create the target-home symlink directly.
+Do not overwrite unrelated real files or external symlinks. Do not edit runtime
+copies or submodule contents unless intentionally maintaining upstream code.

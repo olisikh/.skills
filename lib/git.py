@@ -48,7 +48,12 @@ def has_local_changes(path: Path) -> bool:
 
 def remote_head_ref(path: Path) -> str | None:
     result = run(
-        "git", "-C", str(path), "symbolic-ref", "--quiet", "refs/remotes/origin/HEAD",
+        "git",
+        "-C",
+        str(path),
+        "symbolic-ref",
+        "--quiet",
+        "refs/remotes/origin/HEAD",
         capture=True,
         check=False,
     )
@@ -92,7 +97,9 @@ def update_submodules(
                 f"submodule '{path}' is not configured as a submodule source in {config.sources_file}"
             )
         if path not in declared:
-            raise SystemExit(f"submodule '{path}' is not declared in {repo_root / '.gitmodules'}")
+            raise SystemExit(
+                f"submodule '{path}' is not declared in {repo_root / '.gitmodules'}"
+            )
 
     branch_result = run("git", "branch", "--show-current", capture=True, check=False)
     current_branch = branch_result.stdout.strip()
@@ -100,7 +107,16 @@ def update_submodules(
         raise SystemExit("parent repo is not on a branch")
 
     print("[update-skills] Initializing submodules")
-    run("git", "submodule", "update", "--init", "--recursive", "--", *requested, cwd=repo_root)
+    run(
+        "git",
+        "submodule",
+        "update",
+        "--init",
+        "--recursive",
+        "--",
+        *requested,
+        cwd=repo_root,
+    )
 
     updated_any = False
     for path in requested:
@@ -132,13 +148,23 @@ def update_submodules(
         run("git", "add", path, cwd=repo_root)
         updated_any = True
         short = run(
-            "git", "-C", str(submodule_path), "rev-parse", "--short", "HEAD", capture=True
+            "git",
+            "-C",
+            str(submodule_path),
+            "rev-parse",
+            "--short",
+            "HEAD",
+            capture=True,
         ).stdout.strip()
         print(f"[update-skills] Updated {path} to {short}")
 
     if not updated_any:
         print("[update-skills] No submodule pointer changes detected")
         return
+
+    # New upstream layouts can introduce flattened-name or exact-target
+    # collisions. Refuse to publish pointer changes until resulting exports are valid.
+    config.validate()
 
     print("[update-skills] Staged submodule updates:")
     run("git", "diff", "--cached", "--submodule=short", cwd=repo_root)
