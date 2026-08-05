@@ -36,6 +36,12 @@
       "source": "submodules/awesome-llm-skills/brand-guidelines",
       "status": "complete"
     },
+    "agents:skills/bro": {
+      "harness": "agents",
+      "path": "skills/bro",
+      "source": "harness/agents/skills/bro",
+      "status": "complete"
+    },
     "agents:skills/canvas-design": {
       "harness": "agents",
       "path": "skills/canvas-design",
@@ -598,6 +604,12 @@
       "harness": "claude",
       "path": "skills/brand-guidelines",
       "source": "submodules/awesome-llm-skills/brand-guidelines",
+      "status": "complete"
+    },
+    "claude:skills/bro": {
+      "harness": "claude",
+      "path": "skills/bro",
+      "source": "harness/agents/skills/bro",
       "status": "complete"
     },
     "claude:skills/canvas-design": {
