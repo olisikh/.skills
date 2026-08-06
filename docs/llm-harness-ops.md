@@ -87,6 +87,42 @@ Export defaults:
 
 `harness` is always required. `from` and `to` default to `skills`.
 
+### Renamed skills and aliases
+
+Use `remap` on a skill collection export to install a source skill under a new
+name and, optionally, additional names:
+
+```yaml
+submodules:
+  example-skills:
+    exports:
+      - from: skills
+        harness: opencode
+        remap:
+          research/wiki-manager:
+            name: wiki
+            aliases:
+              - wiki-manager
+              - knowledge-wiki
+```
+
+The remap key is the discovered skill path relative to `from`. `name` is the
+main installed name; it defaults to the source directory name. `aliases` adds
+more installed names. The example installs `wiki`, `wiki-manager`, and
+`knowledge-wiki`.
+
+Each renamed or aliased installation receives a generated skill copy with a
+matching `name:` frontmatter field. This preserves the source submodule and
+keeps harnesses that require matching folder and skill names compatible.
+
+Rules:
+
+- `remap` is only valid when `to: skills`.
+- Names must be lowercase, hyphen-separated skill names, at most 64 characters.
+- Names must be unique within a remap entry and across all resulting targets.
+- A remap key that matches no discovered skill is an error.
+- Include/exclude filters run before target collision validation.
+
 ### Filters
 
 `include` and `exclude` match discovered skill paths relative to `from`:

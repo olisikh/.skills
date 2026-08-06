@@ -3,8 +3,11 @@
 
 import fnmatch
 import os
+import re
 import shlex
+import shutil
 import sys
+import tempfile
 from pathlib import Path, PurePosixPath
 from typing import Iterator
 
@@ -19,9 +22,10 @@ DEFAULT_HARNESS_ROOTS = {
 
 TOP_LEVEL_KEYS = {"version", "skill_mirrors", "submodules"}
 SUBMODULE_KEYS = {"path", "exports", "setup"}
-EXPORT_KEYS = {"from", "harness", "to", "include", "exclude"}
+EXPORT_KEYS = {"from", "harness", "to", "include", "exclude", "remap"}
 MIRROR_KEYS = {"from"}
 RESERVED_TARGETS = {".llm-harness-managed-targets.json"}
+SKILL_NAME_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 class Config:
@@ -115,6 +119,7 @@ class Config:
                 "to": export.get("to", "skills"),
                 "include": export.get("include"),
                 "exclude": export.get("exclude"),
+                "remap": export.get("remap"),
             }
             if not isinstance(normalized["harness"], str) or not normalized["harness"]:
                 raise SystemExit(f"submodules.{name}.exports[{index}] needs harness")
@@ -151,12 +156,70 @@ class Config:
                             f"must stay inside 'from': {pattern}"
                         )
             if normalized["to"] != "skills" and (
-                normalized["include"] is not None or normalized["exclude"] is not None
+                normalized["include"] is not None
+                or normalized["exclude"] is not None
+                or normalized["remap"] is not None
             ):
                 raise SystemExit(
-                    f"Filters are only supported for exports targeting 'skills' ({name} export {index})"
+                    f"Filters and remap are only supported for exports targeting 'skills' ({name} export {index})"
                 )
+            normalized["remap"] = self._normalize_remap(
+                name, index, normalized["remap"]
+            )
             yield normalized
+
+    @staticmethod
+    def _validate_skill_name(name: object, field: str) -> str:
+        if (
+            not isinstance(name, str)
+            or not name
+            or len(name) > 64
+            or not SKILL_NAME_PATTERN.fullmatch(name)
+        ):
+            raise SystemExit(f"{field} must be a lowercase hyphen-separated skill name")
+        return name
+
+    def _normalize_remap(
+        self, submodule: str, export_index: int, remap: object
+    ) -> dict[str, dict[str, object]]:
+        if remap is None:
+            return {}
+        if not isinstance(remap, dict):
+            raise SystemExit(
+                f"submodules.{submodule}.exports[{export_index}].remap must be a mapping"
+            )
+
+        normalized: dict[str, dict[str, object]] = {}
+        for source_name, entry in remap.items():
+            field = f"submodules.{submodule}.exports[{export_index}].remap"
+            source_path = self._safe_relative_path(source_name, field, allow_dot=False)
+            if source_path.as_posix() != source_name or any(
+                char in source_name for char in "*?["
+            ):
+                raise SystemExit(
+                    f"{field} keys must be literal skill paths: {source_name}"
+                )
+            if not isinstance(entry, dict):
+                raise SystemExit(f"{field}.{source_name} must be a mapping")
+            unknown = set(entry) - {"name", "aliases"}
+            if unknown:
+                raise SystemExit(
+                    f"Unknown field(s) for {field}.{source_name}: "
+                    f"{', '.join(sorted(unknown))}"
+                )
+
+            name = entry.get("name")
+            if name is not None:
+                name = self._validate_skill_name(name, f"{field}.{source_name}.name")
+            aliases = entry.get("aliases", [])
+            if not isinstance(aliases, list):
+                raise SystemExit(f"{field}.{source_name}.aliases must be a list")
+            aliases = [
+                self._validate_skill_name(alias, f"{field}.{source_name}.aliases")
+                for alias in aliases
+            ]
+            normalized[source_path.as_posix()] = {"name": name, "aliases": aliases}
+        return normalized
 
     @staticmethod
     def _matches_pattern(relative: str, pattern: str) -> bool:
@@ -188,6 +251,8 @@ class Config:
             raise SystemExit(f"Skill export source is not a directory: {source_root}")
 
         matched_includes: set[str] = set()
+        matched_remaps: set[str] = set()
+        remaps = export["remap"] or {}
         discovered = 0
         for current_root, dirs, files in os.walk(source_root, followlinks=False):
             dirs.sort()
@@ -196,6 +261,9 @@ class Config:
                 continue
             source = Path(current_root)
             relative = source.relative_to(source_root).as_posix()
+            remap = remaps.get(relative)
+            if remap is not None:
+                matched_remaps.add(relative)
             include = export["include"]
             if include:
                 matched_includes.update(
@@ -205,8 +273,36 @@ class Config:
                 )
             if self._selected(relative, include, export["exclude"]):
                 discovered += 1
-                yield export["harness"], f"skills/{source.name}", source
+                if remap is None:
+                    names = [source.name]
+                else:
+                    names = [remap["name"] or source.name, *remap["aliases"]]
+                    names = [
+                        self._validate_skill_name(
+                            skill_name,
+                            f"{name}/{relative} installed skill name",
+                        )
+                        for skill_name in names
+                    ]
+                if len(set(names)) != len(names):
+                    raise SystemExit(f"Duplicate remap name for {name}/{relative}")
+                for skill_name in sorted(names):
+                    target_source = (
+                        self._materialize_remapped_skill(
+                            name, export["harness"], source, skill_name
+                        )
+                        if remap is not None
+                        else source
+                    )
+                    yield export["harness"], f"skills/{skill_name}", target_source
             dirs.clear()
+
+        unmatched_remaps = sorted(set(remaps) - matched_remaps)
+        if unmatched_remaps:
+            raise SystemExit(
+                f"Remap path(s) matched no skills in {name}/{export['from']}: "
+                f"{', '.join(unmatched_remaps)}"
+            )
 
         unmatched_literals = [
             pattern
@@ -224,6 +320,57 @@ class Config:
                 f"[config] WARNING: skill export selected nothing: {name}/{export['from']}",
                 file=sys.stderr,
             )
+
+    def _materialize_remapped_skill(
+        self, submodule: str, harness: str, source: Path, skill_name: str
+    ) -> Path:
+        """Create a managed skill copy whose directory and frontmatter agree."""
+        relative_source = source.resolve().relative_to(self.repo_root).as_posix()
+        destination = (
+            self.repo_root
+            / ".generated"
+            / "skills"
+            / harness
+            / submodule
+            / relative_source.replace("/", "__")
+            / skill_name
+        )
+        skill_file = source / "SKILL.md"
+        contents = skill_file.read_text()
+        rewritten = self._rewrite_skill_name(contents, skill_name, skill_file)
+
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        temporary = Path(
+            tempfile.mkdtemp(prefix=f".{skill_name}.", dir=destination.parent)
+        )
+        try:
+            generated = temporary / skill_name
+            shutil.copytree(source, generated, symlinks=False)
+            (generated / "SKILL.md").write_text(rewritten)
+            if destination.exists():
+                shutil.rmtree(destination)
+            generated.replace(destination)
+        finally:
+            if temporary.exists():
+                shutil.rmtree(temporary)
+        return destination
+
+    @staticmethod
+    def _rewrite_skill_name(contents: str, skill_name: str, source: Path) -> str:
+        match = re.match(r"\A---\n(?P<frontmatter>.*?)\n---\n", contents, re.DOTALL)
+        if match is None:
+            raise SystemExit(f"Skill frontmatter is missing: {source}")
+        frontmatter = match.group("frontmatter")
+        replaced, count = re.subn(
+            r"(?m)^name:\s*[^\n]+$", f"name: {skill_name}", frontmatter, count=1
+        )
+        if count != 1:
+            raise SystemExit(f"Skill frontmatter name is missing: {source}")
+        return (
+            contents[: match.start("frontmatter")]
+            + replaced
+            + contents[match.end("frontmatter") :]
+        )
 
     def _list_submodule_targets(self) -> Iterator[tuple[str, str, Path]]:
         for name, entry, source_base in self._submodule_entries():

@@ -81,6 +81,95 @@ class SubmoduleExportTests(unittest.TestCase):
             [("claude", "skills/example")],
         )
 
+    def test_remap_renames_a_skill_and_installs_aliases(self):
+        self.write_config(
+            """    exports:
+      - harness: agents
+        remap:
+          category/example:
+            name: renamed-example
+            aliases:
+              - example
+              - alternate-example
+"""
+        )
+
+        targets = self.config.list_harness_targets()
+
+        self.assertEqual(
+            [(harness, target) for harness, target, _ in targets],
+            [
+                ("agents", "skills/alternate-example"),
+                ("agents", "skills/example"),
+                ("agents", "skills/renamed-example"),
+            ],
+        )
+
+        sync_harness(self.config, "agents")
+
+        home = self.root / "home" / ".agents" / "skills"
+        for name in ("example", "renamed-example", "alternate-example"):
+            skill = home / name / "SKILL.md"
+            self.assertTrue(skill.is_file())
+            self.assertIn(f"name: {name}", skill.read_text())
+
+    def test_remap_rejects_duplicate_installed_names(self):
+        self.write_config(
+            """    exports:
+      - harness: agents
+        remap:
+          category/example:
+            aliases:
+              - example
+"""
+        )
+
+        with self.assertRaisesRegex(SystemExit, "Duplicate remap name"):
+            self.config.list_harness_targets()
+
+    def test_remap_requires_a_discovered_source_skill(self):
+        self.write_config(
+            """    exports:
+      - harness: agents
+        remap:
+          missing:
+            name: renamed-example
+"""
+        )
+
+        with self.assertRaisesRegex(SystemExit, r"Remap path\(s\) matched no skills"):
+            self.config.list_harness_targets()
+
+    def test_remap_rejects_invalid_names(self):
+        self.write_config(
+            """    exports:
+      - harness: agents
+        remap:
+          category/example:
+            name: Invalid Name
+"""
+        )
+
+        with self.assertRaisesRegex(SystemExit, "lowercase hyphen-separated"):
+            self.config.list_harness_targets()
+
+    def test_remap_rejects_collisions_with_other_skills(self):
+        other = self.source_root / "skills" / "other"
+        other.mkdir()
+        (other / "SKILL.md").write_text("---\nname: other\n---\n")
+        self.write_config(
+            """    exports:
+      - harness: agents
+        remap:
+          category/example:
+            aliases:
+              - other
+"""
+        )
+
+        with self.assertRaisesRegex(SystemExit, "Duplicate target agents:skills/other"):
+            self.config.list_harness_targets()
+
     def test_exact_file_and_directory_exports_use_harness_relative_targets(self):
         references = self.source_root / "references"
         references.mkdir()
