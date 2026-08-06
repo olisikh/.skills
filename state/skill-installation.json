@@ -24,12 +24,6 @@
       "source": "submodules/mattpocock-skills/skills/engineering/ask-matt",
       "status": "complete"
     },
-    "agents:skills/batch-grill-me": {
-      "harness": "agents",
-      "path": "skills/batch-grill-me",
-      "source": "submodules/mattpocock-skills/skills/in-progress/batch-grill-me",
-      "status": "complete"
-    },
     "agents:skills/brand-guidelines": {
       "harness": "agents",
       "path": "skills/brand-guidelines",
@@ -142,12 +136,6 @@
       "harness": "agents",
       "path": "skills/dotfiles-ops",
       "source": "harness/agents/skills/dotfiles-ops",
-      "status": "complete"
-    },
-    "agents:skills/edit-article": {
-      "harness": "agents",
-      "path": "skills/edit-article",
-      "source": "submodules/mattpocock-skills/skills/personal/edit-article",
       "status": "complete"
     },
     "agents:skills/explain": {
@@ -477,7 +465,7 @@
     "agents:skills/to-questionnaire": {
       "harness": "agents",
       "path": "skills/to-questionnaire",
-      "source": "submodules/mattpocock-skills/skills/in-progress/to-questionnaire",
+      "source": "submodules/mattpocock-skills/skills/productivity/to-questionnaire",
       "status": "complete"
     },
     "agents:skills/to-spec": {
@@ -510,6 +498,12 @@
       "source": "submodules/awesome-llm-skills/video-downloader",
       "status": "complete"
     },
+    "agents:skills/wait-what": {
+      "harness": "agents",
+      "path": "skills/wait-what",
+      "source": "submodules/mattpocock-skills/skills/productivity/wait-what",
+      "status": "complete"
+    },
     "agents:skills/wayfinder": {
       "harness": "agents",
       "path": "skills/wayfinder",
@@ -531,7 +525,7 @@
     "agents:skills/wizard": {
       "harness": "agents",
       "path": "skills/wizard",
-      "source": "submodules/mattpocock-skills/skills/in-progress/wizard",
+      "source": "submodules/mattpocock-skills/skills/engineering/wizard",
       "status": "complete"
     },
     "agents:skills/writing-beats": {
@@ -540,16 +534,16 @@
       "source": "submodules/mattpocock-skills/skills/in-progress/writing-beats",
       "status": "complete"
     },
+    "agents:skills/writing-for-agents": {
+      "harness": "agents",
+      "path": "skills/writing-for-agents",
+      "source": "submodules/mattpocock-skills/skills/productivity/writing-for-agents",
+      "status": "complete"
+    },
     "agents:skills/writing-fragments": {
       "harness": "agents",
       "path": "skills/writing-fragments",
       "source": "submodules/mattpocock-skills/skills/in-progress/writing-fragments",
-      "status": "complete"
-    },
-    "agents:skills/writing-great-skills": {
-      "harness": "agents",
-      "path": "skills/writing-great-skills",
-      "source": "submodules/mattpocock-skills/skills/productivity/writing-great-skills",
       "status": "complete"
     },
     "agents:skills/writing-shape": {
@@ -592,12 +586,6 @@
       "harness": "claude",
       "path": "skills/ask-matt",
       "source": "submodules/mattpocock-skills/skills/engineering/ask-matt",
-      "status": "complete"
-    },
-    "claude:skills/batch-grill-me": {
-      "harness": "claude",
-      "path": "skills/batch-grill-me",
-      "source": "submodules/mattpocock-skills/skills/in-progress/batch-grill-me",
       "status": "complete"
     },
     "claude:skills/brand-guidelines": {
@@ -724,12 +712,6 @@
       "harness": "claude",
       "path": "skills/dotfiles-ops",
       "source": "harness/agents/skills/dotfiles-ops",
-      "status": "complete"
-    },
-    "claude:skills/edit-article": {
-      "harness": "claude",
-      "path": "skills/edit-article",
-      "source": "submodules/mattpocock-skills/skills/personal/edit-article",
       "status": "complete"
     },
     "claude:skills/explain": {
@@ -1065,7 +1047,7 @@
     "claude:skills/to-questionnaire": {
       "harness": "claude",
       "path": "skills/to-questionnaire",
-      "source": "submodules/mattpocock-skills/skills/in-progress/to-questionnaire",
+      "source": "submodules/mattpocock-skills/skills/productivity/to-questionnaire",
       "status": "complete"
     },
     "claude:skills/to-spec": {
@@ -1098,6 +1080,12 @@
       "source": "submodules/awesome-llm-skills/video-downloader",
       "status": "complete"
     },
+    "claude:skills/wait-what": {
+      "harness": "claude",
+      "path": "skills/wait-what",
+      "source": "submodules/mattpocock-skills/skills/productivity/wait-what",
+      "status": "complete"
+    },
     "claude:skills/wayfinder": {
       "harness": "claude",
       "path": "skills/wayfinder",
@@ -1125,7 +1113,7 @@
     "claude:skills/wizard": {
       "harness": "claude",
       "path": "skills/wizard",
-      "source": "submodules/mattpocock-skills/skills/in-progress/wizard",
+      "source": "submodules/mattpocock-skills/skills/engineering/wizard",
       "status": "complete"
     },
     "claude:skills/writing-beats": {
@@ -1134,16 +1122,16 @@
       "source": "submodules/mattpocock-skills/skills/in-progress/writing-beats",
       "status": "complete"
     },
+    "claude:skills/writing-for-agents": {
+      "harness": "claude",
+      "path": "skills/writing-for-agents",
+      "source": "submodules/mattpocock-skills/skills/productivity/writing-for-agents",
+      "status": "complete"
+    },
     "claude:skills/writing-fragments": {
       "harness": "claude",
       "path": "skills/writing-fragments",
       "source": "submodules/mattpocock-skills/skills/in-progress/writing-fragments",
-      "status": "complete"
-    },
-    "claude:skills/writing-great-skills": {
-      "harness": "claude",
-      "path": "skills/writing-great-skills",
-      "source": "submodules/mattpocock-skills/skills/productivity/writing-great-skills",
       "status": "complete"
     },
     "claude:skills/writing-shape": {
