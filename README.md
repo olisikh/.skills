@@ -19,7 +19,7 @@ llm-harness/
 │   └── llm-harness-ops.md     # canonical operational guide
 ├── harness-paths.yaml         # non-obvious harness root overrides
 ├── harness.py                 # unified entrypoint
-├── llm_harness/               # Python implementation
+├── lib/                       # Python implementation
 ├── scripts/                   # automation helpers
 ├── submodules/                # shared upstream skill submodules
 │   ├── obsidian-skills
