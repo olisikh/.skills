@@ -33,7 +33,7 @@
     "agents:skills/bro": {
       "harness": "agents",
       "path": "skills/bro",
-      "source": "harness/agents/skills/bro",
+      "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/bro",
       "status": "complete"
     },
     "agents:skills/canvas-design": {
@@ -501,7 +501,7 @@
     "agents:skills/wait-what": {
       "harness": "agents",
       "path": "skills/wait-what",
-      "source": "submodules/mattpocock-skills/skills/productivity/wait-what",
+      "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/wait-what",
       "status": "complete"
     },
     "agents:skills/wayfinder": {
@@ -597,7 +597,7 @@
     "claude:skills/bro": {
       "harness": "claude",
       "path": "skills/bro",
-      "source": "harness/agents/skills/bro",
+      "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/bro",
       "status": "complete"
     },
     "claude:skills/canvas-design": {
@@ -1083,7 +1083,7 @@
     "claude:skills/wait-what": {
       "harness": "claude",
       "path": "skills/wait-what",
-      "source": "submodules/mattpocock-skills/skills/productivity/wait-what",
+      "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/wait-what",
       "status": "complete"
     },
     "claude:skills/wayfinder": {
