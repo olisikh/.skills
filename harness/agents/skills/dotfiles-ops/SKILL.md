@@ -1,6 +1,6 @@
 ---
 name: dotfiles-ops
-description: Operate Oleksii's ~/.dotfiles nix-darwin/home-manager repo: inspect, pull, rebuild, rollback, verify launchd/app effects, and handle wrapper/PATH/Homebrew pitfalls.
+description: "Operate Oleksii's ~/.dotfiles nix-darwin/home-manager repo: inspect, pull, rebuild, rollback, verify launchd/app effects, and handle wrapper/PATH/Homebrew pitfalls."
 category: devops
 ---
 

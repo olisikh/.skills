@@ -5,6 +5,13 @@ skill_mirrors:
   # Claude discovers only direct children of ~/.claude/skills.
   claude:
     from: agents
+    flatten: true
+  # Pi also discovers skills from a flat global skills directory. Mirror the
+  # shared agent skills there so category prefixes do not become part of the
+  # installed skill layout.
+  pi:
+    from: agents
+    flatten: true
 
 submodules:
   obsidian-skills:
