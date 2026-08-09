@@ -1260,6 +1260,162 @@
       "source": "submodules/llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query",
       "status": "complete"
     },
+    "pi:skills/apple-notes-to-obsidian": {
+      "harness": "pi",
+      "path": "skills/apple-notes-to-obsidian",
+      "source": "harness/agents/skills/apple-notes-to-obsidian",
+      "status": "complete"
+    },
+    "pi:skills/artifacts-builder": {
+      "harness": "pi",
+      "path": "skills/artifacts-builder",
+      "source": "submodules/awesome-llm-skills/artifacts-builder",
+      "status": "complete"
+    },
+    "pi:skills/ask-matt": {
+      "harness": "pi",
+      "path": "skills/ask-matt",
+      "source": "submodules/mattpocock-skills/skills/engineering/ask-matt",
+      "status": "complete"
+    },
+    "pi:skills/brand-guidelines": {
+      "harness": "pi",
+      "path": "skills/brand-guidelines",
+      "source": "submodules/awesome-llm-skills/brand-guidelines",
+      "status": "complete"
+    },
+    "pi:skills/bro": {
+      "harness": "pi",
+      "path": "skills/bro",
+      "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/bro",
+      "status": "complete"
+    },
+    "pi:skills/canvas-design": {
+      "harness": "pi",
+      "path": "skills/canvas-design",
+      "source": "submodules/awesome-llm-skills/canvas-design",
+      "status": "complete"
+    },
+    "pi:skills/cavecrew": {
+      "harness": "pi",
+      "path": "skills/cavecrew",
+      "source": "submodules/caveman/skills/cavecrew",
+      "status": "complete"
+    },
+    "pi:skills/caveman": {
+      "harness": "pi",
+      "path": "skills/caveman",
+      "source": "submodules/caveman/skills/caveman",
+      "status": "complete"
+    },
+    "pi:skills/caveman-commit": {
+      "harness": "pi",
+      "path": "skills/caveman-commit",
+      "source": "submodules/caveman/skills/caveman-commit",
+      "status": "complete"
+    },
+    "pi:skills/caveman-help": {
+      "harness": "pi",
+      "path": "skills/caveman-help",
+      "source": "submodules/caveman/skills/caveman-help",
+      "status": "complete"
+    },
+    "pi:skills/caveman-review": {
+      "harness": "pi",
+      "path": "skills/caveman-review",
+      "source": "submodules/caveman/skills/caveman-review",
+      "status": "complete"
+    },
+    "pi:skills/changelog-generator": {
+      "harness": "pi",
+      "path": "skills/changelog-generator",
+      "source": "submodules/awesome-llm-skills/changelog-generator",
+      "status": "complete"
+    },
+    "pi:skills/code-review": {
+      "harness": "pi",
+      "path": "skills/code-review",
+      "source": "submodules/mattpocock-skills/skills/engineering/code-review",
+      "status": "complete"
+    },
+    "pi:skills/codebase-design": {
+      "harness": "pi",
+      "path": "skills/codebase-design",
+      "source": "submodules/mattpocock-skills/skills/engineering/codebase-design",
+      "status": "complete"
+    },
+    "pi:skills/competitive-ads-extractor": {
+      "harness": "pi",
+      "path": "skills/competitive-ads-extractor",
+      "source": "submodules/awesome-llm-skills/competitive-ads-extractor",
+      "status": "complete"
+    },
+    "pi:skills/content-research-writer": {
+      "harness": "pi",
+      "path": "skills/content-research-writer",
+      "source": "submodules/awesome-llm-skills/content-research-writer",
+      "status": "complete"
+    },
+    "pi:skills/defuddle": {
+      "harness": "pi",
+      "path": "skills/defuddle",
+      "source": "submodules/obsidian-skills/skills/defuddle",
+      "status": "complete"
+    },
+    "pi:skills/diagnosing-bugs": {
+      "harness": "pi",
+      "path": "skills/diagnosing-bugs",
+      "source": "submodules/mattpocock-skills/skills/engineering/diagnosing-bugs",
+      "status": "complete"
+    },
+    "pi:skills/docx": {
+      "harness": "pi",
+      "path": "skills/docx",
+      "source": "submodules/awesome-llm-skills/document-skills/docx",
+      "status": "complete"
+    },
+    "pi:skills/domain-modeling": {
+      "harness": "pi",
+      "path": "skills/domain-modeling",
+      "source": "submodules/mattpocock-skills/skills/engineering/domain-modeling",
+      "status": "complete"
+    },
+    "pi:skills/domain-name-brainstormer": {
+      "harness": "pi",
+      "path": "skills/domain-name-brainstormer",
+      "source": "submodules/awesome-llm-skills/domain-name-brainstormer",
+      "status": "complete"
+    },
+    "pi:skills/dotfiles-ops": {
+      "harness": "pi",
+      "path": "skills/dotfiles-ops",
+      "source": "harness/agents/skills/dotfiles-ops",
+      "status": "complete"
+    },
+    "pi:skills/explain": {
+      "harness": "pi",
+      "path": "skills/explain",
+      "source": "harness/agents/skills/explain",
+      "status": "complete"
+    },
+    "pi:skills/file-organizer": {
+      "harness": "pi",
+      "path": "skills/file-organizer",
+      "source": "submodules/awesome-llm-skills/file-organizer",
+      "status": "complete"
+    },
+    "pi:skills/fix-issue": {
+      "harness": "pi",
+      "path": "skills/fix-issue",
+      "source": "harness/agents/skills/fix-issue",
+      "status": "complete"
+    },
+    "pi:skills/git-commit": {
+      "harness": "pi",
+      "path": "skills/git-commit",
+      "source": "harness/agents/skills/git-commit",
+      "status": "complete"
+    },
     "pi:skills/graphify/SKILL.md": {
       "harness": "pi",
       "path": "skills/graphify/SKILL.md",
@@ -1270,6 +1426,396 @@
       "harness": "pi",
       "path": "skills/graphify/references",
       "source": "submodules/graphify/graphify/skills/pi/references",
+      "status": "complete"
+    },
+    "pi:skills/grill-me": {
+      "harness": "pi",
+      "path": "skills/grill-me",
+      "source": "submodules/mattpocock-skills/skills/productivity/grill-me",
+      "status": "complete"
+    },
+    "pi:skills/grill-with-docs": {
+      "harness": "pi",
+      "path": "skills/grill-with-docs",
+      "source": "submodules/mattpocock-skills/skills/engineering/grill-with-docs",
+      "status": "complete"
+    },
+    "pi:skills/grilling": {
+      "harness": "pi",
+      "path": "skills/grilling",
+      "source": "submodules/mattpocock-skills/skills/productivity/grilling",
+      "status": "complete"
+    },
+    "pi:skills/handoff": {
+      "harness": "pi",
+      "path": "skills/handoff",
+      "source": "harness/agents/skills/productivity/handoff",
+      "status": "complete"
+    },
+    "pi:skills/image-enhancer": {
+      "harness": "pi",
+      "path": "skills/image-enhancer",
+      "source": "submodules/awesome-llm-skills/image-enhancer",
+      "status": "complete"
+    },
+    "pi:skills/implement": {
+      "harness": "pi",
+      "path": "skills/implement",
+      "source": "submodules/mattpocock-skills/skills/engineering/implement",
+      "status": "complete"
+    },
+    "pi:skills/improve-codebase-architecture": {
+      "harness": "pi",
+      "path": "skills/improve-codebase-architecture",
+      "source": "submodules/mattpocock-skills/skills/engineering/improve-codebase-architecture",
+      "status": "complete"
+    },
+    "pi:skills/internal-comms": {
+      "harness": "pi",
+      "path": "skills/internal-comms",
+      "source": "submodules/awesome-llm-skills/internal-comms",
+      "status": "complete"
+    },
+    "pi:skills/invoice-organizer": {
+      "harness": "pi",
+      "path": "skills/invoice-organizer",
+      "source": "submodules/awesome-llm-skills/invoice-organizer",
+      "status": "complete"
+    },
+    "pi:skills/json-canvas": {
+      "harness": "pi",
+      "path": "skills/json-canvas",
+      "source": "submodules/obsidian-skills/skills/json-canvas",
+      "status": "complete"
+    },
+    "pi:skills/lead-research-assistant": {
+      "harness": "pi",
+      "path": "skills/lead-research-assistant",
+      "source": "submodules/awesome-llm-skills/lead-research-assistant",
+      "status": "complete"
+    },
+    "pi:skills/limits": {
+      "harness": "pi",
+      "path": "skills/limits",
+      "source": "harness/agents/skills/mlops/limits",
+      "status": "complete"
+    },
+    "pi:skills/llm-harness-ops": {
+      "harness": "pi",
+      "path": "skills/llm-harness-ops",
+      "source": "harness/agents/skills/llm-harness-ops",
+      "status": "complete"
+    },
+    "pi:skills/loop-me": {
+      "harness": "pi",
+      "path": "skills/loop-me",
+      "source": "submodules/mattpocock-skills/skills/in-progress/loop-me",
+      "status": "complete"
+    },
+    "pi:skills/mcp-builder": {
+      "harness": "pi",
+      "path": "skills/mcp-builder",
+      "source": "submodules/awesome-llm-skills/mcp-builder",
+      "status": "complete"
+    },
+    "pi:skills/meeting-insights-analyzer": {
+      "harness": "pi",
+      "path": "skills/meeting-insights-analyzer",
+      "source": "submodules/awesome-llm-skills/meeting-insights-analyzer",
+      "status": "complete"
+    },
+    "pi:skills/migrate-to-shoehorn": {
+      "harness": "pi",
+      "path": "skills/migrate-to-shoehorn",
+      "source": "submodules/mattpocock-skills/skills/misc/migrate-to-shoehorn",
+      "status": "complete"
+    },
+    "pi:skills/nix-for-dev": {
+      "harness": "pi",
+      "path": "skills/nix-for-dev",
+      "source": "harness/agents/skills/nix-for-dev",
+      "status": "complete"
+    },
+    "pi:skills/nix-justfile": {
+      "harness": "pi",
+      "path": "skills/nix-justfile",
+      "source": "harness/agents/skills/nix-justfile",
+      "status": "complete"
+    },
+    "pi:skills/nix-manager": {
+      "harness": "pi",
+      "path": "skills/nix-manager",
+      "source": "harness/agents/skills/nix-manager",
+      "status": "complete"
+    },
+    "pi:skills/nix-shell": {
+      "harness": "pi",
+      "path": "skills/nix-shell",
+      "source": "harness/agents/skills/nix-shell",
+      "status": "complete"
+    },
+    "pi:skills/notion-knowledge-capture": {
+      "harness": "pi",
+      "path": "skills/notion-knowledge-capture",
+      "source": "submodules/awesome-llm-skills/notion-knowledge-capture",
+      "status": "complete"
+    },
+    "pi:skills/notion-meeting-intelligence": {
+      "harness": "pi",
+      "path": "skills/notion-meeting-intelligence",
+      "source": "submodules/awesome-llm-skills/notion-meeting-intelligence",
+      "status": "complete"
+    },
+    "pi:skills/notion-research-documentation": {
+      "harness": "pi",
+      "path": "skills/notion-research-documentation",
+      "source": "submodules/awesome-llm-skills/notion-research-documentation",
+      "status": "complete"
+    },
+    "pi:skills/notion-spec-to-implementation": {
+      "harness": "pi",
+      "path": "skills/notion-spec-to-implementation",
+      "source": "submodules/awesome-llm-skills/notion-spec-to-implementation",
+      "status": "complete"
+    },
+    "pi:skills/obsidian-bases": {
+      "harness": "pi",
+      "path": "skills/obsidian-bases",
+      "source": "submodules/obsidian-skills/skills/obsidian-bases",
+      "status": "complete"
+    },
+    "pi:skills/obsidian-cli": {
+      "harness": "pi",
+      "path": "skills/obsidian-cli",
+      "source": "submodules/obsidian-skills/skills/obsidian-cli",
+      "status": "complete"
+    },
+    "pi:skills/obsidian-markdown": {
+      "harness": "pi",
+      "path": "skills/obsidian-markdown",
+      "source": "submodules/obsidian-skills/skills/obsidian-markdown",
+      "status": "complete"
+    },
+    "pi:skills/obsidian-vault": {
+      "harness": "pi",
+      "path": "skills/obsidian-vault",
+      "source": "harness/agents/skills/personal/obsidian-vault",
+      "status": "complete"
+    },
+    "pi:skills/pdf": {
+      "harness": "pi",
+      "path": "skills/pdf",
+      "source": "submodules/awesome-llm-skills/document-skills/pdf",
+      "status": "complete"
+    },
+    "pi:skills/pdf-to-kindle": {
+      "harness": "pi",
+      "path": "skills/pdf-to-kindle",
+      "source": "harness/agents/skills/pdf-to-kindle",
+      "status": "complete"
+    },
+    "pi:skills/pptx": {
+      "harness": "pi",
+      "path": "skills/pptx",
+      "source": "submodules/awesome-llm-skills/document-skills/pptx",
+      "status": "complete"
+    },
+    "pi:skills/prototype": {
+      "harness": "pi",
+      "path": "skills/prototype",
+      "source": "submodules/mattpocock-skills/skills/engineering/prototype",
+      "status": "complete"
+    },
+    "pi:skills/raffle-winner-picker": {
+      "harness": "pi",
+      "path": "skills/raffle-winner-picker",
+      "source": "submodules/awesome-llm-skills/raffle-winner-picker",
+      "status": "complete"
+    },
+    "pi:skills/research": {
+      "harness": "pi",
+      "path": "skills/research",
+      "source": "submodules/mattpocock-skills/skills/engineering/research",
+      "status": "complete"
+    },
+    "pi:skills/resemble-detect": {
+      "harness": "pi",
+      "path": "skills/resemble-detect",
+      "source": "submodules/awesome-llm-skills/resemble-detect",
+      "status": "complete"
+    },
+    "pi:skills/resolving-merge-conflicts": {
+      "harness": "pi",
+      "path": "skills/resolving-merge-conflicts",
+      "source": "submodules/mattpocock-skills/skills/engineering/resolving-merge-conflicts",
+      "status": "complete"
+    },
+    "pi:skills/scaffold-exercises": {
+      "harness": "pi",
+      "path": "skills/scaffold-exercises",
+      "source": "submodules/mattpocock-skills/skills/misc/scaffold-exercises",
+      "status": "complete"
+    },
+    "pi:skills/setup-matt-pocock-skills": {
+      "harness": "pi",
+      "path": "skills/setup-matt-pocock-skills",
+      "source": "submodules/mattpocock-skills/skills/engineering/setup-matt-pocock-skills",
+      "status": "complete"
+    },
+    "pi:skills/setup-pre-commit": {
+      "harness": "pi",
+      "path": "skills/setup-pre-commit",
+      "source": "submodules/mattpocock-skills/skills/misc/setup-pre-commit",
+      "status": "complete"
+    },
+    "pi:skills/setup-ts-deep-modules": {
+      "harness": "pi",
+      "path": "skills/setup-ts-deep-modules",
+      "source": "submodules/mattpocock-skills/skills/in-progress/setup-ts-deep-modules",
+      "status": "complete"
+    },
+    "pi:skills/slack-gif-creator": {
+      "harness": "pi",
+      "path": "skills/slack-gif-creator",
+      "source": "submodules/awesome-llm-skills/slack-gif-creator",
+      "status": "complete"
+    },
+    "pi:skills/sops-secret-safety": {
+      "harness": "pi",
+      "path": "skills/sops-secret-safety",
+      "source": "harness/agents/skills/sops-secret-safety",
+      "status": "complete"
+    },
+    "pi:skills/summarize-changes": {
+      "harness": "pi",
+      "path": "skills/summarize-changes",
+      "source": "harness/agents/skills/summarize-changes",
+      "status": "complete"
+    },
+    "pi:skills/tdd": {
+      "harness": "pi",
+      "path": "skills/tdd",
+      "source": "submodules/mattpocock-skills/skills/engineering/tdd",
+      "status": "complete"
+    },
+    "pi:skills/teach": {
+      "harness": "pi",
+      "path": "skills/teach",
+      "source": "submodules/mattpocock-skills/skills/productivity/teach",
+      "status": "complete"
+    },
+    "pi:skills/template-skill": {
+      "harness": "pi",
+      "path": "skills/template-skill",
+      "source": "submodules/awesome-llm-skills/template-skill",
+      "status": "complete"
+    },
+    "pi:skills/test-gen": {
+      "harness": "pi",
+      "path": "skills/test-gen",
+      "source": "harness/agents/skills/test-gen",
+      "status": "complete"
+    },
+    "pi:skills/theme-factory": {
+      "harness": "pi",
+      "path": "skills/theme-factory",
+      "source": "submodules/awesome-llm-skills/theme-factory",
+      "status": "complete"
+    },
+    "pi:skills/to-questionnaire": {
+      "harness": "pi",
+      "path": "skills/to-questionnaire",
+      "source": "submodules/mattpocock-skills/skills/productivity/to-questionnaire",
+      "status": "complete"
+    },
+    "pi:skills/to-spec": {
+      "harness": "pi",
+      "path": "skills/to-spec",
+      "source": "submodules/mattpocock-skills/skills/engineering/to-spec",
+      "status": "complete"
+    },
+    "pi:skills/to-tickets": {
+      "harness": "pi",
+      "path": "skills/to-tickets",
+      "source": "submodules/mattpocock-skills/skills/engineering/to-tickets",
+      "status": "complete"
+    },
+    "pi:skills/transcribe": {
+      "harness": "pi",
+      "path": "skills/transcribe",
+      "source": "harness/agents/skills/transcribe",
+      "status": "complete"
+    },
+    "pi:skills/triage": {
+      "harness": "pi",
+      "path": "skills/triage",
+      "source": "submodules/mattpocock-skills/skills/engineering/triage",
+      "status": "complete"
+    },
+    "pi:skills/video-downloader": {
+      "harness": "pi",
+      "path": "skills/video-downloader",
+      "source": "submodules/awesome-llm-skills/video-downloader",
+      "status": "complete"
+    },
+    "pi:skills/wait-what": {
+      "harness": "pi",
+      "path": "skills/wait-what",
+      "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/wait-what",
+      "status": "complete"
+    },
+    "pi:skills/wayfinder": {
+      "harness": "pi",
+      "path": "skills/wayfinder",
+      "source": "submodules/mattpocock-skills/skills/engineering/wayfinder",
+      "status": "complete"
+    },
+    "pi:skills/webapp-testing": {
+      "harness": "pi",
+      "path": "skills/webapp-testing",
+      "source": "submodules/awesome-llm-skills/webapp-testing",
+      "status": "complete"
+    },
+    "pi:skills/wiki": {
+      "harness": "pi",
+      "path": "skills/wiki",
+      "source": "harness/agents/skills/research/wiki",
+      "status": "complete"
+    },
+    "pi:skills/wizard": {
+      "harness": "pi",
+      "path": "skills/wizard",
+      "source": "submodules/mattpocock-skills/skills/engineering/wizard",
+      "status": "complete"
+    },
+    "pi:skills/writing-beats": {
+      "harness": "pi",
+      "path": "skills/writing-beats",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-beats",
+      "status": "complete"
+    },
+    "pi:skills/writing-for-agents": {
+      "harness": "pi",
+      "path": "skills/writing-for-agents",
+      "source": "submodules/mattpocock-skills/skills/productivity/writing-for-agents",
+      "status": "complete"
+    },
+    "pi:skills/writing-fragments": {
+      "harness": "pi",
+      "path": "skills/writing-fragments",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-fragments",
+      "status": "complete"
+    },
+    "pi:skills/writing-shape": {
+      "harness": "pi",
+      "path": "skills/writing-shape",
+      "source": "submodules/mattpocock-skills/skills/in-progress/writing-shape",
+      "status": "complete"
+    },
+    "pi:skills/xlsx": {
+      "harness": "pi",
+      "path": "skills/xlsx",
+      "source": "submodules/awesome-llm-skills/document-skills/xlsx",
       "status": "complete"
     }
   },
