@@ -13,3 +13,12 @@ hermes-state/skills/.curator_backups
 
 # Keep reproducible development dependencies despite the global shell.nix ignore rule.
 !shell.nix
+
+# Detached duplicate worktrees; canonical sources are under submodules/.
+/awesome-llm-skills/
+/caveman/
+/graphify/
+/llm-wiki/
+/mattpocock-skills/
+/obsidian-skills/
+/self-improving-agent/
