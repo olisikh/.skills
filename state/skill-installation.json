@@ -1218,6 +1218,12 @@
       "source": "harness/hermes/skills/model-routing",
       "status": "complete"
     },
+    "hermes:skills/obsidian-memory": {
+      "harness": "hermes",
+      "path": "skills/obsidian-memory",
+      "source": "harness/hermes/skills/personal/obsidian-memory",
+      "status": "complete"
+    },
     "openclaw:skills/self-improving-agent": {
       "harness": "openclaw",
       "path": "skills/self-improving-agent",
