@@ -2,7 +2,7 @@
 name: wiki
 description: >
   Universal agent skill for managing and querying an Obsidian-compatible,
-  Karpathy-style LLM-compiled wiki stored at ~/.llm-wiki/hub. Supports
+  Karpathy-style LLM-compiled wiki stored at the configured hub. Supports
   ingestion, compilation, query, lint, and ambient recall from topic
   sub-wikis. Activates on any wiki, knowledge-base, ingest, compile, query,
   lint, or long-term memory request, or when the current conversation looks
@@ -20,7 +20,7 @@ metadata:
 # Wiki
 
 You manage and query an LLM-compiled, Obsidian-compatible knowledge base stored in
-a Git repository at `~/.llm-wiki`.
+one Git repository rooted at `~/notes`.
 
 **Design goal:** this is the long-term memory layer — shared by Hermes, OpenClaw,
 OpenCode, Codex, Claude, and the human. Short-term hot memory stays in the
@@ -28,22 +28,23 @@ harness's native memory; durable compiled knowledge lives here.
 
 ## Canonical paths
 
-- Wiki repository: `~/.llm-wiki`
-- Hub (registry of topic wikis): `~/.llm-wiki/hub`
-- Hub config (optional): `~/.config/llm-wiki/config.json`
+- Unified Git repository: `~/notes`
+- Hub (registry of topic wikis): `~/notes/50 Knowledge/LLM Wiki/hub`
+- Hub config: `~/.config/llm-wiki/config.json`
   ```json
-  { "hub_path": "~/.llm-wiki/hub" }
+  { "hub_path": "~/notes/50 Knowledge/LLM Wiki/hub" }
   ```
-- Topic wikis: `~/.llm-wiki/hub/topics/<slug>/`
+- Topic wikis: `~/notes/50 Knowledge/LLM Wiki/hub/topics/<slug>/`
 - Default topic for this profile: `dotfiles`
 
 Always resolve the hub path by reading `~/.config/llm-wiki/config.json` first.
-If it is missing or has no `hub_path`, fall back to `~/.llm-wiki/hub`.
+For interactive reads, if it is missing or has no `hub_path`, use the portable
+fallback `~/wiki`; the maintenance script fails closed instead of guessing.
 
 ## Topic wiki layout
 
 ```
-~/.llm-wiki/hub/topics/<slug>/
+<hub>/topics/<slug>/
 ├── _index.md                 # Master index
 ├── config.md                 # Title, scope, conventions
 ├── schema.md                 # Topic-local conventions
@@ -123,7 +124,7 @@ reference card:
 ```markdown
 # LLM Wiki — quick reference
 
-Repo: ~/.llm-wiki  |  Hub: ~/.llm-wiki/hub  |  Default topic: dotfiles
+Repo: ~/notes  |  Hub: ~/notes/50 Knowledge/LLM Wiki/hub  |  Default topic: dotfiles
 
 Commands (use `/wiki <cmd>` in Hermes, or `/wiki <cmd>` as alias):
 

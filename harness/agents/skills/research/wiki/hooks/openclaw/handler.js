@@ -1,10 +1,10 @@
 /**
  * Wiki Session Hook for OpenClaw
  *
- * At session end, writes a redacted digest to ~/.llm-wiki/hub/.sessions/digests/
- * and appends high-signal feedback candidates to
- * ~/.llm-wiki/hub/.sessions/feedback/. The hook is conservative: full
- * transcripts are never written by default.
+ * At session end, writes a redacted digest to the configured hub's .sessions/digests/
+ * and appends high-signal feedback candidates to the configured hub's
+ * .sessions/feedback/. The hook is conservative: full transcripts are never
+ * written by default.
  *
  * Events:
  *   command:new / command:reset   session ended
@@ -17,19 +17,27 @@ const DEBUG = process.env.WIKI_SESSION_HOOK_DEBUG === '1';
 
 const HUB_PATH = (() => {
   const home = process.env.HOME || '/tmp';
+  const configPath = path.join(home, '.config', 'llm-wiki', 'config.json');
+
+  function expandConfiguredPath(value) {
+    const configured = String(value).trim();
+    if (configured === '~') return home;
+    if (configured.startsWith('~/')) return path.resolve(home, configured.slice(2));
+    return path.resolve(configured);
+  }
+
   try {
-    const configPath = path.join(home, '.config', 'llm-wiki', 'config.json');
     const raw = require('fs').readFileSync(configPath, 'utf-8');
     const config = JSON.parse(raw);
-    if (config.hub_path) {
-      return config.hub_path.startsWith('~')
-        ? path.join(home, config.hub_path.slice(2))
-        : config.hub_path;
+    if (typeof config.hub_path === 'string' && config.hub_path.trim()) {
+      return expandConfiguredPath(config.hub_path);
     }
-  } catch {
-    // ignore
+  } catch (error) {
+    if (DEBUG) console.error(`[wiki-hook] config resolution failed: ${error.message}`);
   }
-  return path.join(home, '.llm-wiki', 'hub');
+
+  // Portable fallback for interactive hooks; maintenance fails closed instead.
+  return path.join(home, 'wiki');
 })();
 
 const MAX_EXCERPTS = 5;

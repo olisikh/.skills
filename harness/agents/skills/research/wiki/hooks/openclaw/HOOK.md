@@ -1,14 +1,14 @@
 ---
 name: wiki-session
-description: "Capture redacted OpenClaw session context into the ~/.llm-wiki/hub/.sessions/ queue for later review and possible topic-wiki promotion."
+description: "Capture redacted OpenClaw session context into the configured wiki hub's .sessions/ queue for later review and possible topic-wiki promotion."
 metadata: {"openclaw":{"emoji":"📚","events":["command:new","command:reset"],"async":true}}
 ---
 
 # Wiki Session Hook
 
 At the end of an OpenClaw session, this hook writes a redacted digest to
-`~/.llm-wiki/hub/.sessions/digests/` and appends a feedback-candidate event to
-`~/.llm-wiki/hub/.sessions/feedback/` if the session contained corrections,
+`<configured-hub>/.sessions/digests/` and appends a feedback-candidate event to
+`<configured-hub>/.sessions/feedback/` if the session contained corrections,
 preferences, approvals, or important decisions.
 
 The hook is intentionally conservative: it captures metadata and redacted
@@ -23,6 +23,6 @@ openclaw hooks enable wiki-session
 
 ## Safety
 
-- Only writes to `~/.llm-wiki/hub/.sessions/`
+- Only writes to `<configured-hub>/.sessions/`
 - Redacts API keys, tokens, and long opaque blobs before writing
 - Hook failures are swallowed; set `WIKI_SESSION_HOOK_DEBUG=1` to log failures
