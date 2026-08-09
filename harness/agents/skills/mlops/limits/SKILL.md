@@ -15,7 +15,14 @@ python ~/.agents/skills/limits/scripts/limits.py
 
 When this skill is loaded in response to a limits/quota request, **execute the default command immediately** without asking the user for confirmation. Only deviate to filter by provider or output JSON if the user explicitly asks for those options.
 
-The script queries CodexBar and prints one line per configured provider. If the channel supports Markdown, wrap the complete output in one fenced `text` code block.
+The script queries CodexBar and prints one line per configured provider. The normal output contract is fixed:
+
+- One provider per line, exactly: `Provider: <remaining>%/<reset> ...`.
+- Percentages are **remaining** capacity (`100 - usedPercent`), never used capacity.
+- Use the canonical display names `Codex` and `Opencode GO` (and readable title-case names for other providers).
+- Preserve the provider's windows in the order returned by CodexBar; do not add commentary or substitute estimates.
+
+If the channel supports Markdown, wrap the complete provider output in one fenced `text` code block.
 
 ## Options
 

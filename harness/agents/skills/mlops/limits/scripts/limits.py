@@ -10,6 +10,25 @@ import subprocess
 import sys
 from typing import Any
 
+DISPLAY_NAMES = {
+    "codex": "Codex",
+    "opencodego": "Opencode GO",
+    "openai": "OpenAI",
+    "gemini": "Gemini",
+    "claude": "Claude",
+    "openrouter": "OpenRouter",
+    "zai": "ZAI",
+    "minimax": "MiniMax",
+    "kimi": "Kimi",
+    "mistral": "Mistral",
+    "deepseek": "DeepSeek",
+    "alibaba-coding-plan": "Alibaba Coding Plan",
+    "vertexai": "Vertex AI",
+    "copilot": "Copilot",
+    "kilo": "Kilo",
+    "ollama": "Ollama",
+}
+
 PROVIDER_MAP = {
     "openai-codex": "codex",
     "codex": "codex",
@@ -127,7 +146,7 @@ def remaining_token(
 
 def format_line(item: dict[str, Any]) -> str | None:
     provider = str(item.get("provider", "unknown"))
-    label = provider
+    label = DISPLAY_NAMES.get(provider, provider)
     if err := item.get("error"):
         return f"{label}: error ({err})"
     usage = item.get("usage") or {}
