@@ -354,6 +354,12 @@
       "source": "submodules/awesome-llm-skills/document-skills/pdf",
       "status": "complete"
     },
+    "agents:skills/pdf-to-kindle": {
+      "harness": "agents",
+      "path": "skills/pdf-to-kindle",
+      "source": "harness/agents/skills/pdf-to-kindle",
+      "status": "complete"
+    },
     "agents:skills/pptx": {
       "harness": "agents",
       "path": "skills/pptx",
@@ -934,6 +940,12 @@
       "harness": "claude",
       "path": "skills/pdf",
       "source": "submodules/awesome-llm-skills/document-skills/pdf",
+      "status": "complete"
+    },
+    "claude:skills/pdf-to-kindle": {
+      "harness": "claude",
+      "path": "skills/pdf-to-kindle",
+      "source": "harness/agents/skills/pdf-to-kindle",
       "status": "complete"
     },
     "claude:skills/pptx": {
