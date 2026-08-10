@@ -72,7 +72,7 @@ Current conventions:
 - Shared upstream submodules live under `submodules/` and currently are:
   - `obsidian-skills`
   - `mattpocock-skills`
-  - `llm-wiki`
+- The LLM Wiki is a first-party v2 skill under `harness/agents/skills/research/wiki/`; it is intentionally not a submodule.
 - `./harness.py update-skills` is source of truth for configured submodule pointer updates.
 - Exports targeting `skills` discover and flatten skill directories; other targets create exact file or directory links.
 - Harness-specific selections use export-local `include` and `exclude` patterns.

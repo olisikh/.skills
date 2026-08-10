@@ -23,8 +23,7 @@ llm-harness/
 ├── scripts/                   # automation helpers
 ├── submodules/                # shared upstream skill submodules
 │   ├── obsidian-skills
-│   ├── mattpocock-skills
-│   └── llm-wiki
+│   └── mattpocock-skills
 └── config.yaml                # skill source mapping rules
 ```
 
@@ -65,11 +64,10 @@ There is also a local skill, `llm-harness-ops`, that provides a guided workflow 
 
 ## Skill source sync
 
-Shared skill sources live as git submodules:
+Shared external skill sources live as git submodules; the LLM Wiki v2 is maintained as a first-party source under `harness/agents/skills/research/wiki/`:
 
 - `obsidian-skills`
 - `mattpocock-skills`
-- `llm-wiki`
 
 Update submodule pointers with:
 

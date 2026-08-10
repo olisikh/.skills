@@ -34,15 +34,6 @@ submodules:
           - misc/git-guardrails-claude-code
           - in-progress/claude-handoff
 
-  llm-wiki:
-    exports:
-      - from: claude-plugin/skills
-        harness: claude
-      - from: plugins/llm-wiki-opencode/skills
-        harness: opencode
-      - from: plugins/llm-wiki/skills
-        harness: codex
-
   awesome-llm-skills:
     exports:
       - from: .

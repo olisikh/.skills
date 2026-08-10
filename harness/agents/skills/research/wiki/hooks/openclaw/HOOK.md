@@ -1,28 +1,22 @@
 ---
 name: wiki-session
-description: "Capture redacted OpenClaw session context into the configured wiki hub's .sessions/ queue for later review and possible topic-wiki promotion."
+version: 2.0.0
+description: "Capture redacted OpenClaw session context under the configured LLM Wiki v2 root."
 metadata: {"openclaw":{"emoji":"📚","events":["command:new","command:reset"],"async":true}}
 ---
 
-# Wiki Session Hook
+# Wiki v2 session hook
 
-At the end of an OpenClaw session, this hook writes a redacted digest to
-`<configured-hub>/.sessions/digests/` and appends a feedback-candidate event to
-`<configured-hub>/.sessions/feedback/` if the session contained corrections,
-preferences, approvals, or important decisions.
+At the end of an OpenClaw session, write a redacted digest under
+`WIKI_ROOT/90 System/.sessions/digests/` and high-signal feedback candidates
+under `WIKI_ROOT/90 System/.sessions/feedback/`.
 
-The hook is intentionally conservative: it captures metadata and redacted
-highlights, not full transcripts. Topic-wiki promotion remains explicit and
-user-directed.
-
-## Enable
-
-```bash
-openclaw hooks enable wiki-session
-```
+The hook resolves `WIKI_ROOT` from `~/.config/llm-wiki/config.json`. It never
+uses the removed `~/.llm-wiki` checkout, copies full transcripts, or promotes
+session material into `20 Knowledge/` automatically.
 
 ## Safety
 
-- Only writes to `<configured-hub>/.sessions/`
-- Redacts API keys, tokens, and long opaque blobs before writing
-- Hook failures are swallowed; set `WIKI_SESSION_HOOK_DEBUG=1` to log failures
+- Only write below `90 System/.sessions/`.
+- Redact API keys, tokens, passwords, cookies, and opaque blobs.
+- Swallow hook errors by default; set `WIKI_SESSION_HOOK_DEBUG=1` for diagnostics.

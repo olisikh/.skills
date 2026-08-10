@@ -1116,12 +1116,6 @@
       "source": "harness/agents/skills/research/wiki",
       "status": "complete"
     },
-    "claude:skills/wiki-manager": {
-      "harness": "claude",
-      "path": "skills/wiki-manager",
-      "source": "submodules/llm-wiki/claude-plugin/skills/wiki-manager",
-      "status": "complete"
-    },
     "claude:skills/wizard": {
       "harness": "claude",
       "path": "skills/wizard",
@@ -1170,18 +1164,6 @@
       "source": "submodules/graphify/graphify/skills/codex/references",
       "status": "complete"
     },
-    "codex:skills/wiki": {
-      "harness": "codex",
-      "path": "skills/wiki",
-      "source": "submodules/llm-wiki/plugins/llm-wiki/skills/wiki",
-      "status": "complete"
-    },
-    "codex:skills/wiki-query": {
-      "harness": "codex",
-      "path": "skills/wiki-query",
-      "source": "submodules/llm-wiki/plugins/llm-wiki/skills/wiki-query",
-      "status": "complete"
-    },
     "hermes:skills/autonomous-change-execution": {
       "harness": "hermes",
       "path": "skills/autonomous-change-execution",
@@ -1224,6 +1206,12 @@
       "source": "harness/hermes/skills/personal/obsidian-memory",
       "status": "complete"
     },
+    "hermes:skills/wiki": {
+      "harness": "hermes",
+      "path": "skills/wiki",
+      "source": "harness/hermes/skills/wiki",
+      "status": "complete"
+    },
     "openclaw:skills/self-improving-agent": {
       "harness": "openclaw",
       "path": "skills/self-improving-agent",
@@ -1246,18 +1234,6 @@
       "harness": "opencode",
       "path": "skills/graphify/references",
       "source": "submodules/graphify/graphify/skills/opencode/references",
-      "status": "complete"
-    },
-    "opencode:skills/wiki-manager": {
-      "harness": "opencode",
-      "path": "skills/wiki-manager",
-      "source": "submodules/llm-wiki/plugins/llm-wiki-opencode/skills/wiki-manager",
-      "status": "complete"
-    },
-    "opencode:skills/wiki-query": {
-      "harness": "opencode",
-      "path": "skills/wiki-query",
-      "source": "submodules/llm-wiki/plugins/llm-wiki-opencode/skills/wiki-query",
       "status": "complete"
     },
     "pi:skills/apple-notes-to-obsidian": {

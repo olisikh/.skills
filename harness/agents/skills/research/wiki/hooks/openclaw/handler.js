@@ -36,8 +36,8 @@ const HUB_PATH = (() => {
     if (DEBUG) console.error(`[wiki-hook] config resolution failed: ${error.message}`);
   }
 
-  // Portable fallback for interactive hooks; maintenance fails closed instead.
-  return path.join(home, 'wiki');
+  // Portable fallback for interactive hooks; the v2 maintenance path fails closed.
+  return path.join(home, 'notes', '50 Knowledge', 'LLM Wiki');
 })();
 
 const MAX_EXCERPTS = 5;
@@ -232,7 +232,7 @@ async function appendFeedbackQueue(sessionsDir, context, scan) {
     sessionId,
     workspace: context.workspace || 'unknown',
     excerpts: scan.feedback,
-    topicHint: 'dotfiles',
+    topicHint: 'llm-wiki-v2',
     status: 'pending',
   };
 
@@ -241,7 +241,7 @@ async function appendFeedbackQueue(sessionsDir, context, scan) {
 }
 
 async function handler(context) {
-  const sessionsDir = path.join(HUB_PATH, '.sessions');
+  const sessionsDir = path.join(HUB_PATH, '90 System', '.sessions');
   try {
     await ensureLayout(sessionsDir);
 
