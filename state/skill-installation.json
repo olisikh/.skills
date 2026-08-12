@@ -60,16 +60,58 @@
       "source": "submodules/caveman/skills/caveman-commit",
       "status": "complete"
     },
+    "agents:skills/caveman-discover": {
+      "harness": "agents",
+      "path": "skills/caveman-discover",
+      "source": "submodules/caveman/skills/caveman-discover",
+      "status": "complete"
+    },
+    "agents:skills/caveman-evidence-review": {
+      "harness": "agents",
+      "path": "skills/caveman-evidence-review",
+      "source": "submodules/caveman/skills/caveman-evidence-review",
+      "status": "complete"
+    },
+    "agents:skills/caveman-explore": {
+      "harness": "agents",
+      "path": "skills/caveman-explore",
+      "source": "submodules/caveman/skills/caveman-explore",
+      "status": "complete"
+    },
     "agents:skills/caveman-help": {
       "harness": "agents",
       "path": "skills/caveman-help",
       "source": "submodules/caveman/skills/caveman-help",
       "status": "complete"
     },
+    "agents:skills/caveman-learn": {
+      "harness": "agents",
+      "path": "skills/caveman-learn",
+      "source": "submodules/caveman/skills/caveman-learn",
+      "status": "complete"
+    },
+    "agents:skills/caveman-manage": {
+      "harness": "agents",
+      "path": "skills/caveman-manage",
+      "source": "submodules/caveman/skills/caveman-manage",
+      "status": "complete"
+    },
+    "agents:skills/caveman-optimize": {
+      "harness": "agents",
+      "path": "skills/caveman-optimize",
+      "source": "submodules/caveman/skills/caveman-optimize",
+      "status": "complete"
+    },
     "agents:skills/caveman-review": {
       "harness": "agents",
       "path": "skills/caveman-review",
       "source": "submodules/caveman/skills/caveman-review",
+      "status": "complete"
+    },
+    "agents:skills/caveman-setup": {
+      "harness": "agents",
+      "path": "skills/caveman-setup",
+      "source": "submodules/caveman/skills/caveman-setup",
       "status": "complete"
     },
     "agents:skills/changelog-generator": {
@@ -222,6 +264,12 @@
       "source": "submodules/awesome-llm-skills/internal-comms",
       "status": "complete"
     },
+    "agents:skills/investigate-first": {
+      "harness": "agents",
+      "path": "skills/investigate-first",
+      "source": "submodules/caveman/skills/investigate-first",
+      "status": "complete"
+    },
     "agents:skills/invoice-organizer": {
       "harness": "agents",
       "path": "skills/invoice-organizer",
@@ -238,6 +286,12 @@
       "harness": "agents",
       "path": "skills/lead-research-assistant",
       "source": "submodules/awesome-llm-skills/lead-research-assistant",
+      "status": "complete"
+    },
+    "agents:skills/lean-build": {
+      "harness": "agents",
+      "path": "skills/lean-build",
+      "source": "submodules/caveman/skills/lean-build",
       "status": "complete"
     },
     "agents:skills/limits": {
@@ -274,6 +328,12 @@
       "harness": "agents",
       "path": "skills/migrate-to-shoehorn",
       "source": "submodules/mattpocock-skills/skills/misc/migrate-to-shoehorn",
+      "status": "complete"
+    },
+    "agents:skills/migration": {
+      "harness": "agents",
+      "path": "skills/migration",
+      "source": "submodules/caveman/skills/migration",
       "status": "complete"
     },
     "agents:skills/nix-for-dev": {
@@ -396,6 +456,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/resolving-merge-conflicts",
       "status": "complete"
     },
+    "agents:skills/safe-refactor": {
+      "harness": "agents",
+      "path": "skills/safe-refactor",
+      "source": "submodules/caveman/skills/safe-refactor",
+      "status": "complete"
+    },
     "agents:skills/scaffold-exercises": {
       "harness": "agents",
       "path": "skills/scaffold-exercises",
@@ -436,6 +502,12 @@
       "harness": "agents",
       "path": "skills/summarize-changes",
       "source": "harness/agents/skills/summarize-changes",
+      "status": "complete"
+    },
+    "agents:skills/surgical-patch": {
+      "harness": "agents",
+      "path": "skills/surgical-patch",
+      "source": "submodules/caveman/skills/surgical-patch",
       "status": "complete"
     },
     "agents:skills/tdd": {
@@ -496,6 +568,12 @@
       "harness": "agents",
       "path": "skills/triage",
       "source": "submodules/mattpocock-skills/skills/engineering/triage",
+      "status": "complete"
+    },
+    "agents:skills/verify-and-stop": {
+      "harness": "agents",
+      "path": "skills/verify-and-stop",
+      "source": "submodules/caveman/skills/verify-and-stop",
       "status": "complete"
     },
     "agents:skills/video-downloader": {
@@ -630,16 +708,58 @@
       "source": "submodules/caveman/skills/caveman-commit",
       "status": "complete"
     },
+    "claude:skills/caveman-discover": {
+      "harness": "claude",
+      "path": "skills/caveman-discover",
+      "source": "submodules/caveman/skills/caveman-discover",
+      "status": "complete"
+    },
+    "claude:skills/caveman-evidence-review": {
+      "harness": "claude",
+      "path": "skills/caveman-evidence-review",
+      "source": "submodules/caveman/skills/caveman-evidence-review",
+      "status": "complete"
+    },
+    "claude:skills/caveman-explore": {
+      "harness": "claude",
+      "path": "skills/caveman-explore",
+      "source": "submodules/caveman/skills/caveman-explore",
+      "status": "complete"
+    },
     "claude:skills/caveman-help": {
       "harness": "claude",
       "path": "skills/caveman-help",
       "source": "submodules/caveman/skills/caveman-help",
       "status": "complete"
     },
+    "claude:skills/caveman-learn": {
+      "harness": "claude",
+      "path": "skills/caveman-learn",
+      "source": "submodules/caveman/skills/caveman-learn",
+      "status": "complete"
+    },
+    "claude:skills/caveman-manage": {
+      "harness": "claude",
+      "path": "skills/caveman-manage",
+      "source": "submodules/caveman/skills/caveman-manage",
+      "status": "complete"
+    },
+    "claude:skills/caveman-optimize": {
+      "harness": "claude",
+      "path": "skills/caveman-optimize",
+      "source": "submodules/caveman/skills/caveman-optimize",
+      "status": "complete"
+    },
     "claude:skills/caveman-review": {
       "harness": "claude",
       "path": "skills/caveman-review",
       "source": "submodules/caveman/skills/caveman-review",
+      "status": "complete"
+    },
+    "claude:skills/caveman-setup": {
+      "harness": "claude",
+      "path": "skills/caveman-setup",
+      "source": "submodules/caveman/skills/caveman-setup",
       "status": "complete"
     },
     "claude:skills/changelog-generator": {
@@ -810,6 +930,12 @@
       "source": "submodules/awesome-llm-skills/internal-comms",
       "status": "complete"
     },
+    "claude:skills/investigate-first": {
+      "harness": "claude",
+      "path": "skills/investigate-first",
+      "source": "submodules/caveman/skills/investigate-first",
+      "status": "complete"
+    },
     "claude:skills/invoice-organizer": {
       "harness": "claude",
       "path": "skills/invoice-organizer",
@@ -826,6 +952,12 @@
       "harness": "claude",
       "path": "skills/lead-research-assistant",
       "source": "submodules/awesome-llm-skills/lead-research-assistant",
+      "status": "complete"
+    },
+    "claude:skills/lean-build": {
+      "harness": "claude",
+      "path": "skills/lean-build",
+      "source": "submodules/caveman/skills/lean-build",
       "status": "complete"
     },
     "claude:skills/limits": {
@@ -862,6 +994,12 @@
       "harness": "claude",
       "path": "skills/migrate-to-shoehorn",
       "source": "submodules/mattpocock-skills/skills/misc/migrate-to-shoehorn",
+      "status": "complete"
+    },
+    "claude:skills/migration": {
+      "harness": "claude",
+      "path": "skills/migration",
+      "source": "submodules/caveman/skills/migration",
       "status": "complete"
     },
     "claude:skills/nix-for-dev": {
@@ -984,6 +1122,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/resolving-merge-conflicts",
       "status": "complete"
     },
+    "claude:skills/safe-refactor": {
+      "harness": "claude",
+      "path": "skills/safe-refactor",
+      "source": "submodules/caveman/skills/safe-refactor",
+      "status": "complete"
+    },
     "claude:skills/scaffold-exercises": {
       "harness": "claude",
       "path": "skills/scaffold-exercises",
@@ -1024,6 +1168,12 @@
       "harness": "claude",
       "path": "skills/summarize-changes",
       "source": "harness/agents/skills/summarize-changes",
+      "status": "complete"
+    },
+    "claude:skills/surgical-patch": {
+      "harness": "claude",
+      "path": "skills/surgical-patch",
+      "source": "submodules/caveman/skills/surgical-patch",
       "status": "complete"
     },
     "claude:skills/tdd": {
@@ -1084,6 +1234,12 @@
       "harness": "claude",
       "path": "skills/triage",
       "source": "submodules/mattpocock-skills/skills/engineering/triage",
+      "status": "complete"
+    },
+    "claude:skills/verify-and-stop": {
+      "harness": "claude",
+      "path": "skills/verify-and-stop",
+      "source": "submodules/caveman/skills/verify-and-stop",
       "status": "complete"
     },
     "claude:skills/video-downloader": {
@@ -1290,16 +1446,58 @@
       "source": "submodules/caveman/skills/caveman-commit",
       "status": "complete"
     },
+    "pi:skills/caveman-discover": {
+      "harness": "pi",
+      "path": "skills/caveman-discover",
+      "source": "submodules/caveman/skills/caveman-discover",
+      "status": "complete"
+    },
+    "pi:skills/caveman-evidence-review": {
+      "harness": "pi",
+      "path": "skills/caveman-evidence-review",
+      "source": "submodules/caveman/skills/caveman-evidence-review",
+      "status": "complete"
+    },
+    "pi:skills/caveman-explore": {
+      "harness": "pi",
+      "path": "skills/caveman-explore",
+      "source": "submodules/caveman/skills/caveman-explore",
+      "status": "complete"
+    },
     "pi:skills/caveman-help": {
       "harness": "pi",
       "path": "skills/caveman-help",
       "source": "submodules/caveman/skills/caveman-help",
       "status": "complete"
     },
+    "pi:skills/caveman-learn": {
+      "harness": "pi",
+      "path": "skills/caveman-learn",
+      "source": "submodules/caveman/skills/caveman-learn",
+      "status": "complete"
+    },
+    "pi:skills/caveman-manage": {
+      "harness": "pi",
+      "path": "skills/caveman-manage",
+      "source": "submodules/caveman/skills/caveman-manage",
+      "status": "complete"
+    },
+    "pi:skills/caveman-optimize": {
+      "harness": "pi",
+      "path": "skills/caveman-optimize",
+      "source": "submodules/caveman/skills/caveman-optimize",
+      "status": "complete"
+    },
     "pi:skills/caveman-review": {
       "harness": "pi",
       "path": "skills/caveman-review",
       "source": "submodules/caveman/skills/caveman-review",
+      "status": "complete"
+    },
+    "pi:skills/caveman-setup": {
+      "harness": "pi",
+      "path": "skills/caveman-setup",
+      "source": "submodules/caveman/skills/caveman-setup",
       "status": "complete"
     },
     "pi:skills/changelog-generator": {
@@ -1452,6 +1650,12 @@
       "source": "submodules/awesome-llm-skills/internal-comms",
       "status": "complete"
     },
+    "pi:skills/investigate-first": {
+      "harness": "pi",
+      "path": "skills/investigate-first",
+      "source": "submodules/caveman/skills/investigate-first",
+      "status": "complete"
+    },
     "pi:skills/invoice-organizer": {
       "harness": "pi",
       "path": "skills/invoice-organizer",
@@ -1468,6 +1672,12 @@
       "harness": "pi",
       "path": "skills/lead-research-assistant",
       "source": "submodules/awesome-llm-skills/lead-research-assistant",
+      "status": "complete"
+    },
+    "pi:skills/lean-build": {
+      "harness": "pi",
+      "path": "skills/lean-build",
+      "source": "submodules/caveman/skills/lean-build",
       "status": "complete"
     },
     "pi:skills/limits": {
@@ -1504,6 +1714,12 @@
       "harness": "pi",
       "path": "skills/migrate-to-shoehorn",
       "source": "submodules/mattpocock-skills/skills/misc/migrate-to-shoehorn",
+      "status": "complete"
+    },
+    "pi:skills/migration": {
+      "harness": "pi",
+      "path": "skills/migration",
+      "source": "submodules/caveman/skills/migration",
       "status": "complete"
     },
     "pi:skills/nix-for-dev": {
@@ -1626,6 +1842,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/resolving-merge-conflicts",
       "status": "complete"
     },
+    "pi:skills/safe-refactor": {
+      "harness": "pi",
+      "path": "skills/safe-refactor",
+      "source": "submodules/caveman/skills/safe-refactor",
+      "status": "complete"
+    },
     "pi:skills/scaffold-exercises": {
       "harness": "pi",
       "path": "skills/scaffold-exercises",
@@ -1666,6 +1888,12 @@
       "harness": "pi",
       "path": "skills/summarize-changes",
       "source": "harness/agents/skills/summarize-changes",
+      "status": "complete"
+    },
+    "pi:skills/surgical-patch": {
+      "harness": "pi",
+      "path": "skills/surgical-patch",
+      "source": "submodules/caveman/skills/surgical-patch",
       "status": "complete"
     },
     "pi:skills/tdd": {
@@ -1726,6 +1954,12 @@
       "harness": "pi",
       "path": "skills/triage",
       "source": "submodules/mattpocock-skills/skills/engineering/triage",
+      "status": "complete"
+    },
+    "pi:skills/verify-and-stop": {
+      "harness": "pi",
+      "path": "skills/verify-and-stop",
+      "source": "submodules/caveman/skills/verify-and-stop",
       "status": "complete"
     },
     "pi:skills/video-downloader": {
