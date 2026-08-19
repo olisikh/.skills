@@ -282,6 +282,12 @@
       "source": "submodules/obsidian-skills/skills/json-canvas",
       "status": "complete"
     },
+    "agents:skills/kindle-transfer": {
+      "harness": "agents",
+      "path": "skills/kindle-transfer",
+      "source": "harness/agents/skills/kindle-transfer",
+      "status": "complete"
+    },
     "agents:skills/lead-research-assistant": {
       "harness": "agents",
       "path": "skills/lead-research-assistant",
@@ -946,6 +952,12 @@
       "harness": "claude",
       "path": "skills/json-canvas",
       "source": "submodules/obsidian-skills/skills/json-canvas",
+      "status": "complete"
+    },
+    "claude:skills/kindle-transfer": {
+      "harness": "claude",
+      "path": "skills/kindle-transfer",
+      "source": "harness/agents/skills/kindle-transfer",
       "status": "complete"
     },
     "claude:skills/lead-research-assistant": {
@@ -1666,6 +1678,12 @@
       "harness": "pi",
       "path": "skills/json-canvas",
       "source": "submodules/obsidian-skills/skills/json-canvas",
+      "status": "complete"
+    },
+    "pi:skills/kindle-transfer": {
+      "harness": "pi",
+      "path": "skills/kindle-transfer",
+      "source": "harness/agents/skills/kindle-transfer",
       "status": "complete"
     },
     "pi:skills/lead-research-assistant": {
