@@ -252,6 +252,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/implement",
       "status": "complete"
     },
+    "agents:skills/implement-spec": {
+      "harness": "agents",
+      "path": "skills/implement-spec",
+      "source": "submodules/mattpocock-skills/skills/in-progress/implement-spec",
+      "status": "complete"
+    },
     "agents:skills/improve-codebase-architecture": {
       "harness": "agents",
       "path": "skills/improve-codebase-architecture",
@@ -916,6 +922,12 @@
       "harness": "claude",
       "path": "skills/implement",
       "source": "submodules/mattpocock-skills/skills/engineering/implement",
+      "status": "complete"
+    },
+    "claude:skills/implement-spec": {
+      "harness": "claude",
+      "path": "skills/implement-spec",
+      "source": "submodules/mattpocock-skills/skills/in-progress/implement-spec",
       "status": "complete"
     },
     "claude:skills/improve-codebase-architecture": {
@@ -1642,6 +1654,12 @@
       "harness": "pi",
       "path": "skills/implement",
       "source": "submodules/mattpocock-skills/skills/engineering/implement",
+      "status": "complete"
+    },
+    "pi:skills/implement-spec": {
+      "harness": "pi",
+      "path": "skills/implement-spec",
+      "source": "submodules/mattpocock-skills/skills/in-progress/implement-spec",
       "status": "complete"
     },
     "pi:skills/improve-codebase-architecture": {
