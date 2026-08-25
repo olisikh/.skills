@@ -1348,61 +1348,61 @@
       "harness": "hermes",
       "path": "skills/autonomous-change-execution",
       "source": "harness/hermes/skills/autonomous-ai-agents/autonomous-change-execution",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/graphify/SKILL.md": {
       "harness": "hermes",
       "path": "skills/graphify/SKILL.md",
       "source": "submodules/graphify/graphify/skill-claw.md",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/graphify/references": {
       "harness": "hermes",
       "path": "skills/graphify/references",
       "source": "submodules/graphify/graphify/skills/claw/references",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/harness-managed-skills": {
       "harness": "hermes",
       "path": "skills/harness-managed-skills",
       "source": "harness/hermes/skills/autonomous-ai-agents/harness-managed-skills",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/kindle-transfer": {
       "harness": "hermes",
       "path": "skills/kindle-transfer",
       "source": "harness/hermes/skills/kindle-transfer",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/llm-harness-ops": {
       "harness": "hermes",
       "path": "skills/llm-harness-ops",
       "source": "harness/hermes/skills/autonomous-ai-agents/llm-harness-ops",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/model-routing": {
       "harness": "hermes",
       "path": "skills/model-routing",
       "source": "harness/hermes/skills/model-routing",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/obsidian-memory": {
       "harness": "hermes",
       "path": "skills/obsidian-memory",
       "source": "harness/hermes/skills/personal/obsidian-memory",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/wiki": {
       "harness": "hermes",
       "path": "skills/wiki",
       "source": "harness/hermes/skills/wiki",
-      "status": "complete"
+      "status": "blocked"
     },
     "openclaw:skills/self-improving-agent": {
       "harness": "openclaw",
       "path": "skills/self-improving-agent",
       "source": "submodules/self-improving-agent/self-improving-agent",
-      "status": "complete"
+      "status": "blocked"
     },
     "opencode:prompts": {
       "harness": "opencode",
