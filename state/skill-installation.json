@@ -1380,12 +1380,6 @@
       "source": "harness/hermes/skills/autonomous-ai-agents/llm-harness-ops",
       "status": "complete"
     },
-    "hermes:skills/model-routing": {
-      "harness": "hermes",
-      "path": "skills/model-routing",
-      "source": "harness/hermes/skills/model-routing",
-      "status": "complete"
-    },
     "hermes:skills/obsidian-memory": {
       "harness": "hermes",
       "path": "skills/obsidian-memory",
