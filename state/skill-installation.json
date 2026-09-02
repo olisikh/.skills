@@ -36,6 +36,12 @@
       "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/bro",
       "status": "complete"
     },
+    "agents:skills/build-with-exa": {
+      "harness": "agents",
+      "path": "skills/build-with-exa",
+      "source": "submodules/exa-skills/skills/build-with-exa",
+      "status": "complete"
+    },
     "agents:skills/canvas-design": {
       "harness": "agents",
       "path": "skills/canvas-design",
@@ -132,6 +138,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/codebase-design",
       "status": "complete"
     },
+    "agents:skills/company-research": {
+      "harness": "agents",
+      "path": "skills/company-research",
+      "source": "submodules/exa-skills/skills/company-research",
+      "status": "complete"
+    },
     "agents:skills/competitive-ads-extractor": {
       "harness": "agents",
       "path": "skills/competitive-ads-extractor",
@@ -178,6 +190,18 @@
       "harness": "agents",
       "path": "skills/dotfiles-ops",
       "source": "harness/agents/skills/dotfiles-ops",
+      "status": "complete"
+    },
+    "agents:skills/exa-contents": {
+      "harness": "agents",
+      "path": "skills/exa-contents",
+      "source": "submodules/exa-skills/skills/exa-contents",
+      "status": "complete"
+    },
+    "agents:skills/exa-search": {
+      "harness": "agents",
+      "path": "skills/exa-search",
+      "source": "submodules/exa-skills/skills/exa-search",
       "status": "complete"
     },
     "agents:skills/explain": {
@@ -286,6 +310,12 @@
       "harness": "agents",
       "path": "skills/json-canvas",
       "source": "submodules/obsidian-skills/skills/json-canvas",
+      "status": "complete"
+    },
+    "agents:skills/lead-generation": {
+      "harness": "agents",
+      "path": "skills/lead-generation",
+      "source": "submodules/exa-skills/skills/lead-generation",
       "status": "complete"
     },
     "agents:skills/lead-research-assistant": {
@@ -696,6 +726,12 @@
       "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/bro",
       "status": "complete"
     },
+    "claude:skills/build-with-exa": {
+      "harness": "claude",
+      "path": "skills/build-with-exa",
+      "source": "submodules/exa-skills/skills/build-with-exa",
+      "status": "complete"
+    },
     "claude:skills/canvas-design": {
       "harness": "claude",
       "path": "skills/canvas-design",
@@ -798,6 +834,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/codebase-design",
       "status": "complete"
     },
+    "claude:skills/company-research": {
+      "harness": "claude",
+      "path": "skills/company-research",
+      "source": "submodules/exa-skills/skills/company-research",
+      "status": "complete"
+    },
     "claude:skills/competitive-ads-extractor": {
       "harness": "claude",
       "path": "skills/competitive-ads-extractor",
@@ -850,6 +892,18 @@
       "harness": "claude",
       "path": "skills/dotfiles-ops",
       "source": "harness/agents/skills/dotfiles-ops",
+      "status": "complete"
+    },
+    "claude:skills/exa-contents": {
+      "harness": "claude",
+      "path": "skills/exa-contents",
+      "source": "submodules/exa-skills/skills/exa-contents",
+      "status": "complete"
+    },
+    "claude:skills/exa-search": {
+      "harness": "claude",
+      "path": "skills/exa-search",
+      "source": "submodules/exa-skills/skills/exa-search",
       "status": "complete"
     },
     "claude:skills/explain": {
@@ -964,6 +1018,12 @@
       "harness": "claude",
       "path": "skills/json-canvas",
       "source": "submodules/obsidian-skills/skills/json-canvas",
+      "status": "complete"
+    },
+    "claude:skills/lead-generation": {
+      "harness": "claude",
+      "path": "skills/lead-generation",
+      "source": "submodules/exa-skills/skills/lead-generation",
       "status": "complete"
     },
     "claude:skills/lead-research-assistant": {
@@ -1348,55 +1408,55 @@
       "harness": "hermes",
       "path": "skills/autonomous-change-execution",
       "source": "harness/hermes/skills/autonomous-ai-agents/autonomous-change-execution",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/graphify/SKILL.md": {
       "harness": "hermes",
       "path": "skills/graphify/SKILL.md",
       "source": "submodules/graphify/graphify/skill-claw.md",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/graphify/references": {
       "harness": "hermes",
       "path": "skills/graphify/references",
       "source": "submodules/graphify/graphify/skills/claw/references",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/harness-managed-skills": {
       "harness": "hermes",
       "path": "skills/harness-managed-skills",
       "source": "harness/hermes/skills/autonomous-ai-agents/harness-managed-skills",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/kindle-transfer": {
       "harness": "hermes",
       "path": "skills/kindle-transfer",
       "source": "harness/hermes/skills/kindle-transfer",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/llm-harness-ops": {
       "harness": "hermes",
       "path": "skills/llm-harness-ops",
       "source": "harness/hermes/skills/autonomous-ai-agents/llm-harness-ops",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/obsidian-memory": {
       "harness": "hermes",
       "path": "skills/obsidian-memory",
       "source": "harness/hermes/skills/personal/obsidian-memory",
-      "status": "complete"
+      "status": "blocked"
     },
     "hermes:skills/wiki": {
       "harness": "hermes",
       "path": "skills/wiki",
       "source": "harness/hermes/skills/wiki",
-      "status": "complete"
+      "status": "blocked"
     },
     "openclaw:skills/self-improving-agent": {
       "harness": "openclaw",
       "path": "skills/self-improving-agent",
       "source": "submodules/self-improving-agent/self-improving-agent",
-      "status": "complete"
+      "status": "blocked"
     },
     "opencode:prompts": {
       "harness": "opencode",
@@ -1444,6 +1504,12 @@
       "harness": "pi",
       "path": "skills/bro",
       "source": ".generated/skills/agents/mattpocock-skills/submodules__mattpocock-skills__skills__productivity__wait-what/bro",
+      "status": "complete"
+    },
+    "pi:skills/build-with-exa": {
+      "harness": "pi",
+      "path": "skills/build-with-exa",
+      "source": "submodules/exa-skills/skills/build-with-exa",
       "status": "complete"
     },
     "pi:skills/canvas-design": {
@@ -1542,6 +1608,12 @@
       "source": "submodules/mattpocock-skills/skills/engineering/codebase-design",
       "status": "complete"
     },
+    "pi:skills/company-research": {
+      "harness": "pi",
+      "path": "skills/company-research",
+      "source": "submodules/exa-skills/skills/company-research",
+      "status": "complete"
+    },
     "pi:skills/competitive-ads-extractor": {
       "harness": "pi",
       "path": "skills/competitive-ads-extractor",
@@ -1588,6 +1660,18 @@
       "harness": "pi",
       "path": "skills/dotfiles-ops",
       "source": "harness/agents/skills/dotfiles-ops",
+      "status": "complete"
+    },
+    "pi:skills/exa-contents": {
+      "harness": "pi",
+      "path": "skills/exa-contents",
+      "source": "submodules/exa-skills/skills/exa-contents",
+      "status": "complete"
+    },
+    "pi:skills/exa-search": {
+      "harness": "pi",
+      "path": "skills/exa-search",
+      "source": "submodules/exa-skills/skills/exa-search",
       "status": "complete"
     },
     "pi:skills/explain": {
@@ -1696,6 +1780,12 @@
       "harness": "pi",
       "path": "skills/json-canvas",
       "source": "submodules/obsidian-skills/skills/json-canvas",
+      "status": "complete"
+    },
+    "pi:skills/lead-generation": {
+      "harness": "pi",
+      "path": "skills/lead-generation",
+      "source": "submodules/exa-skills/skills/lead-generation",
       "status": "complete"
     },
     "pi:skills/lead-research-assistant": {
