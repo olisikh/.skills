@@ -44,4 +44,4 @@ readlink /run/current-system    # /nix/store/...-darwin-system-26.05.06648f4
 launchctl print gui/$(id -u)/ai.hermes.gateway | grep -E 'state =|pid =|last exit code'
 ```
 
-Future rule: the user-facing wrapper is now `dots make` (formerly `home make`). If wrapper use fails with a missing `default.nix` or `dots` is not found, immediately suspect PATH/wrapper resolution before changing repo files or flake structure. In Hermes runs, prefer direct `darwin-rebuild` or explicit `~/.local/bin/nix-build`.
+Future rule: the preferred user-facing command is `dots build`; `dots make` remains an alias. If wrapper use fails with a missing `default.nix` or `dots` is not found, immediately suspect PATH/wrapper resolution before changing repo files or flake structure. In Hermes runs, prefer `dots build`; if `dots` is unavailable, use explicit `~/.local/bin/nix-build`.

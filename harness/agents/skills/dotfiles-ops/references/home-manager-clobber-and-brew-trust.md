@@ -33,7 +33,7 @@ Expected shape:
 }
 ```
 
-If `darwin-rebuild` still errors immediately after an earlier mixed sudo/non-sudo attempt, rerun the rebuild after confirming the trust file on disk.
+If the rebuild still errors immediately after an earlier mixed sudo/non-sudo attempt, rerun `dots build` after confirming the trust file on disk.
 
 ### 2) Back up clobbering unmanaged file
 
@@ -46,7 +46,7 @@ mv ~/.config/opencode/tui.json ~/.config/opencode/tui.json.pre-home-manager-$(da
 Then rerun:
 
 ```bash
-sudo darwin-rebuild switch --flake ~/.dotfiles#$(scutil --get LocalHostName)
+dots build
 ```
 
 ## Verification

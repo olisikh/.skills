@@ -13,7 +13,7 @@ This is the canonical merged skill for dotfiles maintenance. It replaces the old
 ## When to use
 
 - User asks to pull, rebuild, apply, or inspect `~/.dotfiles`
-- User says `dots make`, `sync my nix config`, `rebuild dotfiles`, `apply dotfiles`
+- User says `dots build`, `sync my nix config`, `rebuild dotfiles`, `apply dotfiles`
 - User wants nix-darwin generations, rollback, garbage collection, templates, dev shells, or secrets editing
 - User reports a launchd service, Home Manager package, macOS setting, app alias, or Nix-managed tool changed after a dotfiles update
 
@@ -24,7 +24,7 @@ Do **not** use this for unrelated repos. Do **not** run `dots update` / flake up
 - Repo: `~/.dotfiles`
 - Default branch: `main`
 - Host configs commonly include `olisikh-mini`, `olisikh-mbair`, and `C2JF2NTH6H`
-- The preferred user-facing wrapper is `dots` (`dots make`, `dots update`, etc.)
+- The preferred user-facing wrapper is `dots` (`dots build`, `dots update`, etc.)
 - Older notes may mention `home`; that command has been replaced by `dots`
 - Avoid disruptive actions: no rebooting and no Docker/service interruption unless explicitly asked
 
@@ -34,7 +34,6 @@ Do **not** use this for unrelated repos. Do **not** run `dots update` / flake up
 DOTFILES="$HOME/.dotfiles"
 SCRIPTS="$DOTFILES/modules/home/core/user/scripts"
 DOTS_WRAPPER_SRC="$DOTFILES/modules/home/core/user/scripts/dots"
-SYSTEM="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
 ```
 
 Important files:
@@ -73,21 +72,14 @@ If `--ff-only` fails, stop and report divergence. Do not merge or rebase automat
 
 ### 3. Apply the configuration
 
-Preferred for Hermes/non-interactive runs:
+Use the managed wrapper; `dots build` resolves the current host and applies nix-darwin + Home Manager:
 
 ```bash
 cd ~/.dotfiles
-SYSTEM="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
-sudo darwin-rebuild switch --flake "$HOME/.dotfiles#$SYSTEM"
+dots build
 ```
 
-User-facing wrapper:
-
-```bash
-dots make
-```
-
-If running from Hermes/non-interactive shells, `dots` may be missing from `PATH` or may resolve `nix-build` incorrectly. In that case use the direct command above, or an explicit helper:
+If `dots` is unavailable in a Hermes/non-interactive shell, use the explicit dotfiles helper:
 
 ```bash
 ~/.local/bin/nix-build
@@ -122,7 +114,7 @@ command -v peekaboo && peekaboo --version 2>/dev/null || true
 
 Defined in `modules/home/core/user/scripts/dots`:
 
-- `dots make` / `dots build` → rebuild/apply nix-darwin + Home Manager
+- `dots build` → rebuild/apply nix-darwin + Home Manager
 - `dots update` → update hashes and flake lock
 - `dots upgrade` → update + rebuild
 - `dots tpl <template>` → instantiate flake template
@@ -145,7 +137,7 @@ Examples:
 ```bash
 ~/.local/bin/nix-build
 ~/.local/bin/nix-build olisikh-mini --show-trace
-sudo darwin-rebuild switch --flake ~/.dotfiles#olisikh-mini --show-trace
+dots build --show-trace
 ```
 
 ### `nix-update`
@@ -214,7 +206,7 @@ Never print secret values in chat or tool summaries.
 
 ## Common pitfalls
 
-1. **Wrapper/PATH mismatch in Hermes.** `dots make` can fail if `~/.local/bin` is missing from `PATH`, or it can call legacy Nix `nix-build` instead of the dotfiles helper. Suspect PATH/wrapper resolution first. In agent runs, prefer direct `darwin-rebuild` or explicit `~/.local/bin/nix-build`.
+1. **Wrapper/PATH mismatch in Hermes.** `dots build` can fail if `~/.local/bin` is missing from `PATH`, or it can call legacy Nix `nix-build` instead of the dotfiles helper. Suspect PATH/wrapper resolution first. In that case use explicit `~/.local/bin/nix-build`.
 
 2. **Homebrew trusted-tap failures can abort a successful rebuild late in activation.** If the configured tap is expected (for example `steipete/tap` for `peekaboo`/`codexbar`), trust it as the user, verify the trust file on disk, then rerun the rebuild.
 
@@ -244,8 +236,7 @@ cd ~/.dotfiles
 git status --short --branch
 git fetch origin --prune
 git pull --ff-only origin main
-SYSTEM="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
-sudo darwin-rebuild switch --flake "$HOME/.dotfiles#$SYSTEM"
+dots build
 git status --short --branch
 readlink /run/current-system || true
 ```
@@ -254,8 +245,7 @@ readlink /run/current-system || true
 
 ```bash
 cd ~/.dotfiles
-SYSTEM="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
-sudo darwin-rebuild switch --flake "$HOME/.dotfiles#$SYSTEM" --show-trace
+dots build --show-trace
 ```
 
 ### List generations safely
