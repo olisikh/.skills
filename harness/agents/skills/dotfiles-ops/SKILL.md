@@ -79,12 +79,13 @@ cd ~/.dotfiles
 dots build
 ```
 
-If `dots` is unavailable in a Hermes/non-interactive shell, use the explicit dotfiles helper:
+If `dots` is unavailable because `~/.local/bin` is missing from `PATH`, prepend that directory and retry. If `dots build` reaches a nested sudo helper that cannot elevate in a non-interactive shell, use the direct host-specific switch instead; do not autodetect the host:
 
 ```bash
-~/.local/bin/nix-build
-# or, if testing repo edits before installation:
-~/.dotfiles/modules/home/core/user/scripts/nix-build
+PATH="$HOME/.local/bin:$PATH" dots build
+# Fallback when the nested helper is blocked at sudo:
+HOST="olisikh-mini"
+sudo darwin-rebuild switch --flake "$HOME/.dotfiles#$HOST"
 ```
 
 ### 4. Verify after apply
@@ -206,7 +207,7 @@ Never print secret values in chat or tool summaries.
 
 ## Common pitfalls
 
-1. **Wrapper/PATH mismatch in Hermes.** `dots build` can fail if `~/.local/bin` is missing from `PATH`, or it can call legacy Nix `nix-build` instead of the dotfiles helper. Suspect PATH/wrapper resolution first. In that case use explicit `~/.local/bin/nix-build`.
+1. **Wrapper/PATH/sudo mismatch in Hermes.** If `dots build` is not found, prepend `~/.local/bin` to `PATH`. If it calls the wrong `nix-build`, use the explicit wrapper path. If the nested helper then fails with `sudo: a terminal is required` or `a password is required`, use the direct host-specific `sudo darwin-rebuild switch --flake "$HOME/.dotfiles#$HOST"` path with a known host value; do not add host autodetection.
 
 2. **Homebrew trusted-tap failures can abort a successful rebuild late in activation.** If the configured tap is expected (for example `steipete/tap` for `peekaboo`/`codexbar`), trust it as the user, verify the trust file on disk, then rerun the rebuild.
 
