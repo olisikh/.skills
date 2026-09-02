@@ -16,6 +16,10 @@ submodules:
     exports:
       - harness: agents
 
+  exa-skills:
+    exports:
+      - harness: agents
+
   mattpocock-skills:
     exports:
       - harness: agents
