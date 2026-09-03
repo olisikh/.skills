@@ -14,6 +14,36 @@ skills:
       - type: command
         name: defuddle
         optional: true
+  agents:build-with-exa:
+    scope: global
+    requirements:
+      - type: environment
+        name: EXA_API_KEY
+        optional: true
+  agents:company-research:
+    scope: global
+    requirements:
+      - type: environment
+        name: EXA_API_KEY
+        optional: true
+  agents:exa-contents:
+    scope: global
+    requirements:
+      - type: environment
+        name: EXA_API_KEY
+        optional: true
+  agents:exa-search:
+    scope: global
+    requirements:
+      - type: environment
+        name: EXA_API_KEY
+        optional: true
+  agents:lead-generation:
+    scope: global
+    requirements:
+      - type: environment
+        name: EXA_API_KEY
+        optional: true
   agents:personal/obsidian-vault:
     scope: global
     requirements:
