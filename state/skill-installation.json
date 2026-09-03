@@ -1408,55 +1408,55 @@
       "harness": "hermes",
       "path": "skills/autonomous-change-execution",
       "source": "harness/hermes/skills/autonomous-ai-agents/autonomous-change-execution",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/graphify/SKILL.md": {
       "harness": "hermes",
       "path": "skills/graphify/SKILL.md",
       "source": "submodules/graphify/graphify/skill-claw.md",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/graphify/references": {
       "harness": "hermes",
       "path": "skills/graphify/references",
       "source": "submodules/graphify/graphify/skills/claw/references",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/harness-managed-skills": {
       "harness": "hermes",
       "path": "skills/harness-managed-skills",
       "source": "harness/hermes/skills/autonomous-ai-agents/harness-managed-skills",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/kindle-transfer": {
       "harness": "hermes",
       "path": "skills/kindle-transfer",
       "source": "harness/hermes/skills/kindle-transfer",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/llm-harness-ops": {
       "harness": "hermes",
       "path": "skills/llm-harness-ops",
       "source": "harness/hermes/skills/autonomous-ai-agents/llm-harness-ops",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/obsidian-memory": {
       "harness": "hermes",
       "path": "skills/obsidian-memory",
       "source": "harness/hermes/skills/personal/obsidian-memory",
-      "status": "blocked"
+      "status": "complete"
     },
     "hermes:skills/wiki": {
       "harness": "hermes",
       "path": "skills/wiki",
       "source": "harness/hermes/skills/wiki",
-      "status": "blocked"
+      "status": "complete"
     },
     "openclaw:skills/self-improving-agent": {
       "harness": "openclaw",
       "path": "skills/self-improving-agent",
       "source": "submodules/self-improving-agent/self-improving-agent",
-      "status": "blocked"
+      "status": "complete"
     },
     "opencode:prompts": {
       "harness": "opencode",
